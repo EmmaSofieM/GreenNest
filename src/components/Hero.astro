@@ -1,0 +1,342 @@
+---
+--- 
+ <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        font-family: "quicksand", sans-serif;
+        color: #d3fa91;
+      }
+
+      .hero {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+      }
+      
+
+      .hero-section {
+        position: relative;
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      /* --- Venstre billede --- */
+      .left {
+        background: url("/images/sticky.png") center center/cover no-repeat;
+      }
+
+      .left::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #28040787; /* Rødt overlay */
+      }
+
+      /* --- Højre billede slideshow --- */
+      .right {
+        position: relative;
+      }
+
+      .slideshow {
+        position: absolute;
+        inset: 0;
+        overflow: hidden; /* skjul det der ruller udenfor */
+      }
+
+      /* Slide op/ind — mere polished animation */
+      :root {
+        --slide-duration: 1000ms; /* animation varighed */
+        --slide-ease: cubic-bezier(0.16, 1, 0.3, 1); /* glat ease-out */
+        --slide-pause: 1800ms; /* pause når slide står stille */
+      }
+
+      .slideshow img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: translate3d(0, 100%, 0);
+        transition: transform var(--slide-duration) var(--slide-ease), opacity 220ms linear;
+        will-change: transform, opacity;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 0; /* Billeder under overlay */
+      }
+
+      /* synlig slide (på skærmen) */
+      .slideshow img.active {
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+        opacity: 1;
+        z-index: 1; /* mindre end overlay */
+      }
+
+      /* slide der bevæger sig op og ud (næste frame) */
+      .slideshow img.up {
+        transform: translate3d(0, -100%, 0);
+        visibility: visible;
+        opacity: 1;
+        z-index: 2; /* stadig under overlay */
+      }
+
+      .right::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #122d127c; /* grønt overlay */
+        z-index: 3; /* overlay over slides, under .hero-content (z-index:4) */
+        pointer-events: none;
+      }
+
+      /* --- Tekst overlay --- */
+      .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 4; /* behold tekst øverst */
+      }
+
+      h1 {
+        font-size: clamp(20px, 6vw, 64px); /* skalerer for at passe på én linje */
+        line-height: 1;
+        font-weight: 400;
+        color: #d3fa91;
+        white-space: nowrap; /* undgå linjeskift */
+        text-overflow: ellipsis; /* afkort hvis alligevel for langt */
+        z-index: 15;
+      }
+
+      .scroll-down {
+        position: absolute;
+        bottom: 80px;
+        left: 60%;
+        transform: translateX(-50%);
+        font-size: 1rem;
+        color: #d3fa91;
+        z-index: 2;
+        text-align: center;
+        animation: bounce 2s infinite;
+      }
+
+      /* pil lidt skæv til højre og nede for teksten */
+      .scroll-down::after {
+        content: "↓";
+        display: inline-block;
+        margin-left: 30px; /* skub til højre */
+        transform: translateY(25px) rotate(-15deg); /* lidt ned og skæv */
+        font-size: 1.4rem;
+      }
+
+      .hero-content.mobile h1 {
+        display: none;
+      }
+
+        .scroll-down-mobile {
+       display: none;
+      }
+
+      /* pil lidt skæv til højre og nede for teksten */
+      .scroll-down-mobile::after {
+       display: none;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translate(-50%, 0);
+        }
+        50% {
+          transform: translate(-50%, 10px);
+        }
+      }
+
+      /* --- Responsiv design --- */
+      @media (max-width: 768px) {
+        /* Mobil: enkelt kolonne, skjul venstre side, fokus på slideshow */
+        .hero {
+          display: block;
+          height: 100vh;
+        }
+
+        .hero-section {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          flex: none;
+        }
+
+        .scroll-down-mobile {
+        position: absolute;
+        bottom: 30px;
+        left: 43%;
+        transform: translateX(-50%);
+        font-size: 1rem;
+        color: #d3fa91;
+        z-index: 5;
+        text-align: center;
+        animation: bounce 5s infinite;
+        display: block;
+      }
+
+      /* pil lidt skæv til højre og nede for teksten */
+      .scroll-down-mobile::after {
+        content: "↓";
+        display: inline-block;
+        font-size: 1.4rem;
+        display: block;
+      }
+
+        /* behold markup, men gem venstre sektion på mobil */
+        .left {
+          display: none !important;
+        }
+
+        .right {
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+
+        .slideshow {
+          position: absolute;
+          inset: 0;
+        }
+
+        /* centreret titel over slideshow */
+        .hero-content {
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          z-index: 5;
+          width: 90%;
+          pointer-events: none;
+        }
+
+        /* tillad linjebrud hvis nødvendigt på meget små skærme */
+        .hero-content h1,
+        h1 {
+          white-space: normal;
+          font-size: clamp(18px, 8vw, 48px);
+          line-height: 3.05;
+        }
+
+        /* flyt kun "green spaces" en smule op på mobil */
+        .hero-content.mobile h1 .gs {
+          display: inline-block;
+          transform: translateY(-60px); /* juster værdien efter behov */
+          line-height: 1;
+          font-size: 1.8rem;
+        }
+        .hero-content.mobile h1 .to {
+          display: inline-block;
+        }
+
+          .hero-content.mobile h1 {
+        display: block;
+      }
+
+        /* pil / scroll-down centreret nederst */
+        .scroll-down {
+          position: absolute;
+          bottom: 24px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 10;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <!-- Venstre sektion -->
+      <div class="hero-section left">
+        <div class="hero-content">
+          <h1><span class="gs">green spaces</span> <span class="to">to</span></h1>
+        </div>
+        <div class="scroll-down">scroll down</div>
+      </div>
+        <div class="scroll-down-mobile">scroll down</div>
+
+      <!-- mobil view -->
+       <div class="hero-section mobile">
+        <div class="hero-content mobile">
+          <h1><span class="gs">green spaces to</h1>
+        </div>
+
+      <!-- Højre sektion (slideshow) -->
+      <div class="hero-section right">
+        <div class="slideshow">
+          <img src="/images/1.png" class="active" alt="park 1" />
+          <img src="/images/2.png" alt="park 2" />
+          <img src="/images/3.png" alt="park 3" />
+          <img src="/images/4.png" alt="" />
+          <img src="/images/5.png" alt="park 5" />
+          <img src="/images/6.png" alt="park 6" />
+          <img src="/images/7.png" alt="park 7" />
+          <img src="/images/8.png" alt="park 8" />
+          <img src="/images/9.png" alt="park 9" />
+          <img src="/images/10.png" alt="park 10" />
+        </div>
+        <div class="hero-content">
+          <h1 id="slide-title" aria-live="polite">explore</h1>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const slides = document.querySelectorAll(".slideshow img");
+      const labels = ["explore", "breathe", "connect", "study", "unwind", "move", "gather", "reflect", "play", "belong"];
+      const titleEl = document.getElementById("slide-title");
+
+      if (slides.length) {
+        // find eller sæt første aktiv og sikre startpositioner
+        let current = [...slides].findIndex((s) => s.classList.contains("active"));
+        if (current === -1) {
+          slides.forEach((s) => s.classList.remove("active", "up"));
+          current = 0;
+          slides[0].classList.add("active");
+        }
+        // sæt initial titel (sikkerhed hvis labels mismatch)
+        if (labels[current]) titleEl.textContent = labels[current];
+
+        const transitionMs = 800; // skal matche CSS transition
+        const intervalMs = 3000;
+
+        setInterval(() => {
+          const next = (current + 1) % slides.length;
+
+          slides[next].classList.remove("up");
+          slides[current].classList.remove("active");
+          slides[current].classList.add("up");
+
+          requestAnimationFrame(() => {
+            slides[next].classList.add("active");
+            if (labels[next]) titleEl.textContent = labels[next];
+          });
+
+          setTimeout(() => {
+            slides[current].classList.remove("up");
+            current = next;
+          }, transitionMs + 20);
+        }, intervalMs);
+      }
+    </script>
+  </body>
+</html>

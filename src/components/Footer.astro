@@ -1,0 +1,295 @@
+---
+--- 
+    <style>
+      body {
+        margin: 0;
+        background-color: #FAFCF7;
+        color: #122D12;
+      }
+
+      footer {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        padding: 80px 60px 40px;
+        background-color: #f9faf5;
+        border-top: 1px solid #d8dccf;
+        position: relative;
+      }
+
+      /* --- Left section --- */
+      .footer-signup h2 {
+        font-size: 31px; /* 26 + 5px */
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+
+      .footer-signup p {
+        font-size: 23px; /* 18 + 5px */
+        margin: 0 0 12px;
+      }
+
+      .footer-signup input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #2f3b27;
+        background-color: transparent;
+        font-size: 21px; /* 16 + 5px */
+        color: #2f3b27;
+        outline: none;
+      }
+
+      .footer-signup input::placeholder {
+        color: #2f3b27;
+        opacity: 0.7;
+      }
+
+
+      /* --- Contact section --- */
+      .footer-signup p {
+        font-size: 21px; /* 16 + 5px (contact text) */
+        line-height: 1.5;
+      }
+
+      .footer-signup a {
+        font-size: 21px; /* 16 + 5px */
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .footer-signup img,
+      .footer-signup svg {
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+
+      .footer-signup a {
+        text-decoration: none;
+        color: #2f3b27;
+        display: block;
+        margin: 6px 0;
+        font-size: 21px; /* 16 + 5px */
+      }
+
+      /* --- Credits section --- */
+      .footer-credits h3 {
+        font-size: 21px; /* 16 + 5px */
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .footer-credits p {
+        margin: 6px 0;
+        font-size: 20px; /* 15 + 5px */
+      }
+
+      /* --- Links section --- */
+      .footer-links h3 {
+        font-size: 21px; /* 16 + 5px */
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: #2f3b27;
+        margin: 5px 0;
+        font-size: 21px; /* 16 + 5px */
+      }
+
+      /* --- Bottom logo --- */
+      .footer-logo {
+        /* placer i den sidste kolonne via grid (juster hvis du vil den skal spanning) */
+        grid-column: 3;
+        align-self: end;
+        justify-self: end;
+        margin-top: 40px;
+        text-align: right;
+        position: absolute; /* undgå absolute som bryder flow */
+        padding: 0;
+      }
+
+      .footer-logo img {
+        max-width: 600px; /* juster efter ønsket størrelse */
+        width: 100%;
+        height: auto;
+        display: inline-block;
+      }
+
+      /* --- Back to top --- */
+      .footer-top {
+        position: absolute;
+        bottom: 30px;
+        left: 60px;
+        font-size: 21px; /* 16 + 5px */
+        color: #2f3b27;
+        text-decoration: none;
+      }
+
+    .footer-arrow {
+  width: 14px;              /* størrelse på pilen */
+  height: 14px;
+  margin-left: 5px;         /* afstand fra teksten */
+  vertical-align: middle;   /* sikrer den står på linje med teksten */
+  display: inline-block;    /* nødvendigt for vert-align at virke */
+  transition: transform 0.2s ease;
+}
+
+/* valgfri hover-effekt */
+.footer-links a:hover .footer-arrow {
+  transform: translateX(3px);
+}
+
+.go-up {
+padding-top: 30px;
+  display: inline-flex;      /* inline-flex for at stå på linje med tekst */
+  align-items: center;       /* vertikalt centreret */
+  text-decoration: none;
+  color: inherit;
+    animation: bounce 1s infinite; /* animation på pilen */
+
+}
+
+.footer-arrow {
+  width: 14px;
+  height: 14px;
+  margin-left: 5px;         /* afstand mellem tekst og pil */
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.input-wrapper {
+  position: relative;        /* gør det muligt at placere pilen absolut */
+  display: inline-block;
+  width: 100%;               /* fylder hele formular-bredden */
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding-right: 30px;       /* plads til pilen inde i input */
+  box-sizing: border-box;
+}
+
+.input-wrapper .footer-arrow {
+  position: absolute;
+  right: 10px;               /* afstand fra højre kant */
+  top: 50%;                  /* centrer vertikalt */
+  transform: translateY(-50%);
+  width: 16px;               /* størrelse på pilen */
+  height: 16px;
+  pointer-events: none;      /* så klik går igennem til input */
+}
+.connect {
+  font-family: "Nimbus Sans D OT Bold", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px); /* hvor meget den hopper */
+  }
+}
+
+.footer-contact a {
+  display: inline-flex;       /* gør teksten og ikonet på linje */
+  align-items: center;        /* vertikalt centreret */
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 5px;         /* lidt afstand mellem links */
+}
+
+.contact-icon {
+  width: 25px;               /* samme størrelse som pilene */
+  height: 24px;
+  margin-right: 5px;         /* afstand mellem ikon og tekst */
+  display: inline-block;
+  vertical-align: middle;    /* fallback hvis inline-flex ikke virker */
+}
+
+.padding {
+    padding: 50px;
+}
+
+
+      @media (max-width: 768px) {
+        footer {
+          padding: 60px 30px;
+          text-align: left;
+        }
+
+        .footer-logo img {
+          max-width: 300px;
+          width: 70%;
+        }
+
+        .footer-top {
+          left: 30px;
+        }
+      }
+    </style>
+
+    <footer>
+      <!-- Signup Section -->
+  <div class="footer-signup">
+  <p>Sign up, get the news and give us feedback</p>
+  <h2 class="connect">Lets connect!</h2>
+  <form class="signup-form">
+    <div class="input-wrapper">
+      <input type="email" placeholder="e-mail" />
+      <img src="public/images/arrow4.svg" alt="" class="footer-arrow" />
+    </div>
+  </form>
+
+      <!-- Contact Section -->
+     <div class="padding"></div>
+  <p>Do you have questions?<br />Contact us on phone or email</p>
+  <a href="tel:+351268568639">
+    <img src="public/images/phone.svg" alt="Phone icon" class="contact-icon">
+    +351 268 568 639
+  </a> <br>
+  <a href="mailto:greennest.info@gmail.com">
+    <img src="public/images/email.svg" alt="Email icon" class="contact-icon">
+    greennest.info@gmail.com
+  </a>
+
+
+      <!-- Back to top -->
+    <a href="#" class="go-up">
+      Go to top
+      <img src="public/images/arrow-up.svg" alt="" class="footer-arrow" />
+    </a>
+</div>
+
+<div class="footer-contact"></div>
+      <!-- Credits Section -->
+      <div class="footer-credits">
+        <h3>Credits</h3>
+        <p>All photos are done by<br />Jarne Vanbrabant @jarne.vbb</p>
+        <br>
+        <p>Website and game are done by<br />Martim Jung and Emma Sofie Munch</p>
+      </div>
+
+      <!-- Links Section -->
+      <div class="footer-links">
+        <h3>Game</h3>
+  <a href="#">Unity <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  
+  <h3>Live map</h3>
+  <a href="#">Leaflet <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+
+  <h3>Links</h3>
+  <a href="#">Home <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  <a href="#">About <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  <a href="#">Map <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+</div>
+
+
+      <!-- Large logo at bottom -->
+      <div class="footer-logo">
+        <img src="/images/logogreen-footer.png" alt="Green Nest logo" />
+      </div>
+
+    </footer>
+

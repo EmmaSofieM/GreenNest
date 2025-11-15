@@ -1,3 +1,10 @@
+---
+import "../base.css";
+import Header from "../components/Header.astro";
+
+const { title } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,18 +12,23 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hind:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Press+Start+2P&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
+		<Header />
 		<slot />
 	</body>
 </html>
 
 <style>
-	html,
 	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  margin: 0;
+  width: 100%;
+  min-height: 100vh; /* sørger for at siden kan scrolles */
+}
+
+	
 </style>
