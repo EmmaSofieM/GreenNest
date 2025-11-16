@@ -117,7 +117,7 @@
       const heatPoints = [];
 
       const customIcon = L.icon({
-        iconUrl: "public/images/mapPhotos/PINNED.png",
+        iconUrl: "/images/mapPhotos/PINNED.png",
         iconSize: [32, 32],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32],
@@ -146,11 +146,11 @@
 
             const popupHtml = `
               <strong style="display:block; text-align:right; margin-bottom:6px;">${parkName}</strong>
-              <div class="popup-item"><img src="public/images/mapPhotos/location.png"><span>${address}</span></div>
-              <div class="popup-item"><img src="public/images/mapPhotos/dog.png"><span>Dogs allowed: ${dogs}</span></div>
-              <div class="popup-item"><img src="public/images/mapPhotos/shadow.png"><span>Shade: ${shade}</span></div>
-              <div class="popup-item"><img src="public/images/mapPhotos/bench.png"><span>Tables & benches: ${tables}</span></div>
-              <div class="popup-item"><img src="public/images/mapPhotos/noise.png"><span>Noise level: ${noise} dB</span></div>
+              <div class="popup-item"><img src="/images/mapPhotos/location.png"><span>${address}</span></div>
+              <div class="popup-item"><img src="/images/mapPhotos/dog.png"><span>Dogs allowed: ${dogs}</span></div>
+              <div class="popup-item"><img src="/images/mapPhotos/shadow.png"><span>Shade: ${shade}</span></div>
+              <div class="popup-item"><img src="/images/mapPhotos/bench.png"><span>Tables & benches: ${tables}</span></div>
+              <div class="popup-item"><img src="/images/mapPhotos/noise.png"><span>Noise level: ${noise} dB</span></div>
             `;
             layer.bindPopup(popupHtml);
 
@@ -179,14 +179,14 @@
           const isCloudy = [45,48,56,57,66,67,71,73].includes(code);
 
           let icon, text;
-          if(isRaining){ icon='<img src="public/images/mapPhotos/rain.png" style="height:1.2em;margin-right:0.5em;">'; text="Rain"; }
-          else if(isCloudy){ icon='<img src="public/images/mapPhotos/cloud.png" style="height:1.2em;margin-right:0.5em;">'; text="Cloudy"; }
-          else{ icon='<img src="public/images/mapPhotos/sun.png" style="height:1.2em;margin-right:0.5em;">'; text="Sunny"; }
+          if(isRaining){ icon='<img src="/images/mapPhotos/rain.png" style="height:1.2em;margin-right:0.5em;">'; text="Rain"; }
+          else if(isCloudy){ icon='<img src="/images/mapPhotos/cloud.png" style="height:1.2em;margin-right:0.5em;">'; text="Cloudy"; }
+          else{ icon='<img src="/images/mapPhotos/sun.png" style="height:1.2em;margin-right:0.5em;">'; text="Sunny"; }
 
           document.getElementById("live-temp").innerHTML = `
             <div style="display:flex;align-items:center;gap:6px;white-space:nowrap;">${icon}<strong>Lisbon</strong></div>
             <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
-              <img src="public/images/mapPhotos/temp.png" style="height:1.2em;margin-right:0.5em;">
+              <img src="/images/mapPhotos/temp.png" style="height:1.2em;margin-right:0.5em;">
               <span>${temp.toFixed(1)}°C - ${text}</span>
             </div>
           `;
