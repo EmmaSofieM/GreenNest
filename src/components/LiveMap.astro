@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parks in Lisbon with Temperature Heatmap</title>
+
+  <!-- Leaflet CSS/JS + heat plugin -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .live-map {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 24px 0;
+    }
+
+    #map {
+      width: 100%;
+      max-width: 1150px;
+      height: 65vh;
+      max-height: 900px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      border: 1px solid #d0e8a5;
+    }
+
+    #live-temp {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      color: #122d12;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 1px solid #b6e86d;
+      text-align: right;
+      min-width: 150px;
+      transition: transform 0.2s ease;
+    }
+    #live-temp:hover {
+      transform: scale(1.05);
+    }
+
+    /* Popup styling */
+    .leaflet-popup-content-wrapper {
+      background: rgba(211, 250, 145, 0.95) !important;
+      color: #122d12 !important;
+      border-radius: 12px;
+      padding: 10px;
+      min-width: 200px;
+    }
+    .leaflet-popup-tip {
+      background: rgba(211, 250, 145, 0.95) !important;
+    }
+    .popup-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+    }
+    .popup-item img {
+      height: 1.5em;
+      margin-right: 0.6em;
+    }
+    .popup-item span {
+      flex: 1;
+      text-align: right;
+    }
+    .popup-item:last-child { margin-bottom: 0; }
+  </style>
+</head>
+
+<body>
+  <section class="live-map">
+    <div id="map"></div>
+    <div id="live-temp">Loading temperature...</div>
+  </section>
+
+  <script type="module">
+    const waitFor = (condFn, interval = 50, timeout = 5000) =>
+      new Promise((res, rej) => {
+        const start = Date.now();
+        (function check() {
+          if (condFn()) return res();
+          if (Date.now() - start > timeout) return rej(new Error("timeout"));
+          setTimeout(check, interval);
+        })();
+      });
+
+    (async () => {
+      try { await waitFor(() => window.L && window.L.heatLayer); } 
+      catch(e) { console.error("Leaflet or heat plugin failed to load", e); return; }
+
+      const map = L.map("map").setView([38.716, -9.14], 13);
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap & CartoDB",
+        maxZoom: 19
+      }).addTo(map);
+
+      const parksUrl = "https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/POIArLivre/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson";
+      const heatPoints = [];
+
+      const customIcon = L.icon({
+        iconUrl: "public/images/mapPhotos/PINNED.png",
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+      });
+
+      function getRandomNoise() { return Math.floor(40 + Math.random()*30); }
+      function randomShade() { return ["Low","Medium","High"][Math.floor(Math.random()*3)]; }
+      function randomTables() { return Math.random() > 0.5 ? "Yes" : "No"; }
+      function randomDogs() { return Math.random() > 0.5 ? "Yes" : "No"; }
+
+      try {
+        const res = await fetch(parksUrl);
+        const geojson = await res.json();
+
+        L.geoJSON(geojson, {
+          style: { color:"#006400", weight:1.2, fillColor:"#00aa44", fillOpacity:0.6 },
+          pointToLayer: (feature, latlng) => L.marker(latlng, {icon: customIcon}),
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties || {};
+            const parkName = props.NOME || props.name || "Unknown park";
+            const address = props.ENDERECO || "Unknown address";
+            const noise = getRandomNoise();
+            const shade = randomShade();
+            const tables = randomTables();
+            const dogs = randomDogs();
+
+            const popupHtml = `
+              <strong style="display:block; text-align:right; margin-bottom:6px;">${parkName}</strong>
+              <div class="popup-item"><img src="public/images/mapPhotos/location.png"><span>${address}</span></div>
+              <div class="popup-item"><img src="public/images/mapPhotos/dog.png"><span>Dogs allowed: ${dogs}</span></div>
+              <div class="popup-item"><img src="public/images/mapPhotos/shadow.png"><span>Shade: ${shade}</span></div>
+              <div class="popup-item"><img src="public/images/mapPhotos/bench.png"><span>Tables & benches: ${tables}</span></div>
+              <div class="popup-item"><img src="public/images/mapPhotos/noise.png"><span>Noise level: ${noise} dB</span></div>
+            `;
+            layer.bindPopup(popupHtml);
+
+            if(feature.geometry?.coordinates){
+              const [lng, lat] = feature.geometry.coordinates;
+              const temperature = 20 + Math.random()*15;
+              const intensity = (temperature-20)/15;
+              heatPoints.push([lat, lng, intensity]);
+            }
+          }
+        }).addTo(map);
+
+        L.heatLayer(heatPoints, { radius:55, blur:15, maxZoom:17, gradient:{0:'blue',0.5:'lime',1:'red'} }).addTo(map);
+      } catch(err){ console.error("Could not fetch park data:", err); }
+
+      async function updateLiveTemp() {
+        try {
+          const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=38.716&longitude=-9.14&current_weather=true");
+          const data = await res.json();
+          const weather = data.current_weather;
+          if(!weather){ document.getElementById("live-temp").textContent = "Weather unavailable"; return; }
+
+          const temp = weather.temperature;
+          const code = weather.weathercode;
+          const isRaining = [51,53,55,61,63,65,80,81,82].includes(code);
+          const isCloudy = [45,48,56,57,66,67,71,73].includes(code);
+
+          let icon, text;
+          if(isRaining){ icon='<img src="public/images/mapPhotos/rain.png" style="height:1.2em;margin-right:0.5em;">'; text="Rain"; }
+          else if(isCloudy){ icon='<img src="public/images/mapPhotos/cloud.png" style="height:1.2em;margin-right:0.5em;">'; text="Cloudy"; }
+          else{ icon='<img src="public/images/mapPhotos/sun.png" style="height:1.2em;margin-right:0.5em;">'; text="Sunny"; }
+
+          document.getElementById("live-temp").innerHTML = `
+            <div style="display:flex;align-items:center;gap:6px;white-space:nowrap;">${icon}<strong>Lisbon</strong></div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+              <img src="public/images/mapPhotos/temp.png" style="height:1.2em;margin-right:0.5em;">
+              <span>${temp.toFixed(1)}°C - ${text}</span>
+            </div>
+          `;
+        } catch { document.getElementById("live-temp").textContent = "Weather unavailable"; }
+      }
+
+      updateLiveTemp();
+      setInterval(updateLiveTemp, 60000);
+    })();
+  </script>
+</body>
+</html>

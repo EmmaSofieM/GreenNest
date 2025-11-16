@@ -4,10 +4,10 @@
 <header class="site-header">
   <div class="logo">
     <a href="/" aria-label="Gå til forsiden">
-      <img src="images/logolys.svg" alt="Green Nest Logo" class="logo-desktop" />
+      <img src="public/images/logogreen.png" alt="Green Nest Logo" class="logo-desktop" />
     </a>
     <a href="/" aria-label="Gå til forsiden">
-      <img src="images/watermarklys.svg" alt="Green Nest Watermark" class="logo-mobile" />
+      <img src="public/images/watermark.png" alt="Green Nest Watermark" class="logo-mobile" />
     </a>
   </div>
 
@@ -16,9 +16,9 @@
     <span></span>
     <span></span>
   </div>
-  
+
   <nav id="mobileMenu" aria-hidden="true">
-    <a href="/index">Home</a>
+    <a href="/">Home</a>
     <a href="/about">About</a>
     <a href="/map">Map</a>
   </nav>
@@ -32,13 +32,14 @@
   }
 /* Farveskift på tekst og burger */
 .site-header a {
-  color: #b8e986; /* lys grøn */
+  color: #122d12; /* lys grøn */
   transition: color 0.3s ease;
+
   
 }
 
 .burger span {
-  background-color: #b8e986; /* lys grøn burger */
+  background-color: #122d12; /* lys grøn burger */
   transition: background-color 0.3s ease;
 }
 
@@ -61,17 +62,13 @@
     width: 100%;
     padding: 5px 30px;
     z-index: 100;
-    border-bottom: 0.5px solid transparent;
-    background-color: transparent; /* Starter gennemsigtig */
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+ 
   }
 
   /* ✅ NYT: Når man scroller forbi hero */
-  .site-header.scrolled {
-    backdrop-filter: blur(100px);
-    background-color: #fafcf7;
-    border-color: #122d12;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  .site-header {
+    backdrop-filter: blur(10px);
+    background-color: #fafcf797;
   }
 
   /* --- Logo --- */
@@ -98,6 +95,7 @@
   nav {
     display: flex;
     gap: 40px;
+
   }
 
   nav a {

@@ -1,0 +1,179 @@
+<section class="section-three">
+  <div class="section-three__overlay">
+    <h2>
+      But who is GreenNest, <br> and why are we doing it?
+    </h2>
+<div class="facts">
+   <h2>73% of people in Lisbon dont use the green parks and spaces, and it effect the mental health.</h2>
+</div>
+
+    <div class="section-three__bottom">
+      <p>
+        Explore the map, and see the park near you, to bring your dog, to read,
+        to meditate or whatever you would like!  Explore the map, and see the park near you, to bring your dog, to read,
+        to meditate or whatever you would like!
+      </p>
+
+      <p>
+        The interactive map is for your mental health, so take the time to
+        find the perfect match for you.  Explore the map, and see the park near you, to bring your dog, to read,
+        to meditate or whatever you would like!
+      </p>
+      <a href="/about">
+        <img src="public/images/arrow4red.svg" alt="" class="section-three__arrow" />
+      </a>
+    </div>
+  </div>
+
+  <div class="section-three__image"></div>
+</section>
+
+<style>
+  /* sørg for grid placering så image og overlay står i samme række */
+  .section-three {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 0;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .section-three__image {
+    grid-column: 1;
+    grid-row: 1;
+    background: url("/images/4.png") center/cover no-repeat; /* brug /images */
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  .section-three__overlay {
+    grid-column: 2;
+    grid-row: 1;
+    z-index: 1; /* sørg for overlay ligger ovenpå hvis nødvendigt */
+  }
+
+  @media (max-width: 900px) {
+    .section-three {
+      grid-template-columns: 1fr;
+    }
+    .section-three__image {
+      order: -1;
+      height: 45vh;
+      min-height: auto;
+    }
+    .section-three__overlay {
+      grid-column: auto;
+    }
+  }
+
+/* --- SECTION 3 --- */
+
+
+/* hover-effekt: ryk ikonet lidt til højre */
+.section-three__arrow:hover {
+  transform: translateX(8px);
+}
+.section-three {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* husk at skifte */
+.section-three__overlay {
+  grid-column: 2; /* flyt overlay til højre kolonne */
+  background: #280407;
+  padding: 4rem 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 7rem;
+}
+
+.section-three__image {
+  background: url("public/images/4.png") center/cover no-repeat;
+  filter: brightness(0.75);
+  min-height: 100vh;
+}
+
+/* LEFT SIDE OVERLAY BOX */
+.section-three__overlay {
+  background: #280407;
+  padding: 4rem 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 3.5rem;
+}
+
+.section-three__overlay h2 {
+  color: #FF6464;
+  font-size: 3.2rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* MAP BOX */
+
+
+
+
+/* BOTTOM TEXT + ARROW */
+.section-three__bottom {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+  z-index: 1;
+}
+
+.section-three__bottom p {
+  color: #FF6464;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.section-three__arrow {
+  width: 55px;
+  height: auto;
+  align-self: center;
+  transition: transform 160ms ease; /* simpel hover-anim */
+  display: block;
+}
+
+/* RESPONSIV LAYOUT */
+@media (max-width: 900px) {
+  .section-three {
+    grid-template-columns: 1fr;
+  }
+
+  .section-three__image {
+    height: 45vh;
+    order: -1;
+  }
+
+  .section-three__overlay {
+    padding: 3rem 2rem;
+  }
+}
+
+/* Gør .facts-teksten mindre og bedre linjeafstand */
+.facts h2 {
+  font-size: 2rem;       /* mindre tekst */
+  line-height: 1.35;
+  font-weight: 400;
+  margin: 0;
+  color: inherit;
+  color: #FF6464;
+}
+
+@media (max-width: 768px) {
+  .facts h2 {
+    font-size: 16px;     /* endnu mindre på små skærme */
+  }
+}
+</style>

@@ -1,0 +1,244 @@
+--- 
+const { images = ['/images/1.png','/images/2.png','/images/3.png', '/images/5.png'] } = Astro.props;
+const uid = `carousel-${Math.random().toString(36).slice(2,9)}`;
+
+// derive simple captions from filenames (used if you don't pass captions prop)
+const derivedCaptions = images.map((src, i) => {
+  const name = (src.split('/').pop() || '').replace(/\.[^/.]+$/, '').replace(/^[0-9\-_]+/, '').replace(/[-_]/g, ' ').trim();
+  return name || `Slide ${i+1}`;
+});
+---
+<div class="about-hero">
+    <h1 class="about-hero__title">Others favorites</h1>
+</div>
+<section id={uid} class="simple-carousel" aria-roledescription="carousel" data-slides={JSON.stringify(images)} data-captions={JSON.stringify(derivedCaptions)}>
+  <button class="carousel-btn prev" aria-label="Previous slide" data-action="prev"> <img src="/images/left.svg" alt=""></button>
+
+  <!-- center column: image + caption (caption larger and under image) -->
+  <div class="carousel-center">
+    <div class="carousel-viewport" tabindex="0" aria-live="polite">
+      <img class="carousel-image" src={images[0]} alt="carousel image" />
+    </div>
+
+    <div class="carousel-caption" aria-hidden="false">
+      <span class="carousel-index">01.</span>
+      <span class="carousel-name">{derivedCaptions[0]}</span>
+      <button type="button" class="caption-pin-btn" aria-label="Go to top">
+        <img src="/images/pin.svg" alt="pin" class="caption-pin" />
+      </button>
+    </div>
+  </div>
+
+  <button class="carousel-btn next" aria-label="Next slide" data-action="next"> <img src="/images/right.svg" alt=""></button>
+</section>
+
+<style>
+
+     .about-hero{
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 24px;
+  }
+
+ 
+
+  .about-hero__title{
+    margin: 400px 0 12px;
+    font-size: 36px;
+    line-height: 1.08;
+  }
+    .carousel-index {
+      font-weight: 700;
+      color: #0c2f0c;
+      font-size: 220px;
+      opacity: 0.85;
+      min-width: 42px;
+      text-align: right;
+    }
+  .simple-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    max-width: 920px;
+    margin: 0 auto;
+    gap:40px;
+  }
+
+  .carousel-viewport {
+    width: 100%;
+    max-width: 720px;
+    height: 500px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .carousel-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    transition: opacity 360ms cubic-bezier(.2,.8,.2,1), transform 360ms cubic-bezier(.2,.8,.2,1);
+    will-change: opacity, transform;
+    opacity: 1;
+  }
+
+  /* center wrapper so caption sits under image without changing image styles */
+  .carousel-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    order: 0; /* keep between the two buttons */
+  }
+
+  /* bigger caption, centered under image; does not affect image styling */
+  .carousel-caption {
+    display: flex;
+    align-items: center;
+    gap: 86px;
+    margin-top: 0;
+    font-weight: 700;
+    color: #0c2f0c;
+  }
+  .carousel-caption .carousel-index 
+  { font-weight: 600;
+    text-align: start; 
+    font-size: 50px; }
+
+  .carousel-caption .carousel-name 
+  {  ; 
+    font-size: 12px; }
+  .carousel-caption .caption-pin { width: 40px; height: auto; display: inline-block; }
+
+/* make the pin clickable without visual chrome */
+  .caption-pin-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .carousel-btn {
+    border-radius: 999px;
+    border: none;
+    background: #fafcf7;
+    font-size: 36px; /* større ikon/tegn */
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+  transform-origin: center center;
+  will-change: transform;    
+  padding: 0;
+  }
+
+  .carousel-btn img {
+    width: 98px; /* øg pil-ikonet så det passer til knappen */
+    height: auto;
+    display: block;
+  }
+
+    .carousel-btn img:hover {
+  transform: translateX(8px);
+  }
+  /* mindre på mobil så det ikke fylder for meget */
+  @media (max-width: 720px) {
+    .carousel-viewport { height: 300px; }
+    .carousel-btn { --size: 56px; font-size: 28px; }
+    .carousel-btn img { width: 22px; }
+  }
+</style>
+
+<script type="module">
+  (function () {
+    // find the carousel container that this script is inside (robust in Astro)
+    const scriptEl = document.currentScript;
+    const root = scriptEl ? scriptEl.closest('.simple-carousel') : document.querySelector('.simple-carousel');
+    if (!root) return;
+    const viewport = root.querySelector('.carousel-viewport');
+    const img = root.querySelector('.carousel-image');
+    const buttons = root.querySelectorAll('.carousel-btn');
+    const slides = root.dataset.slides ? JSON.parse(root.dataset.slides) : [img.getAttribute('src')];
+    const captions = root.dataset.captions ? JSON.parse(root.dataset.captions) : slides.map((s,i)=>`Slide ${i+1}`);
+    const indexEl = root.querySelector('.carousel-index');
+    const nameEl = root.querySelector('.carousel-name');
+    let idx = 0;
+    let animating = false;
+
+    function updateCaption(i) {
+      if (indexEl) indexEl.textContent = String(i + 1).padStart(2, '0') + '.';
+      if (nameEl) nameEl.textContent = captions[i] || '';
+    }
+    updateCaption(0);
+
+    function show(index, dir = 1) {
+      if (animating) return;
+      animating = true;
+      const nextSrc = slides[index];
+      // fade out & slight move
+      img.style.transition = 'opacity 260ms cubic-bezier(.2,.8,.2,1), transform 260ms cubic-bezier(.2,.8,.2,1)';
+      img.style.opacity = '0';
+      img.style.transform = `translateX(${dir * 8}px) scale(0.98)`;
+      setTimeout(() => {
+        img.src = nextSrc;
+        // force reflow so transition applies
+        void img.offsetWidth;
+        img.style.opacity = '1';
+        img.style.transform = 'translateX(0) scale(1)';
+        updateCaption(index);
+        setTimeout(() => { animating = false; }, 300);
+      }, 260);
+    }
+
+    function next() {
+      idx = (idx + 1) % slides.length;
+      show(idx, 1);
+    }
+    function prev() {
+      idx = (idx - 1 + slides.length) % slides.length;
+      show(idx, -1);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const action = btn.getAttribute('data-action');
+        if (action === 'next') next();
+        if (action === 'prev') prev();
+      });
+    });
+
+    // make caption pin scroll to top
+    const pinBtn = root.querySelector('.caption-pin-btn');
+    if (pinBtn) {
+      pinBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // keyboard support when viewport focused
+    viewport.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    });
+
+    // swipe support (basic)
+    let startX = null;
+    viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+    viewport.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const dx = (e.changedTouches[0].clientX - startX);
+      if (dx > 40) prev();
+      else if (dx < -40) next();
+      startX = null;
+    }, {passive:true});
+  })();
+</script>

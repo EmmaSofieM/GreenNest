@@ -6,8 +6,28 @@
   padding: 0;
 }
 
+/* make common visual changes animate smoothly (safe subset, not `all`) */
+*,
+*::before,
+*::after {
+  transition: background-color 420ms ease, color 420ms ease, border-color 420ms ease, opacity 420ms ease, transform 420ms ease, box-shadow 420ms ease;
+}
+
+/* brug browserens native smooth (simpelt) */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* juster hvis du har sticky header */
+}
+
+/* respekter reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 body {
@@ -143,6 +163,7 @@ span {
 /* Overskrifter tættere, men med underafstand */
 h1,
 h2 {
+  font-family: quicksand, sans-serif;
   line-height: 1.15;
   margin-bottom: 0.6rem;
 }

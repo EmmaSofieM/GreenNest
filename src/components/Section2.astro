@@ -1,0 +1,164 @@
+<!-- Section 2: Top rated green spaces -->
+<section class="top-rated-section">
+  <div class="top-rated-header">
+    <p>Top rated green spaces in Lisbon</p>
+  </div>
+
+  <div class="top-rated-grid">
+    <div class="place-card">
+      <img src="/images/1.png" alt="Jardim Mário Soares" />
+      <div class="place-info">
+        <span class="number">01.<span class="dot"></span></span>
+        <p>Jardim Mário Soares</p>
+        <img src="/images/pin.svg" class="leaf-icon" />
+      </div>
+    </div>
+
+     <div class="place-card">
+      <img src="/images/3.png" alt="Jardim da Fundação Calouste" />
+      <div class="place-info">
+        <span class="number">02.<span class="dot"></span></span>
+        <p>Jardim da Fundação Calouste</p>
+        <img src="/images/pin.svg" class="leaf-icon" />
+      </div>
+    </div>
+
+    <div class="place-card">
+      <img src="/images/2.png" alt="Parque Eduardo VII" />
+      <div class="place-info">
+        <span class="number">03.<span class="dot"></span></span>
+        <p>Parque Eduardo VII</p>
+        <img src="/images/pin.svg" class="leaf-icon" />
+      </div>
+    </div>
+
+   
+
+    <div class="place-card">
+      <img src="/images/5.png" alt="Parque da Bela Vista" />
+      <div class="place-info">
+        <span class="number">04.<span class="dot"></span></span>
+        <p>Parque da Bela Vista</p>
+        <img src="/images/pin.svg" class="leaf-icon" />
+      </div>
+    </div>
+  </div>
+
+  <div class="see-all-wrapper">
+    <a class="see-all" href="map.astro" role="button">
+      <span>See all</span>
+      <img src="/images/touch.svg" class="fingerprint" alt="cta" />
+    </a>
+  </div>
+</section>
+
+<style>
+.top-rated-section {
+  position: relative; /* nødvendigt for at ::before kan positioneres relativt til sektionen */
+
+  margin: 190px;
+}
+
+/* Fyld hele viewport-bredden med en ét-pixel streg */
+.top-rated-section::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0; /* skift til f.eks. top: -1px eller top: 20px hvis du vil have stregen udenfor/på anden placering */
+  width: 100vw;
+  max-width: none;
+  height: 1px;
+  background-color: #d8dccf;
+  z-index: 0;
+}
+
+.top-rated-header p {
+  font-size: 16px;
+ font-weight: bold;  
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.top-rated-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.place-card {
+  overflow: hidden;
+}
+
+.place-card img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.place-card:hover img,
+.place-card:focus-within img {
+  transform: scale(1.06); /* lidt mindre end før (1.08) */
+}
+
+.place-info {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 16px;
+}
+
+.number {
+  font-weight: 700;
+  font-size: 40px;
+}
+
+
+
+.leaf-icon {
+  width: 40px !important;    /* sæt den ønskede størrelse (fx 12-24px) */
+  height: auto !important;
+  margin-left: auto; /* eller auto hvis du vil skubbe det helt til højre */
+  max-width: none !important;
+}
+
+.see-all-wrapper {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: flex-end; /* placér til højre som i sektion 1 */
+  align-items: center;
+}
+
+/* se-all som inline-flex så tekst + ikon er på samme linje */
+.see-all {
+  font-size: 56px;
+  font-weight: 600;
+  color: #0c2f0c;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem; /* afstand mellem tekst og ikon */
+}
+
+/* finger-print / CTA-ikon */
+.fingerprint {
+  width: 140px;
+  height: auto;
+  transition: transform 160ms ease; /* simpel hover-anim */
+  display: block;
+}
+
+/* hover-effekt: ryk ikonet lidt til højre */
+.see-all:hover .fingerprint {
+  transform: translateX(8px);
+}
+
+/* mindre skærme: skaler tekst og ikon */
+@media (max-width: 768px) {
+  .see-all { font-size: 28px; gap: 0.6rem; }
+  .fingerprint { width: 64px; }
+}
+</style>

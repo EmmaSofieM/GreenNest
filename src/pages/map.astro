@@ -1,0 +1,20 @@
+---
+import Footer from '../components/Footer.astro';
+import HeaderGreen from '../components/HeaderGreen.astro';
+import "../base.css";
+import Layout from "../layouts/Layout.astro"
+import MapView from '../components/MapView.astro';
+import Carousel from '../components/Carousel.astro';
+import Form from '../components/Form.astro';
+
+
+---
+<script src="/js/lazyload.js" defer></script>
+
+<Layout>
+  <HeaderGreen />
+  <MapView />
+<Carousel />
+<Form />
+<Footer />
+</Layout>

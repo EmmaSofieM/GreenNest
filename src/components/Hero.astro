@@ -53,9 +53,10 @@
 
       /* Slide op/ind — mere polished animation */
       :root {
-        --slide-duration: 1000ms; /* animation varighed */
-        --slide-ease: cubic-bezier(0.16, 1, 0.3, 1); /* glat ease-out */
-        --slide-pause: 1800ms; /* pause når slide står stille */
+        /* længere, blødere overgang for mere "smooth" slideshow */
+        --slide-duration: 1400ms; /* animation varighed - længere = blødere */
+        --slide-ease: cubic-bezier(.2,.8,.2,1); /* blød acceleration / deceleration */
+        --slide-pause: 2200ms; /* pause efter transition */
       }
 
       .slideshow img {
@@ -64,32 +65,36 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transform: translate3d(0, 100%, 0);
-        transition: transform var(--slide-duration) var(--slide-ease), opacity 220ms linear;
+        /* start slightly shifted + scaled and invisible so entering feels smooth */
+        transform: translate3d(0, 6px, 0) scale(1.03);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          transform var(--slide-duration) var(--slide-ease),
+          opacity var(--slide-duration) var(--slide-ease);
         will-change: transform, opacity;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         display: block;
-        visibility: hidden;
-        opacity: 0;
         pointer-events: none;
-        z-index: 0; /* Billeder under overlay */
+        z-index: 0;
       }
 
       /* synlig slide (på skærmen) */
       .slideshow img.active {
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0) scale(1);
         visibility: visible;
         opacity: 1;
-        z-index: 1; /* mindre end overlay */
+        z-index: 1; /* over andre slides men under overlays */
       }
 
       /* slide der bevæger sig op og ud (næste frame) */
       .slideshow img.up {
-        transform: translate3d(0, -100%, 0);
+        /* leaving slide moves slightly up and fades out for a gentle motion */
+        transform: translate3d(0, -6px, 0) scale(0.99);
         visibility: visible;
-        opacity: 1;
-        z-index: 2; /* stadig under overlay */
+        opacity: 0;
+        z-index: 0;
       }
 
       .right::after {
@@ -316,25 +321,30 @@
         // sæt initial titel (sikkerhed hvis labels mismatch)
         if (labels[current]) titleEl.textContent = labels[current];
 
-        const transitionMs = 800; // skal matche CSS transition
-        const intervalMs = 3000;
+        // keep durations in sync with CSS vars above for smoothness
+        const transitionMs = 1400; // should match --slide-duration
+        const pauseMs = 2200;      // should match --slide-pause
+        const intervalMs = transitionMs + pauseMs;
 
         setInterval(() => {
           const next = (current + 1) % slides.length;
 
+          // start transition: mark current as leaving, bring next in
           slides[next].classList.remove("up");
           slides[current].classList.remove("active");
           slides[current].classList.add("up");
 
+          // ensure class change takes effect on next frame
           requestAnimationFrame(() => {
             slides[next].classList.add("active");
             if (labels[next]) titleEl.textContent = labels[next];
           });
 
+          // cleanup after CSS transition finishes
           setTimeout(() => {
             slides[current].classList.remove("up");
             current = next;
-          }, transitionMs + 20);
+          }, transitionMs + 30);
         }, intervalMs);
       }
     </script>

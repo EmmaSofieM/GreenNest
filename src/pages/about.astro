@@ -1,0 +1,17 @@
+---
+import Footer from '../components/Footer.astro';
+import HeaderGreen from '../components/HeaderGreen.astro';
+
+import "../base.css";
+import Layout from "../layouts/Layout.astro"
+import Abouthero from '../components/Abouthero.astro';
+
+---
+
+<script src="/js/lazyload.js" defer></script>
+
+<Layout>
+  <HeaderGreen />
+  <Abouthero />
+    <Footer />
+</Layout>

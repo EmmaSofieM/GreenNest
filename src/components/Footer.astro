@@ -11,7 +11,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 40px;
-        padding: 80px 60px 40px;
+        padding: 80px 160px 40px;
         background-color: #f9faf5;
         border-top: 1px solid #d8dccf;
         position: relative;
@@ -83,18 +83,21 @@
         font-size: 20px; /* 15 + 5px */
       }
 
+
       /* --- Links section --- */
       .footer-links h3 {
         font-size: 21px; /* 16 + 5px */
         font-weight: 700;
-        margin-bottom: 10px;
+        text-align: end;
       }
 
       .footer-links a {
+        text-align: end;
+        padding-right: -20px; /* plads til pilen */
         display: block;
         text-decoration: none;
         color: #2f3b27;
-        margin: 5px 0;
+        margin: 7px 0;
         font-size: 21px; /* 16 + 5px */
       }
 
@@ -106,7 +109,7 @@
         justify-self: end;
         margin-top: 40px;
         text-align: right;
-        position: absolute; /* undgå absolute som bryder flow */
+        position: static;
         padding: 0;
       }
 
@@ -130,7 +133,6 @@
     .footer-arrow {
   width: 14px;              /* størrelse på pilen */
   height: 14px;
-  margin-left: 5px;         /* afstand fra teksten */
   vertical-align: middle;   /* sikrer den står på linje med teksten */
   display: inline-block;    /* nødvendigt for vert-align at virke */
   transition: transform 0.2s ease;
@@ -143,7 +145,7 @@
 
 .go-up {
 padding-top: 30px;
-  display: inline-flex;      /* inline-flex for at stå på linje med tekst */
+  display: inline-flex;      /* inline-flex for to stå på linje med tekst */
   align-items: center;       /* vertikalt centreret */
   text-decoration: none;
   color: inherit;
@@ -151,35 +153,90 @@ padding-top: 30px;
 
 }
 
-.footer-arrow {
-  width: 14px;
-  height: 14px;
-  margin-left: 5px;         /* afstand mellem tekst og pil */
+/* ensure footer arrow used inside input can be clicked (we will use button) */
+.input-wrapper {
+  position: relative;        /* holder confirm-teksten i flowet */
+  display: block;
+  width: 100%;               /* fylder hele formular-bredden */
+  padding-bottom: 8px;       /* lidt plads til confirm-teksten under */
+}
+
+/* ny: input og knap på samme linje */
+.input-row {
+    display: flex;
+    gap: 6px;              /* mindre mellemrum så knappen rykkes tættere på input */
+    align-items: center;
+    width: 100%;
+  }
+
+  .input-row input {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  /* placér knappen i flowet til højre for input */
+  .input-wrapper .footer-arrow-btn {
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: -30px;     /* flyt knappen lidt til venstre; juster -8px efter behov */
+  }
+
+/* lille visuelt tweak så knappen ligner links på hover */
+.input-wrapper .footer-arrow-btn:hover img {
+    transform: translateX(3px);
+  }
+
+/* fjern absolute-styling fra input (hvis tidligere sat) */
+.input-wrapper input {
+    padding-right: 12px;
+  }
+
+/* keep visual arrow size */
+.input-wrapper .footer-arrow-btn img,
+.footer-links img.footer-arrow,
+.go-up img.footer-arrow  {
+  width: 16px;
+  height: 16px;
   display: inline-block;
   vertical-align: middle;
 }
-
-.input-wrapper {
-  position: relative;        /* gør det muligt at placere pilen absolut */
-  display: inline-block;
-  width: 100%;               /* fylder hele formular-bredden */
+ 
+/* same hover motion as links */
+.input-wrapper .footer-arrow-btn:hover img,
+.footer-links a:hover .footer-arrow {
+  transform: translateX(3px);
+}
+ 
+/* confirmation text shown below the input */
+.input-wrapper .footer-confirm {
+  position: static;          /* vises i dokumentflow under input */
+  display: block;
+  margin-top: 8px;
+  transform: translateY(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+  font-weight: 700;
+  color: #122D12;
+  white-space: nowrap;
+  font-size: 16px;
+  text-align: left;
+}
+.input-wrapper .footer-confirm.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.input-wrapper input {
-  width: 100%;
-  padding-right: 30px;       /* plads til pilen inde i input */
-  box-sizing: border-box;
-}
-
-.input-wrapper .footer-arrow {
-  position: absolute;
-  right: 10px;               /* afstand fra højre kant */
-  top: 50%;                  /* centrer vertikalt */
-  transform: translateY(-50%);
-  width: 16px;               /* størrelse på pilen */
-  height: 16px;
-  pointer-events: none;      /* så klik går igennem til input */
-}
 .connect {
   font-family: "Nimbus Sans D OT Bold", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -211,6 +268,20 @@ padding-top: 30px;
 .padding {
     padding: 50px;
 }
+.footer-logo-wrapper {
+  width: 100%;
+  text-align: end;
+  margin-top: 40px;
+}
+
+.footer-logo-wrapper img {
+  height: auto;
+  width: 1000px;
+  right: 0px;
+  position: absolute;
+  bottom: 85px;
+}
+
 
 
       @media (max-width: 768px) {
@@ -227,6 +298,9 @@ padding-top: 30px;
         .footer-top {
           left: 30px;
         }
+
+        /* ensure the inline confirm sits nicely on small screens */
+        .input-wrapper .footer-confirm { display: none; }
       }
     </style>
 
@@ -235,10 +309,18 @@ padding-top: 30px;
   <div class="footer-signup">
   <p>Sign up, get the news and give us feedback</p>
   <h2 class="connect">Lets connect!</h2>
-  <form class="signup-form">
+  <form class="signup-form" on:submit|preventDefault>
     <div class="input-wrapper">
-      <input type="email" placeholder="e-mail" />
-      <img src="public/images/arrow4.svg" alt="" class="footer-arrow" />
+      <div class="input-row">
+        <input type="email" placeholder="e-mail" />
+        <!-- arrow as a button; use root path /images/... -->
+        <button type="button" class="footer-arrow-btn" aria-label="Submit email">
+          <img src="public/images/arrow4.svg" alt="submit" class="footer-arrow" />
+        </button>
+      </div>
+
+      <!-- confirmation text under input -->
+      <span class="footer-confirm" aria-hidden="true">Check your email!</span>
     </div>
   </form>
 
@@ -246,19 +328,19 @@ padding-top: 30px;
      <div class="padding"></div>
   <p>Do you have questions?<br />Contact us on phone or email</p>
   <a href="tel:+351268568639">
-    <img src="public/images/phone.svg" alt="Phone icon" class="contact-icon">
+    <img src="/images/phone.svg" alt="Phone icon" class="contact-icon">
     +351 268 568 639
   </a> <br>
   <a href="mailto:greennest.info@gmail.com">
-    <img src="public/images/email.svg" alt="Email icon" class="contact-icon">
+    <img src="/images/email.svg" alt="Email icon" class="contact-icon">
     greennest.info@gmail.com
   </a>
 
 
       <!-- Back to top -->
-    <a href="#" class="go-up">
-      Go to top
-      <img src="public/images/arrow-up.svg" alt="" class="footer-arrow" />
+    <a href="#top" class="go-up">
+      scroll up
+      <img src="public/images/Arrow-up.svg" alt="go up" class="footer-arrow" />
     </a>
 </div>
 
@@ -277,19 +359,52 @@ padding-top: 30px;
   <a href="#">Unity <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
   
   <h3>Live map</h3>
-  <a href="#">Leaflet <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  <a href="https://leafletjs.com/">Leaflet <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
 
   <h3>Links</h3>
-  <a href="#">Home <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
-  <a href="#">About <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
-  <a href="#">Map <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  <a href="/">Home <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  <a href="/about">About <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
+  <a href="/map">Map <img src="public/images/arrow4.svg" alt="" class="footer-arrow" /></a>
 </div>
 
 
-      <!-- Large logo at bottom -->
-      <div class="footer-logo">
-        <img src="/images/logogreen-footer.png" alt="Green Nest logo" />
-      </div>
+     <div class="footer-logo-wrapper">
+  <img src="/images/logogreen.svg" alt="Green Nest logo" />
+</div>
+
 
     </footer>
+
+<script>
+  // inline confirmation for footer arrow button (shows like send button)
+  (function () {
+    const btn = document.querySelector('.input-wrapper .footer-arrow-btn');
+    const confirm = document.querySelector('.input-wrapper .footer-confirm');
+    if (!btn || !confirm) return;
+    let timeoutId = null;
+
+    function hide() {
+      confirm.classList.remove('show');
+      confirm.setAttribute('aria-hidden', 'true');
+      if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+    }
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      confirm.classList.add('show');
+      confirm.setAttribute('aria-hidden', 'false');
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(hide, 3000);
+
+      // hide when clicking anywhere else (one-time listener)
+      const onDocClick = (ev) => {
+        if (ev.target === btn || btn.contains(ev.target)) return;
+        hide();
+        document.removeEventListener('click', onDocClick);
+      };
+      setTimeout(() => document.addEventListener('click', onDocClick), 0);
+    });
+  })();
+</script>
 

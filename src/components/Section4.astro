@@ -1,0 +1,168 @@
+<!-- Section 4: Data Sources -->
+<section class="data-section">
+  <div class="data-left">
+    <p class="data-top">Where we get our data from</p>
+
+    <h2 class="data-title">
+      GreenNest is full of data.<br />
+      We are trying to make the<br />
+      best experience for you and<br />
+      to keep you updated.
+    </h2>
+
+    <p class="data-subtext">
+      Go check the links and find out where we are getting<br />
+      our data from.
+    </p>
+
+    <div class="data-links">
+      <a href="https://lisbonlisboa.com" target="_blank" class="data-link">
+        LisbonLisboa <img src="public/images/arrow4.svg" alt="" />
+      </a>
+      <a href="https://xweather.com" target="_blank" class="data-link">
+        Xweather <img src="public/images/arrow4.svg" alt="" />
+      </a>
+      <a href="https://bringfido.com" target="_blank" class="data-link">
+        BringFido <img src="public/images/arrow4.svg" alt="" />
+      </a>
+      <a href="https://oasislisbon.com" target="_blank" class="data-link">
+        OasisLisbon <img src="public/images/arrow4.svg" alt="" />
+      </a>
+    </div>
+  </div>
+
+  <div class="data-image-wrapper"> <a href="map.astro">
+    <img src="public/images/2.png" alt="Parque da Bela Vista" class="data-image" />
+    <p class="data-image-caption">Parque da Bela Vista</p>
+  </div>
+</section>
+
+<style>
+.data-section {
+  position: relative; /* nødvendig for ::before */
+  max-width: 1400px;
+  margin: 60px auto;
+  padding: 0 24px; /* standard side-margen */
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 8rem;
+}
+
+/* Fyld hele viewport-bredden med en ét-pixel streg */
+.data-section::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;               /* ændr til f.eks. top: 24px hvis du vil flytte stregen ned */
+  width: 100vw;
+  height: 1px;
+  background-color: #d8dccf;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* sørg for at sektionens indhold ligger over linjen */
+.data-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.top-rated-section {
+  position: relative; /* nødvendigt for at ::before kan positioneres relativt til sektionen */
+
+  margin: 190px;
+}
+
+/* Fyld hele viewport-bredden med en ét-pixel streg */
+.top-rated-section::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0; /* skift til f.eks. top: -1px eller top: 20px hvis du vil have stregen udenfor/på anden placering */
+  width: 100vw;
+  max-width: none;
+  height: 1px;
+  background-color: #d8dccf;
+  z-index: 0;
+}
+.data-title {
+  font-size: 2.8rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 2rem;
+}
+
+.data-subtext {
+  font-size: 0.9rem;
+  margin-bottom: 2.5rem;
+}
+
+.data-links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+}
+
+.data-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  color: #0c2f0c;
+  text-decoration: none;
+  border-bottom: 1px solid #0c2f0c;
+  font-weight: 400; /* sikrer normal vægt som udgangspunkt */
+}
+
+/* Gør links fede ved hover */
+.data-link:hover {
+  font-weight: 700;
+}
+
+.data-link img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s ease;
+}
+
+.data-link:hover img {
+  transform: translateX(8px);
+}
+
+.data-image-wrapper {
+  position: relative;
+}
+
+.data-image {
+  width: 70%;
+  position: absolute;
+  bottom: 50px;
+  right: 15px;
+  transition: transform 120ms cubic-bezier(.2,.8,.2,1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* lille, diskret zoom ved hover / fokus (på wrapper for at undgå layout-skift) */
+.data-image-wrapper:hover .data-image,
+.data-image-wrapper:focus-within .data-image {
+  transform: scale(1.02);
+}
+
+.data-image-caption {
+  position: absolute;
+  bottom: 0px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: #555;
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .data-section {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

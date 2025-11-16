@@ -1,14 +1,94 @@
 ---
 import Hero from '../components/Hero.astro';
 import Header from '../components/Header.astro';
+import HeaderGreen from '../components/HeaderGreen.astro';
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 import Section1 from '../components/Section1.astro';
+import Section2 from '../components/Section2.astro';
+import Section3 from '../components/Section3.astro';
+import Section4 from '../components/Section4.astro';
+import Section5 from '../components/Section5.astro';
+
+
+
+
 import "../base.css";
 ---
+<script src="/js/lazyload.js" defer></script>
+<div id="smooth-wrapper">
+  <div id="smooth-content">
+    <!-- Alt indhold, som skal scrolle glat -->
+
 
 <Layout>
-	<Hero />
-	<Section1 />
-	<Footer />
+  <!-- header vises over hero -->
+  <div id="header-wrapper" class="header-visible">
+    <Header />
+  </div>
+
+  <!-- hero med id så vi kan observere når den forlades -->
+  <div id="hero">
+    <Hero />
+  </div>
+
+  <!-- headerGreen skjult indtil hero er out-of-view -->
+  <div id="headerGreen-wrapper" class="header-hidden" aria-hidden="true">
+    <HeaderGreen />
+  </div>
+
+  <Section1 />
+  <Section2 />
+  <Section3 />
+  <Section4 />
+  <Section5 />
+  <Footer />
+
+  <style>
+    /* simple initial states */
+    .header-hidden { display: none; }
+    .header-visible { display: block; }
+    /* hvis du bruger transitions, skift display -> opacity/transform i stedet */
+  </style>
+
+  <script type="module">
+    const hero = document.getElementById('hero');
+    const headerWrapper = document.getElementById('header-wrapper');
+    const headerGreenWrapper = document.getElementById('headerGreen-wrapper');
+
+    if (hero && headerWrapper && headerGreenWrapper) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // hero i view -> vis original header, skjul green
+            headerWrapper.classList.remove('header-hidden'); headerWrapper.classList.add('header-visible');
+            headerGreenWrapper.classList.remove('header-visible'); headerGreenWrapper.classList.add('header-hidden');
+            headerGreenWrapper.setAttribute('aria-hidden', 'true');
+          } else {
+            // hero out of view -> skjul original header, vis green
+            headerWrapper.classList.remove('header-visible'); headerWrapper.classList.add('header-hidden');
+            headerGreenWrapper.classList.remove('header-hidden'); headerGreenWrapper.classList.add('header-visible');
+            headerGreenWrapper.removeAttribute('aria-hidden');
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0,
+        rootMargin: '0px 0px -80% 0px' // justér hvornår skift sker
+      });
+
+      io.observe(hero);
+    }
+  </script>
+  <script type="module">
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+</script>
+
 </Layout>
+ 
+  </div>
+</div>

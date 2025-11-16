@@ -1,0 +1,130 @@
+--- 
+import LiveMap from './LiveMap.astro';
+--- 
+
+<section class="about-hero">
+  <div class="about-hero__content">
+    <button class="about-hero__back" type="button" onclick="history.back()">← Go back</button>
+    <h1 class="about-hero__title">Find the perfect park for you</h1>
+  </div>
+
+</section>
+
+<!-- NYT: to tekst-kolonner under hero -->
+<section class="about-columns">
+  <div class="col">
+    <h2><br>Subheading 1 (H2)</h2>
+    <p>Discover Lisbon’s most peaceful parks and see how green spaces 
+
+
+Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health. ks and see how green spaces can improve mental health.D
+
+iscover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+
+ks and see how green spaces can improve mental health.Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.</p>
+  </div>
+
+  <div class="col">
+    <h2><br>Subheading 2 (H2)</h2>
+    <p>Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health. ks and see how green spaces can improve mental health.Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+
+ks and see how green spaces can improve mental health.Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.
+Discover Lisbon’s most peaceful parks and see how green spaces can improve mental health.</p>
+  </div>
+</section>
+
+<style>
+  .about-hero {
+    display: flex;
+    align-items: flex-start; /* flyt indhold til toppen i stedet for centreret */
+    gap: 28px;
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 24px;
+  }
+
+  .about-hero__title {
+    margin: 0 0 12px; /* fjern den store top-margin */
+    font-size: 36px;
+    line-height: 1.08;
+  }
+
+  .about-hero__lead{
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.45;
+    color: #2f4b35;
+  }
+
+  .about-hero__back{
+    background: transparent;
+    border: none;
+    color: #122d12;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 6px 0;
+    font-size: 15px;
+  }
+
+  .about-hero__back:hover{
+    transform: translateX(-6px);
+    transition: transform 160ms ease;
+  }
+
+  .about-hero__visual{
+    flex: 0 0 48%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .about-hero__visual img{
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    display: block;
+  }
+    .about-columns{
+    max-width: 1150px;
+    margin: 200px auto 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: start;
+  }
+
+  .about-columns .col h1 {
+    font-size: 22px;
+    margin: 0 0 8px;
+  }
+
+  .about-columns .col h2 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: #2f4b35;
+  }
+
+  .about-columns .col p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #405035;
+  }
+
+  @media (max-width: 900px){
+    .about-hero{
+      flex-direction: column-reverse;
+      text-align: center;
+      gap: 20px;
+      margin: 40px auto;
+    }
+    .about-hero__visual{ justify-content: center; }
+    .about-hero__content{ width: 100%; }
+    .about-hero__title{ font-size: 28px; }
+    .about-hero__lead{ font-size: 16px; }
+    .about-hero__back{ display: inline-block; }
+  }
+</style>

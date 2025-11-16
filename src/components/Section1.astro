@@ -2,48 +2,118 @@
 --- 
 
 <section class="section1">
-  <h1>Discover Lisbon’s most peaceful parks <br>and see how green spaces can improve mental health.</h1>
-  <img src="/images/logogreen.png" alt="Parks in Lisbon" class="section1-image">
+  <div class="inner">
+    <h1>Discover Lisbon’s most peaceful parks<br/>and see how green spaces can improve mental health.</h1>
 
-  
+    <img src="/images/unity.png" alt="Parks in Lisbon" class="section1-image" />
+
+    <div class="section1-text">
+      <a class="cta-link" href="/app" target="_blank" rel="noopener noreferrer">
+        <h2>Try our app and be aware <br> how it improves your mental health</h2>
+        <img src="/images/touch.svg" alt="touch" class="cta-image" />
+      </a>
+    </div>
+  </div>
+</section>
 
 <style>
-    .left {
-        position: relative;
-        left: 900px;
-    }
-
-      /* Gør touch-ikonet meget mindre */
-  .touch-icon {
-    width: 28px;        /* gør billedet lille — ændr efter behov (fx 20px) */
-    height: auto;
-    vertical-align: middle;
-    margin: 0 10px;
-    display: inline-block;
+  :root {
+    --content-width: 1300px;
+    --cta-offset: 20px;
+    --cta-size: 150px; /* sæt størrelse på CTA-ikonet */
   }
+
+  /* Sektion wrapper - centrer hele content-blokken */
   .section1 {
-    margin: 60px;
+    margin: 100px 0;
   }
 
-  /* Gør billedet mindre og responsivt */
+  .inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 24px; /* standard side-margener */
+  }
+
+  /* H1 alignes venstre i samme container som billedet */
+  .inner h1 {
+    margin: 0 0 16px 0;
+    text-align: left;
+    font-size: 45px;
+    line-height: 1.15;
+  }
+
+  /* Billedet fylder containerens bredde og er centreret af .inner */
   .section1-image {
+    display: block;
     width: 100%;
-    max-width: 620px; /* juster denne værdi efter ønsket størrelse */
+    height: auto;
+    margin: 24px 0 0 0;
+    max-width: 100%;
+  }
+
+  /* ---------- ÆNDRING: h2 skal stå til højre, lige ved siden af CTA ---------- */
+  /* Sørg for at h2 og svg står på samme linje: h2 fylder til venstre, svg holder en fast bredde */
+  .section1-text {
+    display: flex;
+    margin-top: 80px; /* mindre luft over h2 */
+    justify-content: flex-end;
+  }
+
+  /* CTA link wraps h2 + icon, opens in new tab */
+  .cta-link {
+    display: flex;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* simple hover: move the CTA icon a bit to the right */
+  .cta-image {
+    flex: 0 0 var(--cta-size);
+    width: var(--cta-size);
     height: auto;
     display: block;
-    margin-top: 24px;
-    border-radius: 6px; /* valgfrit */
-    padding: 100px;
+    align-self: center;
+    transition: transform 360ms ease;
   }
 
-  /* Mindre skærme: endnu mindre billede */
-  @media (max-width: 768px) {
-    .section1 {
-      margin: 40px 20px;
+  .cta-link:hover .cta-image {
+    transform: translateX(8px);
+  }
+
+  h2{
+    margin-top: 25px;
+  }
+  /* ------------------------------------------------------------------------- */
+
+  /* Responsive justeringer */
+  @media (max-width: 900px) {
+    :root { --content-width: 760px; --cta-size: 40px; --cta-offset: 12px; }
+    .inner h1 { font-size: 26px; }
+    .section1-text h2 { font-size: 20px; max-width: calc(100% - var(--cta-size) - var(--cta-offset) - 8px); }
+    .cta-image { width: var(--cta-size); }
+  }
+
+  @media (max-width: 580px) {
+    /* På små skærme stackes CTA under teksten */
+    .section1-image { margin-top: 16px; }
+    .section1-text {
+      display: block;
+      text-align: left;
+      padding-right: 0;
     }
-    .section1-image {
-      max-width: 300px;
-      margin-top: 18px;
+    .section1-text h2 {
+      padding-right: 0;
+      text-align: left;
+      margin-bottom: 12px;
+      max-width: 100%;
+    }
+    .cta-image {
+      position: static;
+      transform: none;
+      display: block;
+      margin-top: 12px;
+      width: 36px;
     }
   }
 </style>
