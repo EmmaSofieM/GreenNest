@@ -1,0 +1,50 @@
+
+> greennest@0.0.1 build
+> astro build
+
+22:02:17 [content] Syncing content
+22:02:17 [content] Synced content
+22:02:17 [types] Generated 16ms
+22:02:17 [build] output: "static"
+22:02:17 [build] mode: "static"
+22:02:17 [build] directory: /Users/emmamunch/Desktop/GreenNest/dist/
+22:02:17 [build] Collecting build info...
+22:02:17 [build] ✓ Completed in 24ms.
+22:02:17 [build] Building static entrypoints...
+22:02:17 [WARN] [vite] 
+Nimbus-Sans-D-OT-Light_32752.woff referenced in Nimbus-Sans-D-OT-Light_32752.woff didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+/fonts/Nimbus-Sans-D-OT-Light_32752.woff referenced in /fonts/Nimbus-Sans-D-OT-Light_32752.woff didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+/fonts/Nimbus-Sans-D-OT-Bold_32747.woff referenced in /fonts/Nimbus-Sans-D-OT-Bold_32747.woff didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+/fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff2 referenced in /fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+/fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff2 referenced in /fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+/fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff referenced in /fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+/fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff referenced in /fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] 
+public/images/4.png referenced in public/images/4.png didn't resolve at build time, it will remain unchanged to be resolved at runtime
+22:02:17 [WARN] [vite] "isRemoteAllowed", "matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/remotePattern.js".
+22:02:17 [vite] ✓ built in 698ms
+22:02:17 [build] ✓ Completed in 716ms.
+
+ building client (vite) 
+22:02:17 [vite] transforming...
+22:02:17 [vite] ✓ 5 modules transformed.
+22:02:17 [vite] rendering chunks...
+22:02:17 [vite] ✓ built in 30ms
+
+ generating static routes 
+22:02:17 ▶ src/pages/about.astro
+22:02:17   └─ /about/index.html (+3ms) 
+22:02:17 ▶ src/pages/map.astro
+22:02:17   └─ /map/index.html (+1ms) 
+22:02:17 ▶ src/pages/index.astro
+22:02:17   └─ /index.html (+1ms) 
+22:02:17 ✓ Completed in 11ms.
+
+22:02:17 [build] 3 page(s) built in 804ms
+22:02:17 [build] Complete!
