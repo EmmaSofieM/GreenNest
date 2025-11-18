@@ -29,151 +29,98 @@
 </section>
 
 <style>
-  /* sørg for grid placering så image og overlay står i samme række */
+  /* grid: left image, right overlay */
   .section-three {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: stretch;
     gap: 0;
     min-height: 100vh;
+    width: 100%;
     overflow: hidden;
+    position: relative;
   }
 
+  /* left column background image */
   .section-three__image {
-    grid-column: 1;
+    grid-column: 1 / 2;
     grid-row: 1;
-    background: url("/images/4.png") center/cover no-repeat; /* brug /images */
+    background-image: url("/images/4.png");
+    background-position: center;
     background-size: cover;
+    background-repeat: no-repeat;
     width: 100%;
-    height: 100%;
     min-height: 100vh;
   }
 
+  /* right column overlay (in document flow, not absolute) */
   .section-three__overlay {
-    grid-column: 2;
+    grid-column: 2 / 3;
     grid-row: 1;
-    z-index: 1; /* sørg for overlay ligger ovenpå hvis nødvendigt */
+    position: relative;
+    z-index: 2;
+    background: #280407;
+    color: #FF6464;
+    padding: 4rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    box-sizing: border-box;
   }
 
+  .section-three__overlay h2 {
+    color: #FF6464;
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .facts h2 {
+    font-size: 2rem;
+    line-height: 1.35;
+    font-weight: 400;
+    margin: 0;
+    color: #FF6464;
+  }
+
+  .section-three__bottom {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+    z-index: 3;
+  }
+
+  .section-three__bottom p {
+    color: #FF6464;
+    font-size: 1rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .section-three__arrow {
+    width: 55px;
+    height: auto;
+    align-self: center;
+    transition: transform 160ms ease;
+    display: block;
+  }
+  .section-three__arrow:hover { transform: translateX(8px); }
+
+  /* responsive: stack image above overlay on small screens */
   @media (max-width: 900px) {
     .section-three {
       grid-template-columns: 1fr;
     }
     .section-three__image {
+      grid-column: 1;
       order: -1;
       height: 45vh;
       min-height: auto;
     }
     .section-three__overlay {
-      grid-column: auto;
+      grid-column: 1;
+      padding: 2.5rem;
     }
+    .facts h2 { font-size: 16px; }
   }
-
-/* --- SECTION 3 --- */
-
-
-/* hover-effekt: ryk ikonet lidt til højre */
-.section-three__arrow:hover {
-  transform: translateX(8px);
-}
-.section-three {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
-/* husk at skifte */
-.section-three__overlay {
-  grid-column: 2; /* flyt overlay til højre kolonne */
-  background: #280407;
-  padding: 4rem 10rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 7rem;
-}
-
-.section-three__image {
-  background: url("/images/4.png") center/cover no-repeat;
-  filter: brightness(0.75);
-  min-height: 100vh;
-}
-
-/* LEFT SIDE OVERLAY BOX */
-.section-three__overlay {
-  background: #280407;
-  padding: 4rem 10rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 3.5rem;
-}
-
-.section-three__overlay h2 {
-  color: #FF6464;
-  font-size: 3.2rem;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-/* MAP BOX */
-
-
-
-
-/* BOTTOM TEXT + ARROW */
-.section-three__bottom {
-  display: grid;
-  gap: 2rem;
-  align-items: start;
-  z-index: 1;
-}
-
-.section-three__bottom p {
-  color: #FF6464;
-  font-size: 1rem;
-  line-height: 1.45;
-}
-
-.section-three__arrow {
-  width: 55px;
-  height: auto;
-  align-self: center;
-  transition: transform 160ms ease; /* simpel hover-anim */
-  display: block;
-}
-
-/* RESPONSIV LAYOUT */
-@media (max-width: 900px) {
-  .section-three {
-    grid-template-columns: 1fr;
-  }
-
-  .section-three__image {
-    height: 45vh;
-    order: -1;
-  }
-
-  .section-three__overlay {
-    padding: 3rem 2rem;
-  }
-}
-
-/* Gør .facts-teksten mindre og bedre linjeafstand */
-.facts h2 {
-  font-size: 2rem;       /* mindre tekst */
-  line-height: 1.35;
-  font-weight: 400;
-  margin: 0;
-  color: inherit;
-  color: #FF6464;
-}
-
-@media (max-width: 768px) {
-  .facts h2 {
-    font-size: 16px;     /* endnu mindre på små skærme */
-  }
-}
 </style>
