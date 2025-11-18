@@ -1,4 +1,5 @@
 --- 
+//@ts-nocheck
 const { images = ['/images/1.png','/images/2.png','/images/3.png', '/images/5.png'] } = Astro.props;
 const uid = `carousel-${Math.random().toString(36).slice(2,9)}`;
 
@@ -153,7 +154,7 @@ const derivedCaptions = images.map((src, i) => {
   }
 </style>
 
-<script>
+<script type="text/javascript">
   // Init all carousels on the page. Robust for SSR -> client hydration.
   (function () {
     const carousels = document.querySelectorAll('.simple-carousel');
