@@ -50,14 +50,8 @@ const derivedCaptions = images.map((src, i) => {
     font-size: 36px;
     line-height: 1.08;
   }
-    .carousel-index {
-      font-weight: 700;
-      color: #0c2f0c;
-      font-size: 220px;
-      opacity: 0.85;
-      min-width: 42px;
-      text-align: right;
-    }
+  /* .carousel-index styling is defined later inside .carousel-caption to keep sizes consistent */
+
   .simple-carousel {
     display: flex;
     align-items: center;
@@ -147,8 +141,9 @@ const derivedCaptions = images.map((src, i) => {
     display: block;
   }
 
-    .carousel-btn img:hover {
-  transform: translateX(8px);
+  /* hover on the button (affects the image inside) */
+  .carousel-btn:hover img {
+    transform: translateX(8px);
   }
   /* mindre på mobil så det ikke fylder for meget */
   @media (max-width: 720px) {
@@ -158,87 +153,87 @@ const derivedCaptions = images.map((src, i) => {
   }
 </style>
 
-<script type="module">
+<script>
+  // Init all carousels on the page. Robust for SSR -> client hydration.
   (function () {
-    // find the carousel container that this script is inside (robust in Astro)
-    const scriptEl = document.currentScript;
-    const root = scriptEl ? scriptEl.closest('.simple-carousel') : document.querySelector('.simple-carousel');
-    if (!root) return;
-    const viewport = root.querySelector('.carousel-viewport');
-    const img = root.querySelector('.carousel-image');
-    const buttons = root.querySelectorAll('.carousel-btn');
-    const slides = root.dataset.slides ? JSON.parse(root.dataset.slides) : [img.getAttribute('src')];
-    const captions = root.dataset.captions ? JSON.parse(root.dataset.captions) : slides.map((s,i)=>`Slide ${i+1}`);
-    const indexEl = root.querySelector('.carousel-index');
-    const nameEl = root.querySelector('.carousel-name');
-    let idx = 0;
-    let animating = false;
+    const carousels = document.querySelectorAll('.simple-carousel');
+    if (!carousels.length) return;
 
-    function updateCaption(i) {
-      if (indexEl) indexEl.textContent = String(i + 1).padStart(2, '0') + '.';
-      if (nameEl) nameEl.textContent = captions[i] || '';
-    }
-    updateCaption(0);
+    carousels.forEach(root => {
+      const viewport = root.querySelector('.carousel-viewport');
+      const img = root.querySelector('.carousel-image');
+      const buttons = root.querySelectorAll('.carousel-btn');
+      const slides = root.dataset.slides ? JSON.parse(root.dataset.slides) : [img && img.getAttribute('src')].filter(Boolean);
+      const captions = root.dataset.captions ? JSON.parse(root.dataset.captions) : slides.map((s, i) => `Slide ${i+1}`);
+      const indexEl = root.querySelector('.carousel-index');
+      const nameEl = root.querySelector('.carousel-name');
 
-    function show(index, dir = 1) {
-      if (animating) return;
-      animating = true;
-      const nextSrc = slides[index];
-      // fade out & slight move
-      img.style.transition = 'opacity 260ms cubic-bezier(.2,.8,.2,1), transform 260ms cubic-bezier(.2,.8,.2,1)';
-      img.style.opacity = '0';
-      img.style.transform = `translateX(${dir * 8}px) scale(0.98)`;
-      setTimeout(() => {
-        img.src = nextSrc;
-        // force reflow so transition applies
-        void img.offsetWidth;
-        img.style.opacity = '1';
-        img.style.transform = 'translateX(0) scale(1)';
-        updateCaption(index);
-        setTimeout(() => { animating = false; }, 300);
-      }, 260);
-    }
+      let idx = 0;
+      let animating = false;
 
-    function next() {
-      idx = (idx + 1) % slides.length;
-      show(idx, 1);
-    }
-    function prev() {
-      idx = (idx - 1 + slides.length) % slides.length;
-      show(idx, -1);
-    }
+      function updateCaption(i) {
+        if (indexEl) indexEl.textContent = String(i + 1).padStart(2, '0') + '.';
+        if (nameEl) nameEl.textContent = captions[i] || '';
+      }
+      updateCaption(0);
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const action = btn.getAttribute('data-action');
-        if (action === 'next') next();
-        if (action === 'prev') prev();
+      function show(index, dir = 1) {
+        if (animating || !img) return;
+        animating = true;
+        const nextSrc = slides[index];
+        img.style.transition = 'opacity 260ms cubic-bezier(.2,.8,.2,1), transform 260ms cubic-bezier(.2,.8,.2,1)';
+        img.style.opacity = '0';
+        img.style.transform = `translateX(${dir * 8}px) scale(0.98)`;
+        setTimeout(() => {
+          img.src = nextSrc;
+          void img.offsetWidth;
+          img.style.opacity = '1';
+          img.style.transform = 'translateX(0) scale(1)';
+          updateCaption(index);
+          setTimeout(() => { animating = false; }, 300);
+        }, 260);
+      }
+
+      function next() {
+        idx = (idx + 1) % slides.length;
+        show(idx, 1);
+      }
+      function prev() {
+        idx = (idx - 1 + slides.length) % slides.length;
+        show(idx, -1);
+      }
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const action = btn.getAttribute('data-action');
+          if (action === 'next') next();
+          if (action === 'prev') prev();
+        });
       });
+
+      const pinBtn = root.querySelector('.caption-pin-btn');
+      if (pinBtn) {
+        pinBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      if (viewport) {
+        viewport.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') next();
+          if (e.key === 'ArrowLeft') prev();
+        });
+
+        let startX = null;
+        viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+        viewport.addEventListener('touchend', (e) => {
+          if (startX === null) return;
+          const dx = (e.changedTouches[0].clientX - startX);
+          if (dx > 40) prev();
+          else if (dx < -40) next();
+          startX = null;
+        }, { passive: true });
+      }
     });
-
-    // make caption pin scroll to top
-    const pinBtn = root.querySelector('.caption-pin-btn');
-    if (pinBtn) {
-      pinBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-
-    // keyboard support when viewport focused
-    viewport.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') next();
-      if (e.key === 'ArrowLeft') prev();
-    });
-
-    // swipe support (basic)
-    let startX = null;
-    viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
-    viewport.addEventListener('touchend', (e) => {
-      if (startX === null) return;
-      const dx = (e.changedTouches[0].clientX - startX);
-      if (dx > 40) prev();
-      else if (dx < -40) next();
-      startX = null;
-    }, {passive:true});
   })();
 </script>
