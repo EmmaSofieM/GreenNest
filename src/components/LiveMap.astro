@@ -1,209 +1,271 @@
 ---
 ---
+<!-- Leaflet + MarkerCluster CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
-<!-- Leaflet CSS -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
-<style>
-  body {
-    margin: 0;
-    padding: 0;
+<style global>
+  :root {
+    --map-max-width: 1200px;
+    --map-height: 70vh;
   }
+
+  .map-wrap {
+    width: 100%;
+    max-width: var(--map-max-width);
+    margin: 32px auto;
+    position: relative;
+  }
+
   #map {
-    width: 60vw;
-    height: 50vh;
-    margin: 40px auto;
+    width: 100%;
+    height: var(--map-height);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 30px rgba(6,20,8,0.06);
   }
 
-  /* dine custom styles */
-  .leaflet-popup-content-wrapper {
-    background: #d3fa91d4 !important;
-    color: #122d12 !important;
+  /* loading indicator */
+  .map-loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.0));
+    z-index: 1100;
+    pointer-events: none;
   }
-  .leaflet-popup-tip {
-    background: #d3fa91d4 !important;
-  }
-  .leaflet-popup-content {
-    color: #122d12 !important;
-  }
+  .map-loading .dot { width:10px; height:10px; background:#122d12; border-radius:50%; animation: ping 900ms infinite ease-in-out; }
+  @keyframes ping { 0% { transform: scale(.6); opacity:.6 } 50% { transform: scale(1.3); opacity:1 } 100% { transform: scale(.6); opacity:.6 } }
 
+  /* live temp card (inside wrapper, top-right) */
   #live-temp {
     position: absolute;
-    top: 50px;
-    right: 22rem;
-    z-index: 1000;
-    background: #ffffffd4;
+    top: 12px;
+    right: 12px;
+    z-index: 1200;
+    background: rgba(255,255,255,0.95);
     color: #122d12;
-    font-size: 1em;
-    font-family: sans-serif;
-    padding: 0.5em 1em;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-    border: 1px solid #b6e86d;
-    letter-spacing: 0.5px;
-    text-align: right;
+    font-size: 0.95rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 0.55em 0.9em;
+    border-radius: 10px;
+    box-shadow: 0 8px 26px rgba(6,20,8,0.08);
+    border: 1px solid rgba(139,197,63,0.18);
+    pointer-events: auto;
   }
 
-  .leaflet-control-zoom {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 0;
-    overflow: visible;
+  /* popup styling overrides */
+  .leaflet-popup-content-wrapper {
+    background: rgba(211,250,145,0.85) !important;
+    background-image: none !important;
+    color: #122d12 !important;
   }
+  .leaflet-popup-tip,
+  .leaflet-popup-tip-container { background: rgba(211,250,145,0.85) !important; background-image: none !important; }
+  .leaflet-popup-content { color: #122d12 !important; }
 
-  .leaflet-control-zoom-in,
-  .leaflet-control-zoom-out {
+  /* zoom control visuals */
+  .leaflet-control-zoom-in, .leaflet-control-zoom-out {
     background: #fff !important;
     color: #122d12 !important;
     border: 1px solid #b6e86d !important;
     border-radius: 50% !important;
-    font-size: 1.2em !important;
-    height: 32px !important;
-    width: 32px !important;
+    width: 34px !important;
+    height: 34px !important;
     line-height: 30px !important;
-    margin: 4px 0;
     text-align: center;
-    padding: 0;
     box-shadow: none !important;
   }
-  .leaflet-control-zoom-in:hover,
-  .leaflet-control-zoom-out:hover {
+  .leaflet-control-zoom-in:hover, .leaflet-control-zoom-out:hover {
     background: #d3fa91 !important;
     border-color: #8fd14a !important;
   }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    :root { --map-height: 55vh; }
+    #live-temp { right: 8px; left: auto; top: 8px; font-size:0.85rem; }
+    .map-wrap { margin: 20px 12px; }
+  }
 </style>
 
-<div id="map"></div>
-<div id="live-temp">Loading temperature...</div>
+<div class="map-wrap" aria-hidden="false">
+  <div id="map" role="application" aria-label="Interactive map of Lisbon parks"></div>
+  <div id="live-temp" aria-live="polite">Loading temperature...</div>
+  <div class="map-loading" id="mapLoading" aria-hidden="true"><div class="dot"></div></div>
+</div>
 
+<!-- scripts loaded client-side -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" client:load></script>
 <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" client:load></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" client:load></script>
 
 <script client:load>
-  const map = L.map("map").setView([38.716, -9.14], 13);
+  // run only in browser
+  (function () {
+    if (typeof window === 'undefined') return;
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-    attribution: "&copy; OpenStreetMap & CartoDB",
-    maxZoom: 19
-  }).addTo(map);
+    // wait until Leaflet is available
+    function whenLeaflet(cb) {
+      if (window.L && window.L.marker) return cb();
+      const t = setInterval(() => { if (window.L && window.L.marker) { clearInterval(t); cb(); } }, 60);
+      // timeout fallback
+      setTimeout(() => { clearInterval(t); if (window.L && window.L.marker) cb(); }, 5000);
+    }
 
-  const parksUrl =
-    "https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/POIArLivre/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson";
+    // small helper to escape user-provided text for popup
+    function esc(s) {
+      return String(s || '').replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'})[c]);
+    }
 
-  function getRandomNoise() {
-    return Math.floor(40 + Math.random() * 30);
-  }
-  function randomShade() {
-    const levels = ["Low", "Medium", "High"];
-    return levels[Math.floor(Math.random() * levels.length)];
-  }
-  function randomTables() {
-    return Math.random() > 0.5 ? "Yes" : "No";
-  }
+    whenLeaflet(initMap);
 
-  const heatPoints = [];
+    function initMap() {
+      const mapEl = document.getElementById('map');
+      const loadingEl = document.getElementById('mapLoading');
+      loadingEl.setAttribute('aria-hidden', 'false');
 
-  const customIcon = L.icon({
-    iconUrl: "mapPhotos/pinned.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
-  });
+      // basic map
+      const map = L.map(mapEl, { preferCanvas: true, zoomControl: true }).setView([38.716, -9.14], 13);
 
-  fetch(parksUrl)
-    .then((res) => res.json())
-    .then((geojson) => {
-      L.geoJSON(geojson, {
-        style: {
-          color: "#006400",
-          weight: 1.2,
-          fillColor: "#00aa44",
-          fillOpacity: 0.6
-        },
-        pointToLayer: (feature, latlng) =>
-          L.marker(latlng, { icon: customIcon }),
-        onEachFeature: (feature, layer) => {
-          const props = feature.properties || {};
-          const parkName =
-            props.NOME || props.nome || props.name || "Unknown park";
-          const noise = getRandomNoise();
-          const shade = randomShade();
-          const tables = randomTables();
-
-          layer.bindPopup(`
-<strong style="display:block; text-align:right;">${parkName}</strong><br>
-<div style="display:flex;align-items:center;margin-bottom:0.5em;">
-  <img src="mapPhotos/noise.png" style="height:2em;">
-  <span style="margin-left:0.7em;flex:1;text-align:right;">Noise level: ${noise} dB</span>
-</div>
-<div style="display:flex;align-items:center;margin-bottom:0.5em;">
-  <img src="mapPhotos/shadow.png" style="height:2em;">
-  <span style="margin-left:0.7em;flex:1;text-align:right;">Shade: ${shade}</span>
-</div>
-<div style="display:flex;align-items:center;">
-  <img src="mapPhotos/bench.png" style="height:2em;">
-  <span style="margin-left:0.7em;flex:1;text-align:right;">Tables: ${tables}</span>
-</div>
-`);
-
-          const coords = feature.geometry.coordinates;
-          const temperature = 20 + Math.random() * 15;
-          const intensity = (temperature - 20) / 15;
-          heatPoints.push([coords[1], coords[0], intensity]);
-        }
+      // nice tile with retina support
+      const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap & CartoDB',
+        maxZoom: 19
       }).addTo(map);
 
-      L.heatLayer(heatPoints, {
-        radius: 55,
-        blur: 15,
-        maxZoom: 17,
-        gradient: { 0.0: "blue", 0.5: "lime", 1.0: "red" }
-      }).addTo(map);
-    });
+      // constrain panning a bit around Lisbon
+      const southWest = L.latLng(38.60, -9.40);
+      const northEast = L.latLng(38.82, -8.95);
+      map.setMaxBounds(L.latLngBounds(southWest, northEast));
+      map.on('drag', () => map.panInsideBounds(map.getBounds(), { animate: false }));
 
-  function updateLiveTemp() {
-    fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=38.716&longitude=-9.14&current_weather=true"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const w = data.current_weather;
-        if (!w) {
-          document.getElementById("live-temp").textContent =
-            "Weather unavailable";
-          return;
-        }
-
-        const temp = w.temperature;
-
-        const rainCodes = [51, 53, 55, 61, 63, 65, 80, 81, 82];
-        const isRaining = rainCodes.includes(w.weathercode);
-
-        let icon = isRaining ? "rain" : "sun";
-        let text = isRaining ? "Rain" : "Sunny";
-
-        document.getElementById("live-temp").innerHTML = `
-<span style="display:flex;align-items:center;">
-  <img src="mapPhotos/hjem.png" style="height:1.3em;margin-right:0.5em;">
-  <span style="flex:1;text-align:right;">Lisbon</span>
-</span><br>
-<span style="display:flex;align-items:center;">
-  <img src="mapPhotos/temp.png" style="height:1.3em;margin-right:0.5em;">
-  <span style="flex:1;text-align:right;">${temp.toFixed(1)}°C</span>
-</span><br>
-<span style="display:flex;align-items:center;">
-  <img src="mapPhotos/${icon}.png" style="height:1.3em;margin-right:0.5em;">
-  <span style="flex:1;text-align:right;">${text}</span>
-</span>
-`;
+      // icon paths - use explicit root paths so builds/hosting find them reliably
+      const customIcon = L.icon({
+        iconUrl: '/images/map/pinned.svg',
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34]
       });
-  }
 
-  updateLiveTemp();
-  setInterval(updateLiveTemp, 60000);
+      const parksUrl = 'https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/POIArLivre/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson';
+
+      // marker cluster
+      const clusterGroup = L.markerClusterGroup({ chunkedLoading: true, removeOutsideVisibleBounds: true });
+
+      const heatPoints = [];
+
+      fetch(parksUrl).then(res => {
+        if (!res.ok) throw new Error('Park data fetch failed');
+        return res.json();
+      }).then(geojson => {
+        // create GeoJSON layer with markers -> cluster
+        L.geoJSON(geojson, {
+          pointToLayer: (feature, latlng) => {
+            return L.marker(latlng, { icon: customIcon });
+          },
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties || {};
+            const parkName = esc(props.NOME || props.nome || props.name || 'Unknown park');
+            const noise = Math.floor(40 + Math.random() * 30);
+            const shade = ['Low','Medium','High'][Math.floor(Math.random()*3)];
+            const tables = Math.random() > 0.5 ? 'Yes' : 'No';
+
+            // detect dog-friendly / dog-park from common property names or fallback to heuristic
+            const lowerProps = JSON.stringify(props).toLowerCase();
+            const isDogPark = (
+              props.DOGPARK === 'Yes' ||
+              props.DOGPARK === 'Sim' ||
+              props.ALLOWS_DOGS === true ||
+              props.allows_dogs === true ||
+              props.cães === 'Sim' ||
+              /dog|cao|cachorro|cães|caes|canino|perros/.test(lowerProps)
+            );
+            
+            const popupHtml = `
+              <div style="text-align:right;min-width:180px;">
+                <strong>${parkName}</strong>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+                  <img src="/images/map/noise.svg" alt="" style="height:1.4em;opacity:.95;">
+                  <span style="flex:1;text-align:right">Noise: ${noise} dB</span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+                  <img src="/images/map/tree.svg" alt="" style="height:1.4em;opacity:.95;">
+                  <span style="flex:1;text-align:right">Shade: ${esc(shade)}</span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+                  <img src="${isDogPark ? '/images/map/dog.svg' : '/images/mapPhotos/bench.png'}" alt="" style="height:1.4em;opacity:.95;">
+                  <span style="flex:1;text-align:right">${isDogPark ? 'Dog friendly' : `Tables: ${esc(tables)}`}</span>
+                </div>
+              </div>`;
+            layer.bindPopup(popupHtml, { maxWidth: 260 });
+            const coords = feature.geometry && feature.geometry.coordinates;
+            if (coords && coords.length >= 2) {
+              const temp = 20 + Math.random()*15;
+              const intensity = Math.max(0, Math.min(1, (temp - 18)/12));
+              heatPoints.push([coords[1], coords[0], intensity]);
+            }
+            clusterGroup.addLayer(layer);
+          }
+        });
+        map.addLayer(clusterGroup);
+
+        // heat layer only if we have points
+        if (heatPoints.length) {
+          L.heatLayer(heatPoints, { radius: 50, blur: 18, maxZoom: 17, gradient: {0.0:'blue',0.5:'lime',1.0:'red'} }).addTo(map);
+        }
+
+        // fit view to markers if available
+        const bounds = clusterGroup.getBounds();
+        if (bounds.isValid()) {
+          map.fitBounds(bounds.pad(0.15), { maxZoom: 16, animate: true });
+        }
+
+      }).catch(err => {
+        console.error('Parks load error', err);
+      }).finally(() => {
+        // hide loading once initial data attempt finished
+        loadingEl.setAttribute('aria-hidden', 'true');
+        loadingEl.style.display = 'none';
+      });
+
+      // live temperature panel
+      const liveEl = document.getElementById('live-temp');
+      function updateLiveTemp() {
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=38.716&longitude=-9.14&current_weather=true')
+          .then(r => r.json())
+          .then(data => {
+            const w = data && data.current_weather;
+            if (!w) { liveEl.textContent = 'Weather unavailable'; return; }
+            const temp = w.temperature;
+            const rainCodes = [51,53,55,61,63,65,80,81,82];
+            const isRaining = rainCodes.includes(w.weathercode);
+            const text = isRaining ? 'Rain' : 'Sunny';
+            liveEl.innerHTML = `
+              <div style="display:flex;align-items:center;gap:8px;">
+                <img src="/images/map/hjem.svg" alt="" style="height:1.2em;">
+                <strong style="margin-left:auto;">Lisbon</strong>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                <img src="/images/map/temp.svg" alt="" style="height:1.2em;">
+                <span style="margin-left:auto;">${temp.toFixed(1)}°C</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                <img src="/images/map/${isRaining ? 'rain' : 'sun'}.svg" alt="" style="height:1.2em;">
+                <span style="margin-left:auto;">${text}</span>
+              </div>
+            `;
+          })
+          .catch(() => { liveEl.textContent = 'Weather unavailable'; });
+      }
+
+      updateLiveTemp();
+      setInterval(updateLiveTemp, 60000);
+
+      // keep map responsive
+      window.addEventListener('resize', () => { setTimeout(() => map.invalidateSize(), 250); });
+    }
+  })();
 </script>
