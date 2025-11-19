@@ -10,7 +10,13 @@
 *,
 *::before,
 *::after {
-  transition: background-color 420ms ease, color 420ms ease, border-color 420ms ease, opacity 420ms ease, transform 420ms ease, box-shadow 420ms ease;
+  transition:
+    background-color 420ms ease,
+    color 420ms ease,
+    border-color 420ms ease,
+    opacity 420ms ease,
+    transform 420ms ease,
+    box-shadow 420ms ease;
 }
 
 /* brug browserens native smooth (simpelt) */
@@ -56,7 +62,9 @@ img {
   font-family: "Nimbus Sans D OT Light";
   font-style: normal;
   font-weight: normal;
-  src: local("Nimbus Sans D OT Light"), url("Nimbus-Sans-D-OT-Light_32752.woff") format("woff");
+  src:
+    local("Nimbus Sans D OT Light"),
+    url("Nimbus-Sans-D-OT-Light_32752.woff") format("woff");
 }
 
 @font-face {
@@ -77,7 +85,10 @@ img {
 
 @font-face {
   font-family: "Nimbus Sans L Condensed";
-  src: url("/fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff2") format("woff2"), url("/fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff") format("woff");
+  src:
+    url("/fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff2")
+      format("woff2"),
+    url("/fonts/nimbus-sans-l-webfont/NimbusSanL-ReguCond.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -85,7 +96,10 @@ img {
 
 @font-face {
   font-family: "Nimbus Sans L Condensed Bold";
-  src: url("/fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff2") format("woff2"), url("/fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff") format("woff");
+  src:
+    url("/fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff2")
+      format("woff2"),
+    url("/fonts/nimbus-sans-l-webfont/NimbusSanL-BoldCond.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -108,7 +122,13 @@ input,
 button,
 label,
 h3 span {
-  font-family: "Nimbus Sans D OT Light", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family:
+    "Nimbus Sans D OT Light",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 a {
@@ -136,7 +156,13 @@ h2 {
 
 h3 {
   font-size: 0.8rem;
-  font-family: "Nimbus Sans D OT Bold", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family:
+    "Nimbus Sans D OT Bold",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 p,
@@ -152,7 +178,6 @@ body {
 
 /* Mere luft i brødtekst og links */
 p,
-a,
 li,
 label,
 span {

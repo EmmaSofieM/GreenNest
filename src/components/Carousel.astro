@@ -3,10 +3,24 @@
 const { images = ['/images/1.png','/images/2.png','/images/3.png', '/images/5.png'] } = Astro.props;
 const uid = `carousel-${Math.random().toString(36).slice(2,9)}`;
 
-// derive simple captions from filenames (used if you don't pass captions prop)
-const derivedCaptions = images.map((src, i) => {
-  const name = (src.split('/').pop() || '').replace(/\.[^/.]+$/, '').replace(/^[0-9\-_]+/, '').replace(/[-_]/g, ' ').trim();
-  return name || `Slide ${i+1}`;
+// derive captions from filenames, fallback to nicer park names
+const _images = Array.isArray(images) ? images : (images ? [images] : []);
+const sampleParkNames = [
+  'Jardim da Estrela',
+  'Parque Eduardo VII',
+  'Jardim do Torel',
+  'Parque das Nações',
+  'Jardim Botânico da Ajuda',
+  'Parque de Monsanto',
+  'Jardim do Príncipe Real',
+  'Parque Mayer',
+  'Parque da Bela Vista',
+  'Jardim Vasco da Gama'
+];
+const derivedCaptions = _images.map((src, i) => {
+  const filename = String(src || '').split('/').pop() || '';
+  const name = filename.replace(/\.[^/.]+$/, '').replace(/^[0-9\-_]+/, '').replace(/[-_]/g, ' ').trim();
+  return name || sampleParkNames[i % sampleParkNames.length] || `Park ${i+1}`;
 });
 ---
 <div class="about-hero">
@@ -34,20 +48,18 @@ const derivedCaptions = images.map((src, i) => {
 </section>
 
 <style>
-
-     .about-hero{
+.about-hero{
     display: flex;
     align-items: center;
     gap: 28px;
-    max-width: 1200px;
-    margin: 100px auto;
-    padding: 0 24px;
+    margin: 100px 140px;
+    margin-bottom: 0;
   }
 
  
 
   .about-hero__title{
-    margin: 400px 0 12px;
+    margin: 100px;
     font-size: 36px;
     line-height: 1.08;
   }
@@ -60,13 +72,12 @@ const derivedCaptions = images.map((src, i) => {
     width: 500px;
     max-width: 920px;
     margin: 0 auto;
-    gap:40px;
+    gap: 150px; /* øget mellemrum mellem prev / center / next */
   }
 
   .carousel-viewport {
-    width: 100%;
-    max-width: 720px;
-    height: 500px;
+    width: 180%;
+    height: 600px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -96,19 +107,35 @@ const derivedCaptions = images.map((src, i) => {
   .carousel-caption {
     display: flex;
     align-items: center;
-    gap: 86px;
+    gap: 24px;
     margin-top: 0;
     font-weight: 700;
     color: #0c2f0c;
+    width: 300%;
+    justify-content: center;
   }
-  .carousel-caption .carousel-index 
-  { font-weight: 600;
-    text-align: start; 
-    font-size: 50px; }
+  .carousel-caption .carousel-index {
+    font-weight: 600;
+    text-align: start;
+    font-size: 42px;
+    line-height: 1;
+    min-width: 56px;
+  }
 
-  .carousel-caption .carousel-name 
-  {  ; 
-    font-size: 12px; }
+  /* make the name more prominent and clamp to max 2 lines */
+  .carousel-caption .carousel-name {
+    font-size: 18px;
+    line-height: 1.15;
+    max-width: 200px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    text-align: left;
+    font-weight: 600;
+  }
   .carousel-caption .caption-pin { width: 40px; height: auto; display: inline-block; }
 
 /* make the pin clickable without visual chrome */
@@ -118,7 +145,7 @@ const derivedCaptions = images.map((src, i) => {
     padding: 0;
     margin: 0;
     display: inline-flex;
-    align-items: center;
+    align-items: end;
     cursor: pointer;
   }
 
@@ -126,14 +153,14 @@ const derivedCaptions = images.map((src, i) => {
     border-radius: 999px;
     border: none;
     background: #fafcf7;
-    font-size: 36px; /* større ikon/tegn */
     display: inline-grid;
     place-items: center;
     cursor: pointer;
-  transition: transform 260ms cubic-bezier(.2,.8,.2,1);
-  transform-origin: center center;
-  will-change: transform;    
-  padding: 0;
+    transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+    transform-origin: center center;
+    will-change: transform;    
+    padding: 0;
+    margin: 0 10px; /* giver lidt ekstra "breathing room" per knap */
   }
 
   .carousel-btn img {
@@ -149,8 +176,10 @@ const derivedCaptions = images.map((src, i) => {
   /* mindre på mobil så det ikke fylder for meget */
   @media (max-width: 720px) {
     .carousel-viewport { height: 300px; }
-    .carousel-btn { --size: 56px; font-size: 28px; }
+    .carousel-btn { --size: 56px; font-size: 28px; margin: 0 6px; }
     .carousel-btn img { width: 22px; }
+    .carousel-caption .carousel-index { font-size: 32px; min-width: 48px; }
+    .carousel-caption .carousel-name { font-size: 14px; -webkit-line-clamp: 2; max-width: 36ch; }
   }
 </style>
 

@@ -1,0 +1,136 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+import "../base.css";
+import Layout from "../layouts/Layout.astro"
+---
+
+<Layout>
+  <Header />
+  <!-- SKAL VÆRE EN VIDEO -->
+  <!-- Hero: unity billede fylder hele viewport -->
+  <section class="hero" role="link" tabindex="0" onclick="location.href='/app'" onkeydown="if(event.key==='Enter') location.href='/app'">
+    <img src="/images/unity.png" alt="Parks in Lisbon" class="hero__image" aria-hidden="true" />
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <h1>Step into GreenNest’s interactive experience and discover how exploring green spaces can improve your mental well-being.</h1>
+
+      <div class="section1-text">
+        <a class="cta-link" href="/app" target="_blank" rel="noopener noreferrer">
+          <h2>Download here</h2>
+          <img src="/images/app.svg" alt="" class="cta-image" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  :root {
+    --text-accent: #d3fa91;
+    --overlay-color: rgba(8, 40, 20, 0.786);
+    --hero-min-height: 100vh;
+    --content-width: 1200px;
+  }
+
+  /* Hero base */
+  .hero {
+    position: relative;
+    min-height: var(--hero-min-height);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer; /* make it clear the hero is clickable */
+  }
+
+  /* full-bleed background image */
+  .hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    display: block;
+  }
+
+  /* mørkegrønt overlay over billedet */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, var(--overlay-color), rgba(8,40,20,0.54));
+    pointer-events: none;
+  }
+
+  /* indhold over billedet */
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: var(--content-width);
+    padding: 2rem 4rem;           /* lidt luft til venstre/højre */
+    padding-left: clamp(20px, 6vw, 80px); /* start fra venstre responsivt */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;     /* <-- flyt alt til venstre */
+    text-align: left;            /* <-- venstrestil tekst */
+    color: var(--text-accent);
+  }
+
+  .hero__content h1 {
+    margin: 0 0 1rem;
+    color: var(--text-accent);
+    font-size: clamp(28px, 4.4vw, 56px);
+    line-height: 1.05;
+    font-weight: 700;
+    text-shadow: 0 8px 28px rgba(4,16,6,0.6);
+    max-width: 90ch;             /* begræns linjelængde når venstrejusteret */
+  }
+
+  .section1-text {
+    margin-top: 5.6rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start; /* sørg for CTA også starter fra venstre */
+    width: 100%;
+  }
+
+  .section1-text h2 {
+  font-family: "Nimbus Sans D OT Light";
+    color: var(--text-accent);
+    font-size: clamp(14px, 2.3vw, 20px);
+    font-weight: 600;
+  }
+
+  .cta-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+
+  .cta-image {
+    width: 96px;
+    height: auto;
+    transition: transform 260ms ease;
+  }
+  .cta-link:hover .cta-image { transform: translateX(8px); }
+
+  /* ensure header doesn't hide hero content if fixed */
+  header, .site-header { z-index: 3; position: relative; }
+
+  /* responsive tweaks */
+  @media (max-width: 900px) {
+    .hero__content { padding: 1.5rem 2rem; padding-left: 24px; align-items: flex-start; text-align: left; }
+    .hero__content h1 { font-size: clamp(22px, 6.4vw, 34px); }
+    .cta-image { width: 44px; }
+  }
+
+  @media (max-width: 580px) {
+    .hero { align-items: flex-end; padding-bottom: 48px; }
+    .hero__content { text-align: left; width: calc(100% - 32px); margin: 0 16px; padding-left: 16px; }
+    .section1-text { justify-content: flex-start; }
+  }
+</style>
