@@ -12,16 +12,16 @@
   </div>
 
   <!-- burger is now created/removed by JS so it's not present in desktop DOM -->
-  <template id="burgerTemplate">
-    <div class="burger" id="burger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+  <template id="burgerTemplateGreen">
+    <div class="burger" id="burgerGreen" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
       <span></span>
       <span></span>
       <span></span>
     </div>
   </template>
-  <div id="burgerContainer" aria-hidden="true"></div>
+  <div id="burgerContainerGreen" aria-hidden="true"></div>
   
-  <nav id="mobileMenu" aria-hidden="true">
+  <nav id="mobileMenuGreen" aria-hidden="true">
     <a href="/">Home</a>
     <a href="/about">About</a>
     <a href="/map">Map</a>
@@ -30,278 +30,206 @@
 </header>
 
 <style>
-  /* --- Base layout --- */
-  body {
-    margin: 0;
-    background-color: #fafcf7;
-  }
-/* Farveskift på tekst og burger */
-.site-header a {
-  color: #000000; /* lys grøn */
-  transition: color 0.3s ease;
-  
-}
+  /* --- Base layout + green theme --- */
+  body { margin: 0; background-color: #fafcf7; }
 
-.burger span {
-  background-color: #000000; /* lys grøn burger */
-  transition: background-color 0.3s ease;
-}
+  .site-header a { color: #122D12; transition: color 0.3s ease; }
+  .burger span { background-color: #122d12; transition: background-color 0.3s ease; }
 
-.site-header.scrolled a {
-  color: #122d12; /* mørkegrøn */
-}
-
-.site-header.scrolled .burger span {
-  background-color: #122d12;
-}
-
-  /* ✅ NYT: Scrollbar fixet header */
   .site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed; /* Gør den fast øverst */
-    top: 0;
-    left: 0;
+    position: fixed;
+    top: 0; left: 0;
     width: 100%;
     padding: 5px 30px;
-    z-index: 100;
-    border-bottom: 0.5px solid transparent;
-    background-color: transparent; /* Starter gennemsigtig */
+    z-index: 1500;
+    background-color: transparent;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(100px);
+    background-color: #fafcf7;
+    border-color: #122d12;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
 
-  /* ✅ NYT: Når man scroller forbi hero */
   .site-header.scrolled {
     backdrop-filter: blur(100px);
     background-color: #fafcf7;
     border-color: #122d12;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
 
-  /* --- Logo --- */
-  .logo {
-    display: flex;
-    align-items: center;
-  }
+  .logo { display:flex; align-items:center; }
+  .logo img { height:50px; transition: opacity .3s ease; }
+  .logo-desktop{ display:block } .logo-mobile{ display:none }
 
-  .logo img {
-    height: 50px;
-    transition: opacity 0.3s ease;
-  }
+  nav { display:flex; gap:40px; }
+  nav a { text-decoration:none; color:#122d12; font-size:18px; transition: color .2s ease; }
+  nav a:hover { color:#5e7c3b; }
 
-  /* --- Two logos (only one visible depending on screen size) --- */
-  .logo-desktop {
-    display: block;
-  }
-
-  .logo-mobile {
-    display: none;
-  }
-
-  /* --- Navigation (desktop) --- */
-  nav {
-    display: flex;
-    gap: 40px;
-  }
-
-  nav a {
-    text-decoration: none;
-    color: #122d12;
-    font-size: 18px;
-    transition: color 0.2s ease;
-  }
-
-  nav a:hover {
-    color: #5e7c3b;
-  }
-
-  /* --- Burger icon (updated for centered X) --- */
   .burger {
-    display: none;
+    display:none;
     position: relative;
-    width: 48px;
-    height: 36px;      /* mere vertikal plads så stregerne ikke presses */
-    cursor: pointer;
-    z-index: 1100;
-    padding: 0;
-    display: inline-block;
+    width:48px;
+    height:36px;
+    cursor:pointer;
+    z-index:1100;
+    padding:0;
+    display:inline-block;
   }
 
-  .burger span {
-    position: absolute;
-    left: 6px;
-    right: 6px;
-    height: 3px;
-    background-color: #d3fa91;
-    border-radius: 2px;
+  .burger span{
+    position:absolute; left:6px; right:6px; height:3px;
+    background-color:#122d12; border-radius:2px;
     transition: transform 260ms cubic-bezier(.2,.8,.2,1), opacity 200ms ease, top 260ms;
-    box-shadow: 0 0.4px 0 rgba(0,0,0,0.06);
-    border: 1px solid rgba(0,0,0,0.03);
-    transform-origin: center center;
-    z-index: 1100;
+    transform-origin:center center; z-index:1100;
   }
- 
-  /* equal spacing: place lines at 25% / 50% / 75% of container height */
-  .burger span:nth-child(1) { top: 25%; transform: translateY(-50%); }
-  .burger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-  .burger span:nth-child(3) { top: 75%; transform: translateY(-50%); }
+  .burger span:nth-child(1){ top:25%; transform:translateY(-50%); }
+  .burger span:nth-child(2){ top:50%; transform:translateY(-50%); }
+  .burger span:nth-child(3){ top:75%; transform:translateY(-50%); }
 
-   /* --- Active: morph into a centered X --- */
-   .burger.active span:nth-child(1) {
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
-   }
-   .burger.active span:nth-child(2) {
-     opacity: 0;
-     transform: scaleX(0);
-   }
-   .burger.active span:nth-child(3) {
-    top: 50%;
-    transform: translateY(-50%) rotate(-45deg);
-   }
+  .burger.active span:nth-child(1){ top:50%; transform:translateY(-50%) rotate(45deg); }
+  .burger.active span:nth-child(2){ opacity:0; transform:scaleX(0); }
+  .burger.active span:nth-child(3){ top:50%; transform:translateY(-50%) rotate(-45deg); }
 
-  /* --- Mobile nav (hidden by default) --- */
-  @media (max-width: 768px) {
+  @media (max-width:768px) {
     nav {
       flex-direction: column;
       position: absolute;
       top: 65px;
       right: 0;
       left: 0;
-      /* Fyld hele viewport fra under header og ned til bunden */
       height: calc(100vh - 65px);
       max-height: 0;
       overflow: hidden;
       align-items: center;
-      /* Glas-effekt: semitransparent baggrund + backdrop-filter */
       -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
-      z-index: 999; /* sikre at menuen ligger over indhold */
-      transition: max-height 1.35s ease;
+      z-index: 999;
+      transition: max-height 420ms ease;
+      background: rgba(250,252,247,0.95);
     }
-  
-    nav.show {
-      /* Når åben: vis hele menu-området (ned til bunden) */
-      max-height: calc(100vh - 65px);
-    }
-  
+    nav.show { max-height: calc(100vh - 65px); }
+
     nav a {
-      display: block;
-      width: 100%;
-      padding: 24px 40px;
-      font-size: 2rem;
-      text-align: end;
-      font-weight: 600;
+      display:block;
+      width:100%;
+      padding:24px 40px;
+      font-size:2rem;
+      text-align:end;
+      font-weight:600;
     }
-  
+
     .burger {
-      /* force visible and above the mobile menu */
-      display: flex !important;
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2200;
+      display:flex !important;
+      position:absolute;
+      right:20px;
+      top:50%;
+      transform:translateY(-50%);
+      z-index:2200;
     }
-  
-    /* Swap logos on mobile */
-    .logo-desktop {
-      display: none;
-    }
- 
-    .logo-mobile {
-      display: block;
-    }
+
+    .logo-desktop{ display:none } .logo-mobile{ display:block }
   }
 </style>
 
 <script client:load type="text/javascript">
 (() => {
-  const menu = document.getElementById('mobileMenu');
-  const burgerContainer = document.getElementById('burgerContainer');
-  const burgerTemplate = document.getElementById('burgerTemplate');
+  const menu = document.getElementById('mobileMenuGreen');
+  const burgerContainer = document.getElementById('burgerContainerGreen');
+  const burgerTemplate = document.getElementById('burgerTemplateGreen');
   if (!menu || !burgerContainer || !burgerTemplate) {
-    console.warn('Header: required elements not found');
+    console.warn('HeaderGreen: required elements not found', { menu: !!menu, burgerContainer: !!burgerContainer, burgerTemplate: !!burgerTemplate });
     return;
   }
 
-  let burger = null;
-  let outsideClickHandler = null;
-  let resizeObserver = null;
+  let lastTouch = 0;
+  let handlersAttached = false;
+  const MAX_HEIGHT = 'calc(100vh - 65px)';
 
-  const closeMenu = () => {
-    if (!menu) return;
-    menu.classList.remove('show');
-    if (burger) burger.classList.remove('active');
-    if (burger) burger.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  };
   const openMenu = () => {
-    if (!menu || !burger) return;
     menu.classList.add('show');
-    burger.classList.add('active');
-    burger.setAttribute('aria-expanded', 'true');
-    menu.setAttribute('aria-hidden', 'false');
+    menu.style.maxHeight = MAX_HEIGHT;
+    const b = document.getElementById('burgerGreen');
+    if (b) { b.classList.add('active'); b.setAttribute('aria-expanded','true'); }
+    menu.setAttribute('aria-hidden','false');
     document.body.style.overflow = 'hidden';
   };
-  const toggleMenu = (e) => {
-    if (e) { e.preventDefault(); e.stopPropagation(); }
-    menu.classList.contains('show') ? closeMenu() : openMenu();
+
+  const closeMenu = () => {
+    menu.classList.remove('show');
+    menu.style.maxHeight = '0';
+    const b = document.getElementById('burgerGreen');
+    if (b) { b.classList.remove('active'); b.setAttribute('aria-expanded','false'); }
+    menu.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
   };
 
-  function attachBurgerHandlers(b) {
-    if (!b) return;
-    burger = b;
-    // pointer/touch/click/keyboard
-    b.addEventListener('click', toggleMenu);
-    b.addEventListener('pointerup', toggleMenu);
-    b.addEventListener('touchstart', (e) => { e.preventDefault(); toggleMenu(e); }, { passive: false });
-    b.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') toggleMenu(e);
-    });
-    // close when a menu link clicked
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-    // outside click handler
-    outsideClickHandler = (e) => {
-      if (!menu.classList.contains('show')) return;
-      if (b.contains(e.target) || menu.contains(e.target)) return;
+  const toggleMenu = () => { menu.classList.contains('show') ? closeMenu() : openMenu(); };
+
+  function onDocumentClick(e) {
+    const clickedBurger = !!(e.target && e.target.closest && e.target.closest('#burgerGreen'));
+    if (clickedBurger) {
+      if (Date.now() - lastTouch < 700) return;
+      toggleMenu();
+      return;
+    }
+    if (menu.classList.contains('show')) {
+      const b = document.getElementById('burgerGreen');
+      if (b && (b.contains(e.target) || menu.contains(e.target))) return;
       closeMenu();
-    };
-    document.addEventListener('click', outsideClickHandler);
+    }
   }
 
-  function detachBurgerHandlers() {
-    if (!burger) return;
-    try {
-      burger.removeEventListener('click', toggleMenu);
-      burger.removeEventListener('pointerup', toggleMenu);
-      // touch handler was added with anonymous wrapper; safe to ignore removal
-      burger.removeEventListener('keydown', toggleMenu);
-    } catch (e) {}
-    if (outsideClickHandler) {
-      document.removeEventListener('click', outsideClickHandler);
-      outsideClickHandler = null;
+  function onDocumentTouchEnd(e) {
+    const clickedBurger = !!(e.target && e.target.closest && e.target.closest('#burgerGreen'));
+    if (clickedBurger) {
+      lastTouch = Date.now();
+      e.preventDefault?.();
+      toggleMenu();
     }
-    burger = null;
+  }
+
+  function onDocumentKey(e) {
+    const b = document.getElementById('burgerGreen');
+    if (!b) return;
+    if (document.activeElement === b && (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar')) {
+      e.preventDefault();
+      toggleMenu();
+    }
+  }
+
+  function attachHandlers() {
+    if (handlersAttached) return;
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('touchend', onDocumentTouchEnd, { passive: false });
+    document.addEventListener('keydown', onDocumentKey);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    handlersAttached = true;
+  }
+
+  function detachHandlers() {
+    if (!handlersAttached) return;
+    document.removeEventListener('click', onDocumentClick);
+    document.removeEventListener('touchend', onDocumentTouchEnd);
+    document.removeEventListener('keydown', onDocumentKey);
+    handlersAttached = false;
   }
 
   function createBurger() {
-    if (burgerContainer.children.length) return; // already created
+    if (burgerContainer.querySelector('#burgerGreen')) return;
     const clone = burgerTemplate.content.cloneNode(true);
     burgerContainer.appendChild(clone);
-    const b = document.getElementById('burger');
-    if (b) attachBurgerHandlers(b);
-    // ensure visible/focusable
-    burgerContainer.setAttribute('aria-hidden', 'false');
+    burgerContainer.setAttribute('aria-hidden','false');
+    attachHandlers();
   }
 
   function removeBurger() {
     closeMenu();
-    detachBurgerHandlers();
+    detachHandlers();
     burgerContainer.innerHTML = '';
-    burgerContainer.setAttribute('aria-hidden', 'true');
+    burgerContainer.setAttribute('aria-hidden','true');
   }
 
   function sync() {
@@ -310,16 +238,11 @@
     else removeBurger();
   }
 
-  // initial sync
   sync();
-
-  // watch resize
   window.addEventListener('resize', () => {
     sync();
-    if (window.innerWidth > 768) closeMenu();
+    if (window.innerWidth > 768 && menu.classList.contains('show')) closeMenu();
   });
-
-  // ensure closed on navigation away / unload
   window.addEventListener('beforeunload', closeMenu);
 })();
 </script>

@@ -126,6 +126,7 @@
     z-index: 1100;
     padding: 0;
     display: inline-block;
+    pointer-events: auto;
   }
 
   .burger span {
@@ -222,84 +223,98 @@
   const burgerContainer = document.getElementById('burgerContainer');
   const burgerTemplate = document.getElementById('burgerTemplate');
   if (!menu || !burgerContainer || !burgerTemplate) {
-    console.warn('Header: required elements not found');
+    console.warn('Header: required elements not found', { menu: !!menu, burgerContainer: !!burgerContainer, burgerTemplate: !!burgerTemplate });
     return;
   }
 
-  let burger = null;
-  let outsideClickHandler = null;
-  let resizeObserver = null;
+  let lastTouch = 0;
+  let handlersAttached = false;
+  const MAX_HEIGHT = 'calc(100vh - 65px)';
 
-  const closeMenu = () => {
-    if (!menu) return;
-    menu.classList.remove('show');
-    if (burger) burger.classList.remove('active');
-    if (burger) burger.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  };
   const openMenu = () => {
-    if (!menu || !burger) return;
     menu.classList.add('show');
-    burger.classList.add('active');
-    burger.setAttribute('aria-expanded', 'true');
+    menu.style.maxHeight = MAX_HEIGHT;
+    const b = document.getElementById('burger');
+    if (b) { b.classList.add('active'); b.setAttribute('aria-expanded', 'true'); }
     menu.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   };
-  const toggleMenu = (e) => {
-    if (e) { e.preventDefault(); e.stopPropagation(); }
+
+  const closeMenu = () => {
+    menu.classList.remove('show');
+    menu.style.maxHeight = '0';
+    const b = document.getElementById('burger');
+    if (b) { b.classList.remove('active'); b.setAttribute('aria-expanded', 'false'); }
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  const toggleMenu = () => {
     menu.classList.contains('show') ? closeMenu() : openMenu();
   };
 
-  function attachBurgerHandlers(b) {
-    if (!b) return;
-    burger = b;
-    // pointer/touch/click/keyboard
-    b.addEventListener('click', toggleMenu);
-    b.addEventListener('pointerup', toggleMenu);
-    b.addEventListener('touchstart', (e) => { e.preventDefault(); toggleMenu(e); }, { passive: false });
-    b.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') toggleMenu(e);
-    });
-    // close when a menu link clicked
-    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-    // outside click handler
-    outsideClickHandler = (e) => {
-      if (!menu.classList.contains('show')) return;
-      if (b.contains(e.target) || menu.contains(e.target)) return;
+  function onDocumentClick(e) {
+    const clickedBurger = !!(e.target && e.target.closest && e.target.closest('#burger'));
+    if (clickedBurger) {
+      if (Date.now() - lastTouch < 700) return; // ignore synthetic click after touch
+      toggleMenu();
+      return;
+    }
+    // if menu open and click outside both burger and menu -> close
+    if (menu.classList.contains('show')) {
+      const b = document.getElementById('burger');
+      if (b && (b.contains(e.target) || menu.contains(e.target))) return;
       closeMenu();
-    };
-    document.addEventListener('click', outsideClickHandler);
+    }
   }
 
-  function detachBurgerHandlers() {
-    if (!burger) return;
-    try {
-      burger.removeEventListener('click', toggleMenu);
-      burger.removeEventListener('pointerup', toggleMenu);
-      // touch handler was added with anonymous wrapper; safe to ignore removal
-      burger.removeEventListener('keydown', toggleMenu);
-    } catch (e) {}
-    if (outsideClickHandler) {
-      document.removeEventListener('click', outsideClickHandler);
-      outsideClickHandler = null;
+  function onDocumentTouchEnd(e) {
+    const clickedBurger = !!(e.target && e.target.closest && e.target.closest('#burger'));
+    if (clickedBurger) {
+      lastTouch = Date.now();
+      e.preventDefault?.();
+      toggleMenu();
     }
-    burger = null;
+  }
+
+  function onDocumentKey(e) {
+    const b = document.getElementById('burger');
+    if (!b) return;
+    if (document.activeElement === b && (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar')) {
+      e.preventDefault();
+      toggleMenu();
+    }
+  }
+
+  function attachHandlers() {
+    if (handlersAttached) return;
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('touchend', onDocumentTouchEnd, { passive: false });
+    document.addEventListener('keydown', onDocumentKey);
+    // close when a menu link clicked
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    handlersAttached = true;
+  }
+
+  function detachHandlers() {
+    if (!handlersAttached) return;
+    document.removeEventListener('click', onDocumentClick);
+    document.removeEventListener('touchend', onDocumentTouchEnd);
+    document.removeEventListener('keydown', onDocumentKey);
+    handlersAttached = false;
   }
 
   function createBurger() {
-    if (burgerContainer.children.length) return; // already created
+    if (burgerContainer.querySelector('#burger')) return;
     const clone = burgerTemplate.content.cloneNode(true);
     burgerContainer.appendChild(clone);
-    const b = document.getElementById('burger');
-    if (b) attachBurgerHandlers(b);
-    // ensure visible/focusable
     burgerContainer.setAttribute('aria-hidden', 'false');
+    attachHandlers();
   }
 
   function removeBurger() {
     closeMenu();
-    detachBurgerHandlers();
+    detachHandlers();
     burgerContainer.innerHTML = '';
     burgerContainer.setAttribute('aria-hidden', 'true');
   }
@@ -310,16 +325,16 @@
     else removeBurger();
   }
 
-  // initial sync
+  // initial
   sync();
 
   // watch resize
   window.addEventListener('resize', () => {
     sync();
-    if (window.innerWidth > 768) closeMenu();
+    if (window.innerWidth > 768 && menu.classList.contains('show')) closeMenu();
   });
 
-  // ensure closed on navigation away / unload
+  // ensure closed on navigation away
   window.addEventListener('beforeunload', closeMenu);
 })();
 </script>
