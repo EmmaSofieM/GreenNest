@@ -13,7 +13,7 @@ import "../base.css";
   <!-- SKAL VÆRE EN VIDEO -->
   <!-- Hero: unity billede fylder hele viewport -->
   <section class="hero" role="link" tabindex="0" onclick="location.href='/app'" onkeydown="if(event.key==='Enter') location.href='/app'">
-    <img src="/images/unity.png" alt="Parks in Lisbon" class="hero__image" aria-hidden="true" />
+    <video src="/video/unity.mp4" class="hero__image" aria-hidden="true" autoplay loop muted></video>
     <div class="hero__overlay" aria-hidden="true"></div>
 
     <div class="hero__content">
@@ -33,10 +33,22 @@ Step into GreenNest, and experience how a calmer, greener future could look and 
 
 </Layout>
 
+<script client:load;>
+(() => {
+  const vid = document.querySelector('.hero__image');
+  if (!vid) return;
+  const rate = 0.6; // juster til ønsket hastighed (1 = normal, <1 = langsommere)
+  const applyRate = () => { try { vid.playbackRate = rate; } catch (e) { /* ignore */ } };
+
+  if (vid.readyState >= 1) applyRate();
+  else vid.addEventListener('loadedmetadata', applyRate, { once: true });
+})();
+</script>
+
 <style>
   :root {
     --text-accent: #d3fa91;
-    --overlay-color: rgba(8, 40, 20, 0.786);
+    --overlay-color: rgba(8, 40, 20, 0.889);
     --hero-min-height: 100vh;
     --content-width: 1400px;
   }
@@ -47,8 +59,7 @@ Step into GreenNest, and experience how a calmer, greener future could look and 
     min-height: var(--hero-min-height);
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: ;
+  
     overflow: hidden;
     cursor: pointer; /* make it clear the hero is clickable */
   }
@@ -79,7 +90,7 @@ Step into GreenNest, and experience how a calmer, greener future could look and 
     position: relative;
     z-index: 2;
     max-width: var(--content-width);
-    padding: 5rem 4rem;           /* lidt luft til venstre/højre */
+    padding: 10rem 4rem;           /* lidt luft til venstre/højre */
     padding-left: 120px; /* start fra venstre responsivt */
     display: flex;
     flex-direction: column;
