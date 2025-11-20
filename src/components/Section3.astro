@@ -1,3 +1,7 @@
+---
+import LiveMap from './LiveMap.astro';
+---
+
 <section class="section-three">
   <div class="section-three__overlay">
     <h2>
@@ -7,7 +11,7 @@
     </h2>
 
     <div class="section-three__map">
-      <img src="/images/unity.png" alt="Interactive map of Lisbon parks" />
+      <div class="livemap-embed"><LiveMap /></div>
     </div>
 
     <div class="section-three__bottom">
@@ -32,7 +36,10 @@
 <style>
 /* --- SECTION 3 --- */
 
-
+  :root {
+    --map-max-width: 1200px;
+    --map-height: 40vh;
+  }
 
 /* hover-effekt: ryk ikonet lidt til højre */
 .section-three__arrow:hover {
@@ -48,18 +55,17 @@
 
 /* husk at skifte */
 .section-three__image {
-  background: url("/images/4.png") center/cover no-repeat;
+  background: url("public/images/11.png") center/cover no-repeat;
   filter: brightness(0.75);
 }
 
 /* LEFT SIDE OVERLAY BOX */
 .section-three__overlay {
   background: rgba(18, 40, 17, 0.92);
-  padding: 4rem 10rem;
+  padding: 4rem 5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 2.5rem;
 }
 
 .section-three__overlay h2 {
@@ -73,13 +79,31 @@
 .section-three__map {
   width: 100%;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  display: block;
 }
 
-.section-three__map img {
+/* ensure the embedded LiveMap fills the map box without changing layout */
+.section-three__map .livemap-embed {
   width: 100%;
   display: block;
 }
+
+/* override inner LiveMap wrapper so it doesn't add extra margins or its own height */
+.section-three__map .livemap-embed .map-wrap {
+  margin: 0;
+  max-width: none;
+  box-shadow: none;
+  display: block;
+}
+
+/* ensure the leaflet map element stretches to container height */
+.section-three__map .livemap-embed #map {
+  width: 100%;
+  display: block;
+}
+
+/* remove the img rule (keeps previous behaviour if image remains elsewhere) */
+.section-three__map img { display: none; }
 
 /* BOTTOM TEXT + ARROW */
 .section-three__bottom {
@@ -88,6 +112,7 @@
   gap: 2rem;
   align-items: start;
   z-index: 1;
+  margin-top: 60px;
 }
 
 .section-three__bottom p {
@@ -118,5 +143,8 @@
   .section-three__overlay {
     padding: 3rem 2rem;
   }
+  /* on small screens keep map height consistent with previous image behaviour */
+  .section-three__map { height: auto; }
+  .section-three__map .livemap-embed .map-wrap { height: var(--map-height, 55vh); }
 }
 </style>
