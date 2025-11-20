@@ -11,8 +11,7 @@
     </h2>
 
     <p class="data-subtext">
-      Go check the links and find out where we are getting<br />
-      our data from.
+   Explore the links to see exactly where our information comes from and how we stay up to date.
     </p>
 
     <div class="data-links">
@@ -143,6 +142,7 @@
   transition: transform 120ms cubic-bezier(.2,.8,.2,1);
   transform-origin: center center;
   will-change: transform;
+  display: block;
 }
 
 /* lille, diskret zoom ved hover / fokus (på wrapper for at undgå layout-skift) */
@@ -158,11 +158,27 @@
   font-size: 0.8rem;
   color: #555;
   opacity: 0.8;
+  display: block;
 }
 
 @media (max-width: 900px) {
   .data-section {
     grid-template-columns: 1fr;
   }
+
+.data-image {
+  
+  display: none;
+}
+
+.data-image-caption {
+  position: absolute;
+  bottom: -30px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: #555;
+  opacity: 0.8;
+  display: none;
+}
 }
 </style>

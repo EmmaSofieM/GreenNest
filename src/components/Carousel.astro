@@ -175,11 +175,90 @@ const derivedCaptions = _images.map((src, i) => {
   }
   /* mindre på mobil så det ikke fylder for meget */
   @media (max-width: 720px) {
-    .carousel-viewport { height: 300px; }
-    .carousel-btn { --size: 56px; font-size: 28px; margin: 0 6px; }
+    /* tighten hero spacing and scale title */
+    .about-hero {
+      margin: 40px 16px;
+      gap: 12px;
+      align-items: center;
+    }
+    .about-hero__title {
+        text-align: start;
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.14;
+    }
+
+    /* make carousel full-width and reduce gaps */
+    .simple-carousel {
+      width: calc(100% - 32px);
+      max-width: none;
+      margin: 0 auto;
+      gap: 20px;
+      padding: 0 16px;
+      align-items: center;
+    }
+
+    /* viewport becomes full width and lower height */
+    .carousel-viewport {
+      width: 100%;
+      height: 300px;
+      max-width: 100%;
+      padding: 0;
+    }
+
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-height: 100%;
+    }
+
+    /* center/caption sizing */
+    .carousel-center {
+      width: 100%;
+      gap: 8px;
+    }
+
+    .carousel-caption {
+      width: 100%;
+      gap: 12px;
+      font-weight: 700;
+      justify-content: center;
+      padding: 0 6px;
+      box-sizing: border-box;
+    }
+
+    .carousel-caption .carousel-index {
+      font-size: 32px;
+      min-width: 44px;
+    }
+
+    .carousel-caption .carousel-name {
+      font-size: 14px;
+      max-width: calc(100% - 64px);
+      -webkit-line-clamp: 2;
+    }
+
+    /* smaller controls */
+    .carousel-btn {
+      padding: 6px;
+      margin: 0 6px;
+    }
+    .carousel-btn img {
+      width: 88px;
+    }
+  }
+
+  /* Extra small phones */
+  @media (max-width: 420px) {
+    .about-hero { margin: 28px 12px; }
+    .about-hero__title { font-size: 20px; }
+
+    .carousel-viewport { height: 240px; }
+    .carousel-caption .carousel-index { font-size: 28px; min-width: 40px; }
+    .carousel-caption .carousel-name { font-size: 13px; max-width: calc(100% - 56px); }
     .carousel-btn img { width: 22px; }
-    .carousel-caption .carousel-index { font-size: 32px; min-width: 48px; }
-    .carousel-caption .carousel-name { font-size: 14px; -webkit-line-clamp: 2; max-width: 36ch; }
+    .simple-carousel { gap: 12px; padding: 0 12px; }
   }
 </style>
 

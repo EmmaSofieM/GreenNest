@@ -32,8 +32,6 @@
       </div>
     </div>
 
-   
-
     <div class="place-card">
       <img src="/images/5.png" alt="Parque da Bela Vista" />
       <div class="place-info">
@@ -54,18 +52,18 @@
 
 <style>
 .top-rated-section {
-  position: relative; /* nødvendigt for at ::before kan positioneres relativt til sektionen */
-
+  position: relative;
   margin: 190px;
+  box-sizing: border-box;
 }
 
-/* Fyld hele viewport-bredden med en ét-pixel streg */
+/* full-bleed 1px line */
 .top-rated-section::before {
   content: "";
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 0; /* skift til f.eks. top: -1px eller top: 20px hvis du vil have stregen udenfor/på anden placering */
+  top: 0;
   width: 100vw;
   max-width: none;
   height: 1px;
@@ -75,7 +73,7 @@
 
 .top-rated-header p {
   font-size: 16px;
- font-weight: bold;  
+  font-weight: bold;
   width: 100%;
   margin-bottom: 2rem;
 }
@@ -88,11 +86,15 @@
 
 .place-card {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  height: 100%;
 }
 
 .place-card img {
   width: 100%;
-  object-fit: cover;
+  height: autp;
   display: block;
   transition: transform 260ms cubic-bezier(.2,.8,.2,1);
   transform-origin: center center;
@@ -101,7 +103,7 @@
 
 .place-card:hover img,
 .place-card:focus-within img {
-  transform: scale(1.06); /* lidt mindre end før (1.08) */
+  transform: scale(1.06);
 }
 
 .place-info {
@@ -109,30 +111,30 @@
   align-items: center;
   gap: 0.35rem;
   font-size: 16px;
+  padding: 12px 8px;
 }
 
 .number {
   font-weight: 700;
   font-size: 40px;
+  line-height: 1;
+  margin-right: 8px;
 }
 
-
-
 .leaf-icon {
-  width: 40px !important;    /* sæt den ønskede størrelse (fx 12-24px) */
+  width: 40px !important;
   height: auto !important;
-  margin-left: auto; /* eller auto hvis du vil skubbe det helt til højre */
+  margin-left: auto;
   max-width: none !important;
 }
 
 .see-all-wrapper {
   margin-top: 5rem;
   display: flex;
-  justify-content: flex-end; /* placér til højre som i sektion 1 */
+  justify-content: flex-end;
   align-items: center;
 }
 
-/* se-all som inline-flex så tekst + ikon er på samme linje */
 .see-all {
   font-size: 56px;
   font-weight: 600;
@@ -140,25 +142,116 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 1rem; /* afstand mellem tekst og ikon */
+  gap: 1rem;
 }
 
-/* finger-print / CTA-ikon */
 .fingerprint {
   width: 140px;
   height: auto;
-  transition: transform 160ms ease; /* simpel hover-anim */
+  transition: transform 160ms ease;
   display: block;
 }
 
-/* hover-effekt: ryk ikonet lidt til højre */
 .see-all:hover .fingerprint {
   transform: translateX(8px);
 }
 
-/* mindre skærme: skaler tekst og ikon */
+/* ---------- Responsive rules (only below) ---------- */
+
+/* medium screens: 2 columns */
+@media (max-width: 1100px) {
+  .top-rated-section { margin: 120px 28px; }
+  .top-rated-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .place-card img { height: 200px; }
+  .number { font-size: 36px; }
+  .see-all { font-size: 40px; }
+  .fingerprint { width: 110px; }
+}
+
+/* small tablets / large phones: compact */
 @media (max-width: 768px) {
+  .top-rated-section { margin: 80px 20px; }
+  .top-rated-header p { font-size: 14px; margin-bottom: 1rem; }
+  .top-rated-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .place-card img { height: 160px; }
+  .number { font-size: 32px; }
+  .see-all-wrapper { margin-top: 2.5rem; justify-content: start; }
   .see-all { font-size: 28px; gap: 0.6rem; }
   .fingerprint { width: 64px; }
+
+  /* leaf icon smaller on these widths */
+  .leaf-icon {
+    width: 25px !important;
+    height: 100% !important;
+    margin-left: auto;
+    max-width: none !important;
+  }
+}
+
+/* mobile: single column stacked, keep same visual identity */
+@media (max-width: 480px) {
+  .top-rated-section {
+    margin: 48px 16px;
+  }
+  .top-rated-header p {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 12px;
+  }
+
+  .top-rated-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .place-card {
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .place-card img {
+    width: 40%;
+    height: 110px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .place-info {
+    padding: 8px 0;
+    gap: 8px;
+    align-items: flex-start;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .number {
+    font-size: 28px;
+    display: block;
+  }
+
+  .place-info p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: inherit;
+  }
+
+  .leaf-icon {
+    width: 20px !important;
+    margin-left: 0;
+    align-self: flex-end;
+  }
+
+  /* See all centered and reduced */
+  .see-all-wrapper {
+    margin-top: 1.5rem;
+    justify-content: center;
+  }
+  .see-all {
+    font-size: 20px;
+    gap: 0.5rem;
+  }
+  .fingerprint { width: 44px; }
 }
 </style>

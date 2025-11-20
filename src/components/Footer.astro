@@ -137,7 +137,9 @@
   display: inline-block;    /* nødvendigt for vert-align at virke */
   transition: transform 0.2s ease;
 }
-
+.footer-links {
+    display: block;
+}
 /* valgfri hover-effekt */
 .footer-links a:hover .footer-arrow {
   transform: translateX(3px);
@@ -285,6 +287,51 @@ padding-top: 30px;
 
 
       @media (max-width: 768px) {
+
+          .footer-links h3 {
+        font-size: 21px; /* 16 + 5px */
+        font-weight: 700;
+        text-align: start;
+      }
+
+      .footer-links a {
+        text-align: start;
+        padding-right: -20px; /* plads til pilen */
+        display: block;
+        text-decoration: none;
+        color: #2f3b27;
+        margin: 7px 0;
+        font-size: 21px; /* 16 + 5px */
+      }
+
+      .footer-logo-wrapper {
+        width: 100%;
+        text-align: start;
+        margin-top: -280px;
+        display: none;
+      }
+
+      .footer-logo-wrapper img {
+        height: auto;
+        width: 1000px;
+        right: 0px;
+        position: absolute;
+      }
+
++      /* Hide footer logo and move links section visually upward */
++      .footer-logo-wrapper {
++        display: none !important;
++      }
++
++      /* Place links at the top row of the footer grid so they appear higher */
++      .footer-links {
++        grid-row: 1;
+
++      }
++
++      /* Push signup and credits down to avoid overlap */
++      .footer-signup { grid-row: 2; }
++      .footer-credits { grid-row: 3; }
         footer {
           padding: 60px 30px;
           text-align: left;

@@ -20,10 +20,9 @@
   :root {
     --content-width: 1300px;
     --cta-offset: 20px;
-    --cta-size: 150px; /* sæt størrelse på CTA-ikonet */
+    --cta-size: 150px;
   }
 
-  /* Sektion wrapper - centrer hele content-blokken */
   .section1 {
     margin: 100px 0;
   }
@@ -31,10 +30,9 @@
   .inner {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 0 24px; /* standard side-margener */
+    padding: 0 24px;
   }
 
-  /* H1 alignes venstre i samme container som billedet */
   .inner h1 {
     margin: 0 0 16px 0;
     text-align: left;
@@ -42,7 +40,6 @@
     line-height: 1.15;
   }
 
-  /* Billedet fylder containerens bredde og er centreret af .inner */
   .section1-image {
     display: block;
     width: 100%;
@@ -51,15 +48,12 @@
     max-width: 100%;
   }
 
-  /* ---------- ÆNDRING: h2 skal stå til højre, lige ved siden af CTA ---------- */
-  /* Sørg for at h2 og svg står på samme linje: h2 fylder til venstre, svg holder en fast bredde */
   .section1-text {
     display: flex;
-    margin-top: 80px; /* mindre luft over h2 */
+    margin-top: 80px;
     justify-content: flex-end;
   }
 
-  /* CTA link wraps h2 + icon, opens in new tab */
   .cta-link {
     display: flex;
     gap: 12px;
@@ -67,7 +61,6 @@
     color: inherit;
   }
 
-  /* simple hover: move the CTA icon a bit to the right */
   .cta-image {
     flex: 0 0 var(--cta-size);
     width: var(--cta-size);
@@ -81,39 +74,100 @@
     transform: translateX(8px);
   }
 
-  h2{
+  h2 {
     margin-top: 25px;
   }
-  /* ------------------------------------------------------------------------- */
 
-  /* Responsive justeringer */
+  /* ---------- Responsive ---------- */
+
+  /* tablet-ish */
   @media (max-width: 900px) {
-    :root { --content-width: 760px; --cta-size: 40px; --cta-offset: 12px; }
-    .inner h1 { font-size: 26px; }
-    .section1-text h2 { font-size: 20px; max-width: calc(100% - var(--cta-size) - var(--cta-offset) - 8px); }
+    :root { --content-width: 760px; --cta-size: 120px; --cta-offset: 12px; }
+    .inner h1 {
+      font-size: 32px;
+      line-height: 1.12;
+      text-align: left;
+    }
+    .section1-text {
+      margin-top: 40px;
+      justify-content: flex-end;
+    }
+    .section1-image {
+      margin-top: 20px;
+    }
+    .section1-text h2 {
+      font-size: 20px;
+      max-width: calc(100% - var(--cta-size) - var(--cta-offset) - 8px);
+    }
     .cta-image { width: var(--cta-size); }
   }
 
+  /* mobile: keep colors/borders intact, only responsive layout changes */
   @media (max-width: 580px) {
-    /* På små skærme stackes CTA under teksten */
-    .section1-image { margin-top: 16px; }
-    .section1-text {
-      display: block;
-      text-align: left;
-      padding-right: 0;
+    :root { --content-width: 100%; --cta-size: 56px; --cta-offset: 12px; }
+
+    .section1 {
+      margin: 48px 0;
     }
-    .section1-text h2 {
-      padding-right: 0;
-      text-align: left;
+
+    .inner {
+      padding: 0 18px;
+    }
+
+    /* make heading compact and centered on small screens */
+    .inner h1 {
+      font-size: 32px;
+      line-height: 1.18;
+      text-align: start;
       margin-bottom: 12px;
-      max-width: 100%;
     }
+
+    /* limit image height so it doesn't push layout (keeps aspect) */
+    .section1-image {
+      margin: 12px 0;
+      width: 100%;
+      max-height: 38vh;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    /* stack CTA under heading, full width but keep original colors */
+    .section1-text {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin-top: 18px;
+      gap: 10px;
+    }
+
+    .cta-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      /* DO NOT change colors/borders — keep inherited color */
+    }
+
+    .cta-link h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 600;
+      text-align: left;
+    }
+
     .cta-image {
-      position: static;
+      width: var(--cta-size);
+      height: auto;
+      margin-top: 0;
       transform: none;
-      display: block;
-      margin-top: 12px;
-      width: 36px;
     }
+
+    /* keep spacing after the section consistent */
+    .section1-text + * { margin-top: 12px; }
   }
 </style>

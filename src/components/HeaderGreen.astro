@@ -133,7 +133,7 @@
     left: 6px;
     right: 6px;
     height: 3px;
-    background-color: #000000;
+    background-color: #d3fa91;
     border-radius: 2px;
     transition: transform 260ms cubic-bezier(.2,.8,.2,1), opacity 200ms ease, top 260ms;
     box-shadow: 0 0.4px 0 rgba(0,0,0,0.06);
@@ -203,12 +203,8 @@
       top: 50%;
       transform: translateY(-50%);
       z-index: 2200;
-      pointer-events: auto;
     }
-  #burgerContainer {
-  pointer-events: auto;
-}
-
+  
     /* Swap logos on mobile */
     .logo-desktop {
       display: none;
@@ -232,7 +228,7 @@
 
   let burger = null;
   let outsideClickHandler = null;
-  let lastTouch = 0; // used to avoid double-trigger (touch -> click)
+  let resizeObserver = null;
 
   const closeMenu = () => {
     if (!menu) return;
@@ -258,59 +254,31 @@
   function attachBurgerHandlers(b) {
     if (!b) return;
     burger = b;
-
-    // named handlers so we can remove them cleanly later
-    const onTouchEnd = function (e) {
-      lastTouch = Date.now();
-      toggleMenu(e);
-    };
-    const onClick = function (e) {
-      // ignore synthetic click that follows touch
-      if (Date.now() - lastTouch < 600) { e.preventDefault(); return; }
-      toggleMenu(e);
-    };
-    const onPointerUp = function (e) {
-      if (Date.now() - lastTouch < 600) return;
-      toggleMenu(e);
-    };
-    const onKey = function (e) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggleMenu(e); }
-    };
-
-    // store references on element for later removal
-    b._hg_onTouchEnd = onTouchEnd;
-    b._hg_onClick = onClick;
-    b._hg_onPointerUp = onPointerUp;
-    b._hg_onKey = onKey;
-
-    b.addEventListener('touchend', onTouchEnd, { passive: false });
-    b.addEventListener('click', onClick);
-    b.addEventListener('pointerup', onPointerUp);
-    b.addEventListener('keydown', onKey);
-
+    // pointer/touch/click/keyboard
+    b.addEventListener('click', toggleMenu);
+    b.addEventListener('pointerup', toggleMenu);
+    b.addEventListener('touchstart', (e) => { e.preventDefault(); toggleMenu(e); }, { passive: false });
+    b.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') toggleMenu(e);
+    });
     // close when a menu link clicked
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-
     // outside click handler
-    outsideClickHandler = function (e) {
+    outsideClickHandler = (e) => {
       if (!menu.classList.contains('show')) return;
       if (b.contains(e.target) || menu.contains(e.target)) return;
       closeMenu();
     };
     document.addEventListener('click', outsideClickHandler);
   }
- 
+
   function detachBurgerHandlers() {
     if (!burger) return;
     try {
-      if (burger._hg_onTouchEnd) burger.removeEventListener('touchend', burger._hg_onTouchEnd);
-      if (burger._hg_onClick) burger.removeEventListener('click', burger._hg_onClick);
-      if (burger._hg_onPointerUp) burger.removeEventListener('pointerup', burger._hg_onPointerUp);
-      if (burger._hg_onKey) burger.removeEventListener('keydown', burger._hg_onKey);
-      delete burger._hg_onTouchEnd;
-      delete burger._hg_onClick;
-      delete burger._hg_onPointerUp;
-      delete burger._hg_onKey;
+      burger.removeEventListener('click', toggleMenu);
+      burger.removeEventListener('pointerup', toggleMenu);
+      // touch handler was added with anonymous wrapper; safe to ignore removal
+      burger.removeEventListener('keydown', toggleMenu);
     } catch (e) {}
     if (outsideClickHandler) {
       document.removeEventListener('click', outsideClickHandler);

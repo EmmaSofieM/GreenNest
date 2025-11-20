@@ -17,7 +17,10 @@ import "../base.css";
     <div class="hero__overlay" aria-hidden="true"></div>
 
     <div class="hero__content">
-      <h1>Step into GreenNest’s interactive experience and discover how exploring green spaces can improve your mental well-being.</h1>
+      <h1>The digital interactive experience gently brings our vision to life, creating a space where nature and urban living blend seamlessly. It offers a calm, immersive look into how future cities can grow greener, richer in biodiversity, and more balanced for both people and the species we share our environment with.</h1>
+
+      <h2>Explore the map at your own pace and interact with the digital plaques you find along the way. Notice the small details, the atmosphere, and the benefits that nature brings into everyday life. You can even shift the weather or adjust the time of day to create the mood that feels right for you.
+Step into GreenNest, and experience how a calmer, greener future could look and feel.</h2>
 
       <div class="section1-text">
         <a class="cta-link" href="/app" target="_blank" rel="noopener noreferrer">
@@ -35,7 +38,7 @@ import "../base.css";
     --text-accent: #d3fa91;
     --overlay-color: rgba(8, 40, 20, 0.786);
     --hero-min-height: 100vh;
-    --content-width: 1200px;
+    --content-width: 1400px;
   }
 
   /* Hero base */
@@ -45,7 +48,7 @@ import "../base.css";
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: ;
     overflow: hidden;
     cursor: pointer; /* make it clear the hero is clickable */
   }
@@ -76,11 +79,10 @@ import "../base.css";
     position: relative;
     z-index: 2;
     max-width: var(--content-width);
-    padding: 2rem 4rem;           /* lidt luft til venstre/højre */
-    padding-left: clamp(20px, 6vw, 80px); /* start fra venstre responsivt */
+    padding: 5rem 4rem;           /* lidt luft til venstre/højre */
+    padding-left: 120px; /* start fra venstre responsivt */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;     /* <-- flyt alt til venstre */
     text-align: left;            /* <-- venstrestil tekst */
     color: var(--text-accent);
@@ -89,7 +91,7 @@ import "../base.css";
   .hero__content h1 {
     margin: 0 0 1rem;
     color: var(--text-accent);
-    font-size: clamp(28px, 4.4vw, 56px);
+    font-size: 2.5rem;
     line-height: 1.05;
     font-weight: 700;
     text-shadow: 0 8px 28px rgba(4,16,6,0.6);
@@ -102,6 +104,15 @@ import "../base.css";
     gap: 1rem;
     justify-content: flex-start; /* sørg for CTA også starter fra venstre */
     width: 100%;
+  }
+
+  h2 {
+    margin: 0 0 1.5rem;
+    color: var(--text-accent);
+    font-size: 1.5rem;
+    line-height: 1.4;
+    font-weight: 400;
+    max-width: 80ch;             /* begræns linjelængde når venstrejusteret */
   }
 
   .section1-text h2 {

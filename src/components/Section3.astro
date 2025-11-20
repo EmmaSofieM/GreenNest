@@ -15,16 +15,8 @@ import LiveMap from './LiveMap.astro';
     </div>
 
     <div class="section-three__bottom">
-      <p>
-        Explore the map, and see the park near you, to bring your dog, to read,
-        to meditate or whatever you would like!
-      </p>
-
-      <p>
-        The interactive map is for your mental health, so take the time to
-        find the perfect match for you.
-      </p>
-      <a href="map.astro">
+    <p> Take a moment to explore the map and discover a park close to you — a place to bring your dog, read a book, meditate, or simply enjoy a quiet break in your day. </p> <p> This interactive map is here to support your well-being, so give yourself the time and space to find the spot that feels just right for you. </p>
+      <a href="/map">
         <img src="/images/arrow4light.svg" alt="" class="section-three__arrow" />
       </a>
     </div>
@@ -57,6 +49,7 @@ import LiveMap from './LiveMap.astro';
 .section-three__image {
   background: url("public/images/11.png") center/cover no-repeat;
   filter: brightness(0.75);
+  display: block;
 }
 
 /* LEFT SIDE OVERLAY BOX */
@@ -129,22 +122,71 @@ import LiveMap from './LiveMap.astro';
   display: block;
 }
 
-/* RESPONSIV LAYOUT */
+/* ---------- Responsive: Section 3 (mobile) ---------- */
 @media (max-width: 900px) {
-  .section-three {
-    grid-template-columns: 1fr;
-  }
-
-  .section-three__image {
-    height: 45vh;
-    order: -1;
-  }
-
-  .section-three__overlay {
-    padding: 3rem 2rem;
-  }
-  /* on small screens keep map height consistent with previous image behaviour */
-  .section-three__map { height: auto; }
-  .section-three__map .livemap-embed .map-wrap { height: var(--map-height, 55vh); }
+    .section-three__image {
+  background: url("public/images/11.png") center/cover no-repeat;
+  filter: brightness(0.75);
+  display: none;
 }
+    .section-three {
+      grid-template-columns: 1fr; /* stack columns */
+      height: auto;               /* allow section to shrink to content */
+    }
+
+     .section-three {
+      grid-template-columns: 1fr; /* stack columns */
+      height: auto;               /* allow section to shrink to content */
+    }
+
+    /* overlay (left) becomes first, full width */
+    .section-three__overlay {
+      padding: 2rem;
+      order: 1;
+      min-height: 0; /* allow overlay content to scroll inside if needed */
+      overflow: visible;
+    }
+
+    /* map becomes second, set a fixed viewport height so it doesn't push layout */
+    .section-three__map {
+      order: 2;
+      height: 55vh;
+      min-height: 320px;
+      overflow: hidden;
+    }
+
+    /* make sure embedded LiveMap fills its container */
+    .section-three__map .livemap-embed,
+    .section-three__map .livemap-embed .map-wrap,
+    .section-three__map .livemap-embed #map {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+    }
+      @media (max-width: 900px) {
+    :root { --map-height: 55vh; }
+    #live-temp { right: 8px; left: auto; top: 8px; font-size:0.85rem; min-width: 200px; }
+    .map-wrap { margin: 20px 12px; }
+  }
+   
+  }
+
+  @media (max-width: 580px) {
+    .section-three__overlay {
+      padding: 1.25rem;
+    }
+
+    .section-three__overlay h2 {
+      font-size: 40px; /* smaller heading for small screens */
+      line-height: 1.15;
+    }
+
+    .section-three__map {
+      height: 44vh;   /* slightly smaller on small phones */
+      min-height: 240px;
+    }
+    .section-three__map .livemap-embed #map {
+      height: 100%;
+    }
+  }
 </style>
