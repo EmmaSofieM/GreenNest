@@ -145,6 +145,16 @@
   gap: 1rem;
 }
 
+/* ensure the text inside the CTA also animates on hover */
+.see-all > span {
+  display: inline-block; /* allow transform on inline text */
+  transition: transform 160ms ease;
+}
+
+.see-all:hover > span {
+  transform: translateX(8px);
+}
+
 .fingerprint {
   width: 140px;
   height: auto;

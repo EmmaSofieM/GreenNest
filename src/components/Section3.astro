@@ -112,7 +112,14 @@ import LiveMap from './LiveMap.astro';
   color: #d8ffb2;
   font-size: 1rem;
   line-height: 1.45;
+  display: inline-block;            /* allow transform on the paragraph */
+  transition: transform 160ms ease; /* match arrow animation */
 }
+
+/* when user hovers the bottom area (or the arrow), move the text slightly */
+.section-three__bottom:hover p {
+    transform: translateX(8px);
+  }
 
 .section-three__arrow {
   width: 55px;

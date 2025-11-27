@@ -75,7 +75,13 @@
   }
 
   h2 {
+    font-family: "Nimbus Sans D OT Light";
     margin-top: 25px;
+    transition: transform 360ms ease; /* enable smooth movement on hover */
+  }
+  /* move heading same as image when hovering CTA */
+  .cta-link:hover h2 {
+    transform: translateX(8px);
   }
 
   /* ---------- Responsive ---------- */
