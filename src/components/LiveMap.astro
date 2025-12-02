@@ -1,9 +1,20 @@
 ---
+
 ---
+
 <!-- Leaflet + MarkerCluster CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+/>
 
 <style global>
   :root {
@@ -12,7 +23,11 @@
   }
 
   /* popup photo */
-  .leaflet-popup .popup-photo { width: 100%; display:block; margin-bottom: 8px; }
+  .leaflet-popup .popup-photo {
+    width: 100%;
+    display: block;
+    margin-bottom: 8px;
+  }
   .leaflet-popup .popup-image {
     width: 100%;
     height: 120px;
@@ -33,7 +48,7 @@
     height: var(--map-height);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 6px 30px rgba(6,20,8,0.06);
+    box-shadow: 0 6px 30px rgba(6, 20, 8, 0.06);
   }
 
   /* loading indicator */
@@ -42,12 +57,35 @@
     inset: 0;
     display: grid;
     place-items: center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.0));
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0)
+    );
     z-index: 1100;
     pointer-events: none;
   }
-  .map-loading .dot { width:10px; height:10px; background:#122d12; border-radius:50%; animation: ping 900ms infinite ease-in-out; }
-  @keyframes ping { 0% { transform: scale(.6); opacity:.6 } 50% { transform: scale(1.3); opacity:1 } 100% { transform: scale(.6); opacity:.6 } }
+  .map-loading .dot {
+    width: 10px;
+    height: 10px;
+    background: #122d12;
+    border-radius: 50%;
+    animation: ping 900ms infinite ease-in-out;
+  }
+  @keyframes ping {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.3);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.6);
+      opacity: 0.6;
+    }
+  }
 
   /* live temp card (inside wrapper, top-right) — øget bredde og større ikoner */
   #live-temp {
@@ -55,15 +93,15 @@
     top: 16px;
     right: 16px;
     z-index: 1200;
-    background: rgba(255,255,255,0.98);
+    background: rgba(255, 255, 255, 0.98);
     color: #122d12;
     font-size: 1rem;
     padding: 0.8em 1.2em;
     border-radius: 12px;
-    box-shadow: 0 12px 34px rgba(6,20,8,0.08);
-    border: 1px solid rgba(139,197,63,0.18);
+    box-shadow: 0 12px 34px rgba(6, 20, 8, 0.08);
+    border: 1px solid rgba(139, 197, 63, 0.18);
     pointer-events: auto;
-    min-width: 220px;       /* større minimumsvidde */
+    min-width: 220px; /* større minimumsvidde */
     max-width: 300px;
     text-align: right;
     display: flex;
@@ -73,7 +111,7 @@
 
   /* større ikoner i boksen og bedre alignment (overstyrer inline styles) */
   #live-temp img {
-    height:2em !important;
+    height: 2em !important;
     width: auto !important;
     margin-right: 0.6rem !important;
     vertical-align: middle;
@@ -93,7 +131,7 @@
 
   /* popup styling overrides */
   .leaflet-popup-content-wrapper {
-    background: rgba(211,250,145,0.85) !important;
+    background: rgba(211, 250, 145, 0.85) !important;
     background-image: none !important;
     color: #122d12 !important;
     /* keep popup box consistent size even if name wraps to 2 lines */
@@ -102,57 +140,66 @@
     min-height: 110px !important;
   }
   .leaflet-popup-tip,
-  .leaflet-popup-tip-container { background: rgba(211,250,145,0.85) !important; background-image: none !important; }
-  .leaflet-popup-content { color: #122d12 !important; }
- 
- /* ensure park name can wrap to max 2 lines and reserve that space */
- .leaflet-popup .popup-name {
-   font-size: 1rem;
-   font-weight: 700;
-   line-height: 1.15;
-   display: -webkit-box;
-   -webkit-line-clamp: 2;
-   -webkit-box-orient: vertical;
-   overflow: hidden;
-   max-height: calc(1.15em * 2);
-   margin-bottom: 6px;
- }
+  .leaflet-popup-tip-container {
+    background: rgba(211, 250, 145, 0.85) !important;
+    background-image: none !important;
+  }
+  .leaflet-popup-content {
+    color: #122d12 !important;
+  }
 
-/* arrange the three fields in a single horizontal row */
-.leaflet-popup .popup-grid {
-  display: flex;
-  gap: 12px;
-  margin-top: 6px;
-}
-.leaflet-popup .popup-item {
-  flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;            /* center icon + value */
-  justify-content: center;
-}
-.leaflet-popup .popup-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #6b6b6b;
-  font-size: 0.9rem;
-}
-/* hide the text labels (keep markup) so only icons show */
-.leaflet-popup .popup-label span { display: none; }
-/* make icons larger */
-.leaflet-popup .popup-label img {
-  height:2.2em; width:auto; opacity:1;
-  -webkit-user-drag: none;
-}
-.leaflet-popup .popup-value {
-  margin-top: 6px;
-  font-weight: 700;
-  color: #122d12;
-  font-size: 0.95rem;
-  line-height: 1;
-}
+  /* ensure park name can wrap to max 2 lines and reserve that space */
+  .leaflet-popup .popup-name {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.15;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: calc(1.15em * 2);
+    margin-bottom: 6px;
+  }
+
+  /* arrange the three fields in a single horizontal row */
+  .leaflet-popup .popup-grid {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .leaflet-popup .popup-item {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center icon + value */
+    justify-content: center;
+  }
+  .leaflet-popup .popup-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #6b6b6b;
+    font-size: 0.9rem;
+  }
+  /* hide the text labels (keep markup) so only icons show */
+  .leaflet-popup .popup-label span {
+    display: none;
+  }
+  /* make icons larger */
+  .leaflet-popup .popup-label img {
+    height: 2.2em;
+    width: auto;
+    opacity: 1;
+    -webkit-user-drag: none;
+  }
+  .leaflet-popup .popup-value {
+    margin-top: 6px;
+    font-weight: 700;
+    color: #122d12;
+    font-size: 0.95rem;
+    line-height: 1;
+  }
 
   /* more space between address and the icon row in popup */
   .leaflet-popup .popup-address {
@@ -160,15 +207,23 @@
     color: #4b4b4b;
     margin-bottom: 12px; /* increased spacing */
   }
-  .leaflet-popup .popup-grid { margin-top: 80px; } /* slight extra breathing room */
+  .leaflet-popup .popup-grid {
+    margin-top: 80px;
+  } /* slight extra breathing room */
 
-@media (max-width: 420px) {
-  .leaflet-popup .popup-grid { flex-wrap: wrap; gap: 8px; }
-  .leaflet-popup .popup-item { flex: 1 1 48%; }
-}
+  @media (max-width: 420px) {
+    .leaflet-popup .popup-grid {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .leaflet-popup .popup-item {
+      flex: 1 1 48%;
+    }
+  }
 
-/* zoom control visuals */
-  .leaflet-control-zoom-in, .leaflet-control-zoom-out {
+  /* zoom control visuals */
+  .leaflet-control-zoom-in,
+  .leaflet-control-zoom-out {
     background: #fff !important;
     color: #122d12 !important;
     border: 1px solid #b6e86d !important;
@@ -179,7 +234,8 @@
     text-align: center;
     box-shadow: none !important;
   }
-  .leaflet-control-zoom-in:hover, .leaflet-control-zoom-out:hover {
+  .leaflet-control-zoom-in:hover,
+  .leaflet-control-zoom-out:hover {
     background: #d3fa91 !important;
     border-color: #8fd14a !important;
   }
@@ -198,12 +254,12 @@
   .leaflet-control-zoom-in,
   .leaflet-control-zoom-out {
     margin: 4px 2px !important; /* small spacing between buttons */
-    background: linear-gradient(180deg,#ffffff,#f6fff0) !important;
-    border: 1px solid rgba(139,197,63,0.22) !important;
+    background: linear-gradient(180deg, #ffffff, #f6fff0) !important;
+    border: 1px solid rgba(139, 197, 63, 0.22) !important;
     width: 44px !important;
     height: 44px !important;
     border-radius: 50% !important; /* keep round */
-    box-shadow: 0 8px 20px rgba(6,20,8,0.10) !important;
+    box-shadow: 0 8px 20px rgba(6, 20, 8, 0.1) !important;
   }
 
   /* remove any leftover outline box around the container when focused */
@@ -215,222 +271,438 @@
 
   /* responsive */
   @media (max-width: 900px) {
-    :root { --map-height: 55vh; }
-    #live-temp { right: 8px; left: auto; top: 8px; font-size:0.85rem; min-width: 200px; }
-    .map-wrap { margin: 20px 12px; }
+    :root {
+      --map-height: 55vh;
+    }
+    #live-temp {
+      right: 8px;
+      left: auto;
+      top: 8px;
+      font-size: 0.85rem;
+      min-width: 200px;
+    }
+    .map-wrap {
+      margin: 20px 12px;
+    }
   }
 </style>
 
 <div class="map-wrap" aria-hidden="false">
-  <div id="map" role="application" aria-label="Interactive map of Lisbon parks"></div>
+  <div id="map" role="application" aria-label="Interactive map of Lisbon parks">
+  </div>
   <div id="live-temp" aria-live="polite">Loading temperature...</div>
-  <div class="map-loading" id="mapLoading" aria-hidden="true"><div class="dot"></div></div>
+  <div class="map-loading" id="mapLoading" aria-hidden="true">
+    <div class="dot"></div>
+  </div>
 </div>
 
 <!-- scripts loaded client-side -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" client:load></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" client:load></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" client:load></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" client:load
+></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" client:load
+></script>
+<script
+  src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+  client:load></script>
 
 <script client:load>
   // run only in browser
   (function () {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // wait until Leaflet is available
     function whenLeaflet(cb) {
       if (window.L && window.L.marker) return cb();
-      const t = setInterval(() => { if (window.L && window.L.marker) { clearInterval(t); cb(); } }, 60);
+      const t = setInterval(() => {
+        if (window.L && window.L.marker) {
+          clearInterval(t);
+          cb();
+        }
+      }, 60);
       // timeout fallback
-      setTimeout(() => { clearInterval(t); if (window.L && window.L.marker) cb(); }, 5000);
+      setTimeout(() => {
+        clearInterval(t);
+        if (window.L && window.L.marker) cb();
+      }, 5000);
     }
 
     // small helper to escape user-provided text for popup
     function esc(s) {
-      return String(s || '').replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'})[c]);
+      return String(s || "").replace(
+        /[&<>"'`]/g,
+        (c) =>
+          ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+            "`": "&#96;",
+          })[c],
+      );
     }
 
     // fallback list of sample park names used when feature has no name
     const sampleParkNames = [
-      'Jardim da Estrela',
-      'Parque Eduardo VII',
-      'Jardim do Torel',
-      'Parque das Nações',
-      'Jardim Botânico da Ajuda',
-      'Parque de Monsanto',
-      'Jardim do Príncipe Real',
-      'Parque Mayer',
-      'Parque da Bela Vista',
-      'Jardim Vasco da Gama'
+      "Jardim da Estrela",
+      "Parque Eduardo VII",
+      "Jardim do Torel",
+      "Parque das Nações",
+      "Jardim Botânico da Ajuda",
+      "Parque de Monsanto",
+      "Jardim do Príncipe Real",
+      "Parque Mayer",
+      "Parque da Bela Vista",
+      "Jardim Vasco da Gama",
     ];
 
     // sample addresses (random fallback shown in popups)
     const sampleAddresses = [
-      'Praça da Estrela 2, 1200-667 Lisboa',
-      'Av. Sidónio Pais, 1070-051 Lisboa',
-      'Rua Júlio de Andrade 10, 1150-183 Lisboa',
-      'Praça do Mar 1, 1990-233 Lisboa',
-      'Largo da Ajuda 134, 1300-011 Lisboa',
-      'Estrada de Monsanto 45, 1500-660 Lisboa',
-      'Rua Dom Pedro V 20, 1250-094 Lisboa',
-      'Calçada do Parque Mayer 3, 1050-090 Lisboa',
-      'Av. Marechal Craveiro Lopes, 1950-040 Lisboa',
-      'Rua Vasco da Gama 8, 1990-030 Lisboa'
+      "Praça da Estrela 2, 1200-667 Lisboa",
+      "Av. Sidónio Pais, 1070-051 Lisboa",
+      "Rua Júlio de Andrade 10, 1150-183 Lisboa",
+      "Praça do Mar 1, 1990-233 Lisboa",
+      "Largo da Ajuda 134, 1300-011 Lisboa",
+      "Estrada de Monsanto 45, 1500-660 Lisboa",
+      "Rua Dom Pedro V 20, 1250-094 Lisboa",
+      "Calçada do Parque Mayer 3, 1050-090 Lisboa",
+      "Av. Marechal Craveiro Lopes, 1950-040 Lisboa",
+      "Rua Vasco da Gama 8, 1990-030 Lisboa",
     ];
 
     // use local public images as fallback in popups
     const samplePhotos = [
-      '/images/1.png',
-      '/images/2.png',
-      '/images/3.png',
-      '/images/4.png',
-      '/images/5.png',
-      '/images/6.png',
-      '/images/7.png',
-      '/images/8.png',
-      '/images/9.png'
+      "/images/1.png",
+      "/images/2.png",
+      "/images/3.png",
+      "/images/4.png",
+      "/images/5.png",
+      "/images/6.png",
+      "/images/7.png",
+      "/images/8.png",
+      "/images/9.png",
     ];
 
     whenLeaflet(initMap);
-    
+
     function initMap() {
-      const mapEl = document.getElementById('map');
-      const loadingEl = document.getElementById('mapLoading');
-      loadingEl.setAttribute('aria-hidden', 'false');
+      const mapEl = document.getElementById("map");
+      const loadingEl = document.getElementById("mapLoading");
+      loadingEl.setAttribute("aria-hidden", "false");
 
       // basic map
-      const map = L.map(mapEl, { preferCanvas: true, zoomControl: true }).setView([38.716, -9.14], 13);
+      const map = L.map(mapEl, {
+        preferCanvas: true,
+        zoomControl: true,
+      }).setView([38.716, -9.14], 13);
 
       // nice tile with retina support
-      const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap & CartoDB',
-        maxZoom: 19
-      }).addTo(map);
+      const tiles = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        {
+          attribution: "&copy; OpenStreetMap & CartoDB",
+          maxZoom: 19,
+        },
+      ).addTo(map);
 
       // constrain panning a bit around Lisbon
-      const southWest = L.latLng(38.60, -9.40);
+      const southWest = L.latLng(38.6, -9.4);
       const northEast = L.latLng(38.82, -8.95);
       map.setMaxBounds(L.latLngBounds(southWest, northEast));
-      map.on('drag', () => map.panInsideBounds(map.getBounds(), { animate: false }));
+      map.on("drag", () =>
+        map.panInsideBounds(map.getBounds(), { animate: false }),
+      );
 
       // icon paths - use explicit root paths so builds/hosting find them reliably
       const customIcon = L.icon({
-        iconUrl: '/images/map/pinned.svg',
+        iconUrl: "/images/map/pinned.svg",
         iconSize: [34, 34],
         iconAnchor: [17, 34],
-        popupAnchor: [0, -34]
+        popupAnchor: [0, -34],
       });
-
-      const parksUrl = 'https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/POIArLivre/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson';
 
       // marker cluster
-      const clusterGroup = L.markerClusterGroup({ chunkedLoading: true, removeOutsideVisibleBounds: true });
-
-      const heatPoints = [];
-
-      fetch(parksUrl).then(res => {
-        if (!res.ok) throw new Error('Park data fetch failed');
-        return res.json();
-      }).then(geojson => {
-        // create GeoJSON layer with markers -> cluster
-        L.geoJSON(geojson, {
-          pointToLayer: (feature, latlng) => {
-            return L.marker(latlng, { icon: customIcon });
-          },
-          onEachFeature: (feature, layer) => {
-            const props = feature.properties || {};
-            const rawName = props.NOME || props.nome || props.name || '';
-            const parkName = esc(rawName || sampleParkNames[Math.floor(Math.random() * sampleParkNames.length)]);
-
-            // derive address from common property names (fallback to a random sample address)
-            const rawAddress = props.ENDERECO || props['ENDEREÇO'] || props.endereco || props.address ||
-              props.RUA || props.rua || props.logradouro || props.street || '';
-            const addressRaw = rawAddress || sampleAddresses[Math.floor(Math.random() * sampleAddresses.length)];
-            const address = esc(addressRaw);
-            const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(addressRaw);
-
-            // choose photo from feature props or fallback to samplePhotos
-            const photoRaw = props.FOTO || props.foto || props.image || props.photo || samplePhotos[Math.floor(Math.random() * samplePhotos.length)];
-            const photo = esc(photoRaw);
-            
-            const noise = Math.floor(40 + Math.random() * 30);
-            const shade = ['Low','Medium','High'][Math.floor(Math.random()*3)];
-            const tables = Math.random() > 0.5 ? 'Yes' : 'No';
-
-            // detect dog-friendly / dog-park from common property names or fallback to heuristic
-            const lowerProps = JSON.stringify(props).toLowerCase();
-            const isDogPark = (
-              props.DOGPARK === 'Yes' ||
-              props.DOGPARK === 'Sim' ||
-              props.ALLOWS_DOGS === true ||
-              props.allows_dogs === true ||
-              props.cães === 'Sim' ||
-              /dog|cao|cachorro|cães|caes|canino|perros/.test(lowerProps)
-            );
-            
-            const popupHtml = `
-               <div style="text-align:left;min-width:200px;">
-                 <strong class="popup-name">${parkName}</strong>
-                ${address ? `<div class="popup-address"><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${address}</a></div>` : ''}
-                ${photo ? `<div class="popup-photo"><img class="popup-image" src="${photo}" alt="${parkName}"></div>` : ''}
-                 <div class="popup-grid">
-                   <div class="popup-item">
-                     <div class="popup-label"><img src="/images/map/noise.svg" alt="Noise"><span>Noise</span></div>
-                     <div class="popup-value">${noise} dB</div>
-                   </div>
-                   <div class="popup-item">
-                     <div class="popup-label"><img src="/images/map/tree.svg" alt="Shade"><span>Shade</span></div>
-                     <div class="popup-value">${esc(shade)}</div>
-                   </div>
-                   <div class="popup-item">
-                     <div class="popup-label"><img src="${isDogPark ? '/images/map/dog.svg' : '/images/mapPhotos/bench.png'}" alt=""><span>Dogs</span></div>
-                     <div class="popup-value">${isDogPark ? 'Dogs' : 'No dogs'}</div>
-                   </div>
-                 </div>
-               </div>`;
-             layer.bindPopup(popupHtml, { maxWidth: 360 });
-            const coords = feature.geometry && feature.geometry.coordinates;
-            if (coords && coords.length >= 2) {
-              const temp = 20 + Math.random()*15;
-              const intensity = Math.max(0, Math.min(1, (temp - 18)/12));
-              heatPoints.push([coords[1], coords[0], intensity]);
-            }
-            clusterGroup.addLayer(layer);
-          }
-        });
-        map.addLayer(clusterGroup);
-
-        // heat layer only if we have points
-        if (heatPoints.length) {
-          L.heatLayer(heatPoints, { radius: 50, blur: 18, maxZoom: 17, gradient: {0.0:'blue',0.5:'lime',1.0:'red'} }).addTo(map);
-        }
-
-        // fit view to markers if available
-        const bounds = clusterGroup.getBounds();
-        if (bounds.isValid()) {
-          map.fitBounds(bounds.pad(0.15), { maxZoom: 16, animate: true });
-        }
-
-      }).catch(err => {
-        console.error('Parks load error', err);
-      }).finally(() => {
-        // hide loading once initial data attempt finished
-        loadingEl.setAttribute('aria-hidden', 'true');
-        loadingEl.style.display = 'none';
+      const clusterGroup = L.markerClusterGroup({
+        chunkedLoading: true,
+        removeOutsideVisibleBounds: true,
       });
 
+      // heat points array (optional visual)
+      const heatPoints = [];
+
+      // Use the 20 parks provided in the inserts (approximate coordinates chosen in Lisbon)
+      const parksData = [
+        {
+          park_name: "Jardim Mário Soares",
+          park_location: "Alvalade / Campo Grande, Lisbon",
+          park_description:
+            "Large central park, formerly Jardim do Campo Grande",
+          dog_id: 1,
+          lat: 38.737,
+          lng: -9.144,
+        },
+        {
+          park_name: "Parque Eduardo VII",
+          park_location: "North of Avenida da Liberdade, Lisbon",
+          park_description: "Formal park with tree-lined zones",
+          dog_id: 2,
+          lat: 38.7275,
+          lng: -9.1528,
+        },
+        {
+          park_name: "Jardim da Estrela",
+          park_location: "Estrela neighborhood, Lisbon",
+          park_description: "Shaded footpaths, benches and lawns",
+          dog_id: 2,
+          lat: 38.7099,
+          lng: -9.155,
+        },
+        {
+          park_name: "Jardim da Fundação Calouste Gulbenkian",
+          park_location: "Near Gulbenkian Museum, Lisbon",
+          park_description: "Peaceful garden with mature trees",
+          dog_id: 2,
+          lat: 38.7435,
+          lng: -9.1546,
+        },
+        {
+          park_name: "Parque Florestal de Monsanto",
+          park_location: "West/Northwest Lisbon",
+          park_description: "Urban forest park, largest green area in Lisbon",
+          dog_id: 2,
+          lat: 38.7412,
+          lng: -9.2186,
+        },
+        {
+          park_name: "Jardim do Príncipe Real",
+          park_location: "Príncipe Real neighborhood, Lisbon",
+          park_description: "Urban garden with historic cedar tree and café",
+          dog_id: 2,
+          lat: 38.7139,
+          lng: -9.1489,
+        },
+        {
+          park_name: "Parque da Bela Vista",
+          park_location: "Marvila area, Lisbon",
+          park_description: "Large park, event area, dog-friendly zone",
+          dog_id: 1,
+          lat: 38.7436,
+          lng: -9.0995,
+        },
+        {
+          park_name: "Parque das Nações",
+          park_location: "Eastern Lisbon, waterfront",
+          park_description: "Modern riverside park, Expo ’98 site",
+          dog_id: 2,
+          lat: 38.768,
+          lng: -9.093,
+        },
+        {
+          park_name: "Jardim Botânico (University of Lisbon)",
+          park_location: "University area, Lisbon",
+          park_description: "Botanical garden with many trees and shaded areas",
+          dog_id: 2,
+          lat: 38.717,
+          lng: -9.157,
+        },
+        {
+          park_name: "Jardim Fernando Pessa",
+          park_location: "Areeiro / Alameda area, Lisbon",
+          park_description: "Small urban park with dog area",
+          dog_id: 1,
+          lat: 38.743,
+          lng: -9.123,
+        },
+        {
+          park_name: "Jardim Botânico da Ajuda",
+          park_location: "Ajuda, Lisbon",
+          park_description: "Botanical garden with historic features",
+          dog_id: 2,
+          lat: 38.699,
+          lng: -9.185,
+        },
+        {
+          park_name: "Jardim França Borges",
+          park_location: "Lisbon",
+          park_description: "Urban green area, shaded spots",
+          dog_id: 2,
+          lat: 38.706,
+          lng: -9.137,
+        },
+        {
+          park_name: "Parque Gonçalo Ribeiro Telles",
+          park_location: "Lisbon",
+          park_description: "Large park with walking paths and green zones",
+          dog_id: 2,
+          lat: 38.722,
+          lng: -9.14,
+        },
+        {
+          park_name: "Tapada das Necessidades",
+          park_location: "Lisbon",
+          park_description: "Expansive grassy areas and trees",
+          dog_id: 2,
+          lat: 38.705,
+          lng: -9.158,
+        },
+        {
+          park_name: "Jardim Torel",
+          park_location: "Lisbon",
+          park_description: "Small garden with benches and views",
+          dog_id: 2,
+          lat: 38.7132,
+          lng: -9.148,
+        },
+        {
+          park_name: "Parque Canino da Parada",
+          park_location: "Alto de São João / Penha area",
+          park_description: "Dedicated dog park in residential area",
+          dog_id: 1,
+          lat: 38.744,
+          lng: -9.124,
+        },
+        {
+          park_name: "Parque Canino Jardim Irma Lúcia",
+          park_location: "Areeiro / Alameda area",
+          park_description: "Dog-friendly urban park",
+          dog_id: 1,
+          lat: 38.748,
+          lng: -9.133,
+        },
+        {
+          park_name: "Parque Canino Alto de São João",
+          park_location: "Lisbon",
+          park_description: "Dog park in residential area",
+          dog_id: 1,
+          lat: 38.743,
+          lng: -9.111,
+        },
+        {
+          park_name: "Parque Canino dos Prazeres",
+          park_location: "Alta de Lisboa",
+          park_description: "Fenced dog area in Alta de Lisboa",
+          dog_id: 1,
+          lat: 38.712,
+          lng: -9.157,
+        },
+        {
+          park_name: "Parque Canino da Bela Vista",
+          park_location: "Inside Parque da Bela Vista",
+          park_description: "Dog park inside Bela Vista park",
+          dog_id: 1,
+          lat: 38.7438,
+          lng: -9.0992,
+        },
+      ];
+
+      // small comments dataset (from src/database/data.json) — shown like the description
+      const comments = [
+        "Love the benches here!",
+        "Shade makes picnics nice",
+        "Dog fountains are useful",
+        "Paths are well kept",
+      ];
+
+      // create markers from the hard-coded parks array
+      parksData.forEach((p) => {
+        const lat = Number(p.lat);
+        const lng = Number(p.lng);
+        if (Number.isFinite(lat) && Number.isFinite(lng)) {
+          const name = esc(p.park_name || "Park");
+          const addressRaw = p.park_location || "";
+          const address = esc(addressRaw);
+          const mapsUrl =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(addressRaw || p.park_name);
+          const description = esc(p.park_description || "");
+          // choose a random photo between 1.png and 10.png (makes popup images random)
+          const photo =
+            "/images/" + (Math.floor(Math.random() * 10) + 1) + ".png";
+          // pick a random comment and escape it (will be shown like description)
+          const commentText = comments.length
+            ? esc(comments[Math.floor(Math.random() * comments.length)])
+            : "";
+          const isDogPark = Number(p.dog_id) === 1;
+
+          const noise = Math.floor(40 + Math.random() * 30);
+          const shade = ["Low", "Medium", "High"][
+            Math.floor(Math.random() * 3)
+          ];
+
+          const popupHtml = `
+            <div style="text-align:left;min-width:200px;">
+              <strong class="popup-name">${name}</strong>
+              ${address ? `<div class="popup-address"><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">${address}</a></div>` : ""}
+              ${photo ? `<div class="popup-photo"><img class="popup-image" src="${photo}" alt="${name}"></div>` : ""}
+              ${description ? `<div class="popup-address"><strong style="display:block;font-weight:700;margin-bottom:4px;">Description</strong>${description}</div>` : ""}
+              ${commentText ? `<div class="popup-address"><strong style="display:block;font-weight:700;margin-bottom:4px;">Comments</strong>"${commentText}"</div>` : ""}
+              <div class="popup-grid">
+                <div class="popup-item">
+                  <div class="popup-label"><img src="/images/map/noise.svg" alt="Noise"><span>Noise</span></div>
+                  <div class="popup-value">${noise} dB</div>
+                </div>
+                <div class="popup-item">
+                  <div class="popup-label"><img src="/images/map/tree.svg" alt="Shade"><span>Shade</span></div>
+                  <div class="popup-value">${esc(shade)}</div>
+                </div>
+                <div class="popup-item">
+                  <div class="popup-label"><img src="/images/map/dog.svg" alt="Dog"><span>Dogs</span></div>
+                  <div class="popup-value">${isDogPark ? "Dogs" : "No dogs"}</div>
+                </div>
+              </div>
+            </div>`;
+
+          const marker = L.marker([lat, lng], { icon: customIcon }).bindPopup(
+            popupHtml,
+            { maxWidth: 360 },
+          );
+          clusterGroup.addLayer(marker);
+
+          // add heat intensity loosely based on whether the location is a dog park (just to populate heat)
+          const intensity = isDogPark ? 0.8 : 0.2 + Math.random() * 0.6;
+          heatPoints.push([lat, lng, Math.max(0, Math.min(1, intensity))]);
+        }
+      });
+
+      map.addLayer(clusterGroup);
+
+      // heat layer only if we have points
+      if (heatPoints.length) {
+        L.heatLayer(heatPoints, {
+          radius: 50,
+          blur: 18,
+          maxZoom: 17,
+          gradient: { 0.0: "blue", 0.5: "lime", 1.0: "red" },
+        }).addTo(map);
+      }
+
+      // fit view to markers if available
+      const bounds = clusterGroup.getBounds();
+      if (bounds.isValid()) {
+        map.fitBounds(bounds.pad(0.15), { maxZoom: 16, animate: true });
+      }
+
+      // hide loading once initial data rendered
+      loadingEl.setAttribute("aria-hidden", "true");
+      loadingEl.style.display = "none";
+
       // live temperature panel
-      const liveEl = document.getElementById('live-temp');
+      const liveEl = document.getElementById("live-temp");
       function updateLiveTemp() {
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=38.716&longitude=-9.14&current_weather=true')
-          .then(r => r.json())
-          .then(data => {
+        fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=38.716&longitude=-9.14&current_weather=true",
+        )
+          .then((r) => r.json())
+          .then((data) => {
             const w = data && data.current_weather;
-            if (!w) { liveEl.textContent = 'Weather unavailable'; return; }
+            if (!w) {
+              liveEl.textContent = "Weather unavailable";
+              return;
+            }
             const temp = w.temperature;
-            const rainCodes = [51,53,55,61,63,65,80,81,82];
+            const rainCodes = [51, 53, 55, 61, 63, 65, 80, 81, 82];
             const isRaining = rainCodes.includes(w.weathercode);
-            const text = isRaining ? 'Rain' : 'Sunny';
+            const text = isRaining ? "Rain" : "Sunny";
             liveEl.innerHTML = `
               <div style="display:flex;align-items:center;gap:8px;">
                 <img src="/images/map/hjem.svg" alt="" style="height:1.2em;">
@@ -441,19 +713,23 @@
                 <span style="margin-left:auto;">${temp.toFixed(1)}°C</span>
               </div>
               <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
-                <img src="/images/map/${isRaining ? 'rain' : 'sun'}.svg" alt="" style="height:1.2em;">
+                <img src="/images/map/${isRaining ? "rain" : "sun"}.svg" alt="" style="height:1.2em;">
                 <span style="margin-left:auto;">${text}</span>
               </div>
             `;
           })
-          .catch(() => { liveEl.textContent = 'Weather unavailable'; });
+          .catch(() => {
+            liveEl.textContent = "Weather unavailable";
+          });
       }
 
       updateLiveTemp();
       setInterval(updateLiveTemp, 60000);
 
       // keep map responsive
-      window.addEventListener('resize', () => { setTimeout(() => map.invalidateSize(), 250); });
+      window.addEventListener("resize", () => {
+        setTimeout(() => map.invalidateSize(), 250);
+      });
     }
   })();
 </script>
