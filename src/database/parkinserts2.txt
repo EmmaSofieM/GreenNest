@@ -1,0 +1,132 @@
+-- DOG TABLE
+INSERT INTO dog (dog_name, dog_description) VALUES ("Dog Park Available", "A fully fenced dog area inside the park");
+INSERT INTO dog (dog_name, dog_description) VALUES ("No Dog Park", "No fenced dog area available");
+
+
+
+-- PARK TABLE
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim Mário Soares", "Alvalade / Campo Grande, Lisbon", FALSE, str_to_date('2018.04.25','%Y.%m.%d'), "Large central park, formerly Jardim do Campo Grande", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Eduardo VII", "North of Avenida da Liberdade, Lisbon", FALSE, str_to_date('1903.01.01','%Y.%m.%d'), "Formal park with tree-lined zones", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim da Estrela", "Estrela neighborhood, Lisbon", FALSE, str_to_date('1852.11.01','%Y.%m.%d'), "Shaded footpaths, benches and lawns", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim da Fundação Calouste Gulbenkian", "Near Gulbenkian Museum, Lisbon", FALSE, str_to_date('1969.01.01','%Y.%m.%d'), "Peaceful garden with mature trees", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Florestal de Monsanto", "West/Northwest Lisbon", FALSE, str_to_date('1934.11.01','%Y.%m.%d'), "Urban forest park, largest green area in Lisbon", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim do Príncipe Real", "Príncipe Real neighborhood, Lisbon", FALSE, str_to_date('1863.01.01','%Y.%m.%d'), "Urban garden with historic cedar tree and café", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque da Bela Vista", "Marvila area, Lisbon", FALSE, str_to_date('1991.01.01','%Y.%m.%d'), "Large park, event area, dog-friendly zone", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque das Nações", "Eastern Lisbon, waterfront", FALSE, str_to_date('1998.05.22','%Y.%m.%d'), "Modern riverside park, Expo ’98 site", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim Botânico (University of Lisbon)", "University area, Lisbon", FALSE, str_to_date('1878.01.01','%Y.%m.%d'), "Botanical garden with many trees and shaded areas", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim Fernando Pessa", "Areeiro / Alameda area, Lisbon", FALSE, str_to_date('2000.01.01','%Y.%m.%d'), "Small urban park with dog area", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim Botânico da Ajuda", "Ajuda, Lisbon", FALSE, str_to_date('1768.01.01','%Y.%m.%d'), "Botanical garden with historic features", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim França Borges", "Lisbon", FALSE, str_to_date('1863.01.01','%Y.%m.%d'), "Urban green area, shaded spots", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Gonçalo Ribeiro Telles", "Lisbon", FALSE, str_to_date('2021.06.13','%Y.%m.%d'), "Large park with walking paths and green zones", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Tapada das Necessidades", "Lisbon", FALSE, str_to_date('1604.01.01','%Y.%m.%d'), "Expansive grassy areas and trees", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Jardim Torel", "Lisbon", FALSE, str_to_date('2000.01.01','%Y.%m.%d'), "Small garden with benches and views", 2);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Canino da Parada", "Alto de São João / Penha area", FALSE, str_to_date('2000.01.01','%Y.%m.%d'), "Dedicated dog park in residential area", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Canino Jardim Irma Lúcia", "Areeiro / Alameda area", FALSE, str_to_date('2000.01.01','%Y.%m.%d'), "Dog-friendly urban park", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Canino Alto de São João", "Lisbon", FALSE, str_to_date('2000.01.01','%Y.%m.%d'), "Dog park in residential area", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Canino dos Prazeres", "Alta de Lisboa", FALSE, str_to_date('2000.01.01','%Y.%m.%d'), "Fenced dog area in Alta de Lisboa", 1);
+INSERT INTO park (park_name, park_location, park_wifi, park_creationdate, park_description, park_dog_id) VALUES
+("Parque Canino da Bela Vista", "Inside Parque da Bela Vista", FALSE, str_to_date('1991.01.01','%Y.%m.%d'), "Dog park inside Bela Vista park", 1);
+
+
+-- SERVICE TABLE
+INSERT INTO service (ser_name, ser_description) VALUES ("Benches", "Seating available around the park");
+INSERT INTO service (ser_name, ser_description) VALUES ("Tables", "Picnic tables available");
+INSERT INTO service (ser_name, ser_description) VALUES ("Shade", "Trees or built shade structures");
+INSERT INTO service (ser_name, ser_description) VALUES ("Toilets", "Public restrooms available");
+INSERT INTO service (ser_name, ser_description) VALUES ("Water Fountain", "Drinking fountains for humans and dogs");
+INSERT INTO service (ser_name, ser_description) VALUES ("Playground", "Children’s play area");
+INSERT INTO service (ser_name, ser_description) VALUES ("Walking Paths", "Paths suitable for walking or jogging");
+
+
+-- PARK-SERVICE TABLE
+-- Example: mapping some common services to parks
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (1, 1, "Many benches available");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (1, 2, "Several picnic tables");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (1, 3, "Large shaded areas");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (2, 1, "Benches along the main avenues");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (2, 3, "Shaded areas under trees");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (3, 1, "Plenty of benches");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (3, 3, "Shaded paths for walking");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (4, 1, "Benches near fountains");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (4, 3, "Shaded garden areas");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (7, 1, "Some benches");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (7, 3, "Shaded spots");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (7, 2, "Picnic tables");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (16, 1, "Benches around the dog park");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (16, 3, "Trees provide shade");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (20, 1, "Benches available");
+INSERT INTO parkservice (ps_park_id, ps_ser_id, ps_note) VALUES (20, 3, "Shaded areas");
+
+
+-- ACTIVITY TABLE
+INSERT INTO activity (act_name, act_description) VALUES ("Running", "Paths suitable for running and jogging");
+INSERT INTO activity (act_name, act_description) VALUES ("Dog Walking", "Wide walking paths for dogs");
+INSERT INTO activity (act_name, act_description) VALUES ("Picnic", "Grass areas suitable for picnics");
+INSERT INTO activity (act_name, act_description) VALUES ("Relaxing", "Quiet spots for relaxation");
+INSERT INTO activity (act_name, act_description) VALUES ("Children Play", "Playground activities for children");
+INSERT INTO activity (act_name, act_description) VALUES ("Cycling", "Bike-friendly park paths");
+
+
+-- PARKACTIVITY TABLE
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (1, 1, "Morning runs recommended");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (1, 2, "Dogs allowed in fenced area");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (1, 3, "Picnic areas near the benches");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (2, 1, "Good for jogging");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (2, 4, "Relax on lawns");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (3, 2, "Walk dogs on paths");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (3, 3, "Picnic areas available");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (7, 2, "Dog-friendly park");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (7, 3, "Picnic near shaded areas");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (16, 2, "Dedicated dog area");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (16, 3, "Bring your own picnic");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (20, 2, "Dog park inside larger park");
+INSERT INTO parkactivity (pa_park_id, pa_act_id, pa_note) VALUES (20, 4, "Relax under trees");
+
+-- USER TABLE
+INSERT INTO user (user_name, user_email, user_pass, user_location, user_bdate) VALUES ("EmmaSofie", "emma@example.com", "hashed_password", "Lisbon", str_to_date('2000.04.18','%Y.%m.%d'));
+INSERT INTO user (user_name, user_email, user_pass, user_location, user_bdate) VALUES ("CarlosP", "carlos@example.com", "hashed_password", "Lisbon", str_to_date('1998.11.12','%Y.%m.%d'));
+INSERT INTO user (user_name, user_email, user_pass, user_location, user_bdate) VALUES ("AnaM", "ana@example.com", "hashed_password", "Lisbon", str_to_date('2001.07.05','%Y.%m.%d'));
+
+
+-- FAVORITE TABLE
+INSERT INTO favorite (ufav_park_id, ufav_user_id) VALUES (1, 1);
+INSERT INTO favorite (ufav_park_id, ufav_user_id) VALUES (7, 1);
+INSERT INTO favorite (ufav_park_id, ufav_user_id) VALUES (2, 2);
+INSERT INTO favorite (ufav_park_id, ufav_user_id) VALUES (16, 2);
+INSERT INTO favorite (ufav_park_id, ufav_user_id) VALUES (20, 3);
+
+
+
+-- REVIEW TABLE
+INSERT INTO review (urev_park_id, urev_user_id, urev_title, urev_text) VALUES (1, 1, "Great park for dogs", "Loved the fenced dog area and shady paths.");
+INSERT INTO review (urev_park_id, urev_user_id, urev_title, urev_text) VALUES (7, 1, "Nice picnic spot", "Good benches and shade, perfect for an afternoon.");
+INSERT INTO review (urev_park_id, urev_user_id, urev_title, urev_text) VALUES (16, 2, "Fun for dogs", "The dog park is well maintained and safe.");
+INSERT INTO review (urev_park_id, urev_user_id, urev_title, urev_text) VALUES (20, 3, "Peaceful area", "Dogs enjoyed the space, plenty of trees.");
+
+
+
+-- COMMENTS TABLE
+INSERT INTO comments (comment_text, comment_ps_id, comment_user_id) VALUES ("Love the benches here!", 1, 1);
+INSERT INTO comments (comment_text, comment_ps_id, comment_user_id) VALUES ("Shade makes picnics nice", 3, 1);
+INSERT INTO comments (comment_text, comment_ps_id, comment_user_id) VALUES ("Dog fountains are useful", 8, 2);
+INSERT INTO comments (comment_text, comment_ps_id, comment_user_id) VALUES ("Paths are well kept", 16, 3);
+

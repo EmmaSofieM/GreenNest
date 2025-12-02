@@ -1,0 +1,145 @@
+create table park (
+    park_id int not null auto_increment,
+    park_name VARCHAR(60) not null,            # park name
+    park_location VARCHAR(100) not null,        # location or area in Lisbon
+    park_wifi boolean not null,                # whether the park has Wi-Fi
+    park_creationdate DATE not null,           # date the park was created
+    park_description VARCHAR(200),              # short description of the park
+    park_dog_id INT not null,                  # foreign key linking to dog table
+    primary key (park_id)
+);
+
+create table activity (
+    act_id int not null auto_increment,
+    act_name VARCHAR(40) not null,             # activity name
+    act_description VARCHAR(200) not null,     # description of the activity
+    primary key (act_id)
+);
+
+create table service (
+    ser_id int not null auto_increment,
+    ser_name VARCHAR(40) not null,             # service name (benches, toilets etc.)
+    ser_description VARCHAR(200) not null,     # service description
+    primary key (ser_id)
+);
+
+create table parkservice (
+    ps_id int not null auto_increment,
+    ps_park_id int not null,                   # foreign key to park
+    ps_ser_id int not null,                    # foreign key to service
+    ps_note VARCHAR(40) not null,              # notes about the service
+    primary key (ps_id)
+);
+
+create table parkactivity (
+    pa_id int not null auto_increment,
+    pa_park_id int not null,                   # foreign key to park
+    pa_act_id int not null,                    # foreign key to activity
+    pa_note VARCHAR(40) not null,              # notes about the activity
+    primary key (pa_id)
+);
+
+create table user (
+    user_id int not null auto_increment,
+    user_name VARCHAR(60) not null,            # username
+    user_email VARCHAR(60) not null,           # user email
+    user_pass VARCHAR(60) not null,            # password (hashed)
+    user_location VARCHAR(30),                 # optional location
+    user_bdate DATE,                           # birthday
+    primary key (user_id)
+);
+
+create table favorite (
+    ufav_id int not null auto_increment,
+    ufav_park_id int not null,                 # foreign key to park
+    ufav_user_id int not null,                 # foreign key to user
+    primary key (ufav_id)
+);
+
+create table review (
+    urev_id int not null auto_increment,
+    urev_park_id int not null,                 # foreign key to park
+    urev_user_id int not null,                 # foreign key to user
+    urev_title VARCHAR(100) not null,          # review title
+    urev_text VARCHAR(100) not null,                   # review text
+    primary key (urev_id)
+);
+
+create table dog (
+    dog_id int not null auto_increment,
+    dog_name VARCHAR(60) not null,             # type of dog facility
+    dog_description VARCHAR(100) not null,     # description of dog area
+    primary key (dog_id)
+);
+
+create table elements (
+    element_id int not null auto_increment,
+    elemnet_name VARCHAR(60) not null,         # element name (shade, water fountain etc.)
+    element_description VARCHAR(200) not null,  # description of the element
+    primary key (element_id)
+);
+
+create table comments (
+    comment_id int not null auto_increment,
+    comment_text VARCHAR(150) not null,         # the comment text
+    comment_ps_id int not null,        # foreign key to park-service
+    comment_user_id int not null,      		   # foreign key to user
+    primary key (comment_id)
+);
+
+# FOREIGN KEY SECTION
+
+alter table park 
+add constraint park_fk_dog
+foreign key (park_dog_id) references dog(dog_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table parkactivity 
+add constraint pa_fk_park
+foreign key (pa_park_id) references park(park_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table parkactivity 
+add constraint pa_fk_act
+foreign key (pa_act_id) references activity(act_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table parkservice 
+add constraint ps_fk_park
+foreign key (ps_park_id) references park(park_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table parkservice
+add constraint ps_fk_ser
+foreign key (ps_ser_id) references service(ser_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table favorite
+add constraint ufav_fk_park
+foreign key (ufav_park_id) references park(park_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table favorite
+add constraint ufav_fk_user
+foreign key (ufav_user_id) references user(user_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table review
+add constraint urev_fk_park
+foreign key (urev_park_id) references park(park_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table review
+add constraint urev_fk_user
+foreign key (urev_user_id) references user(user_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table comments
+add constraint comment_fk_user
+foreign key (comment_user_id) references user(user_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+alter table comments
+add constraint comment_fk_ps
+foreign key (comment_ps_id) references parkservice(ps_id) 
+ON DELETE NO ACTION ON UPDATE NO ACTION;

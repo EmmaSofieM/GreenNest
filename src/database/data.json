@@ -1,0 +1,473 @@
+{
+  "park": [
+    {
+      "park_name": "Jardim Mário Soares",
+      "park_location": "\"Alvalade / Campo Grande",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('2018.04.25'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Parque Eduardo VII",
+      "park_location": "\"North of Avenida da Liberdade",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1903.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Jardim da Estrela",
+      "park_location": "\"Estrela neighborhood",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1852.11.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Jardim da Fundação Calouste Gulbenkian",
+      "park_location": "\"Near Gulbenkian Museum",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1969.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Parque Florestal de Monsanto",
+      "park_location": "West/Northwest Lisbon",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('1934.11.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "\"Urban forest park"
+    },
+    {
+      "park_name": "Jardim do Príncipe Real",
+      "park_location": "\"Príncipe Real neighborhood",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1863.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Parque da Bela Vista",
+      "park_location": "\"Marvila area",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1991.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Parque das Nações",
+      "park_location": "\"Eastern Lisbon",
+      "park_wifi": "waterfront\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1998.05.22'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Jardim Botânico (University of Lisbon)",
+      "park_location": "\"University area",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1878.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Jardim Fernando Pessa",
+      "park_location": "\"Areeiro / Alameda area",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('2000.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Jardim Botânico da Ajuda",
+      "park_location": "\"Ajuda",
+      "park_wifi": "Lisbon\"",
+      "park_creationdate": "FALSE",
+      "park_description": "str_to_date('1768.01.01'",
+      "park_dog_id": "'%Y.%m.%d')"
+    },
+    {
+      "park_name": "Jardim França Borges",
+      "park_location": "Lisbon",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('1863.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "\"Urban green area"
+    },
+    {
+      "park_name": "Parque Gonçalo Ribeiro Telles",
+      "park_location": "Lisbon",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('2021.06.13'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Large park with walking paths and green zones"
+    },
+    {
+      "park_name": "Tapada das Necessidades",
+      "park_location": "Lisbon",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('1604.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Expansive grassy areas and trees"
+    },
+    {
+      "park_name": "Jardim Torel",
+      "park_location": "Lisbon",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('2000.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Small garden with benches and views"
+    },
+    {
+      "park_name": "Parque Canino da Parada",
+      "park_location": "Alto de São João / Penha area",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('2000.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Dedicated dog park in residential area"
+    },
+    {
+      "park_name": "Parque Canino Jardim Irma Lúcia",
+      "park_location": "Areeiro / Alameda area",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('2000.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Dog-friendly urban park"
+    },
+    {
+      "park_name": "Parque Canino Alto de São João",
+      "park_location": "Lisbon",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('2000.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Dog park in residential area"
+    },
+    {
+      "park_name": "Parque Canino dos Prazeres",
+      "park_location": "Alta de Lisboa",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('2000.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Fenced dog area in Alta de Lisboa"
+    },
+    {
+      "park_name": "Parque Canino da Bela Vista",
+      "park_location": "Inside Parque da Bela Vista",
+      "park_wifi": "FALSE",
+      "park_creationdate": "str_to_date('1991.01.01'",
+      "park_description": "'%Y.%m.%d')",
+      "park_dog_id": "Dog park inside Bela Vista park"
+    }
+  ],
+  "activity": [
+    {
+      "act_name": "Running",
+      "act_description": "Paths suitable for running and jogging"
+    },
+    {
+      "act_name": "Dog Walking",
+      "act_description": "Wide walking paths for dogs"
+    },
+    {
+      "act_name": "Picnic",
+      "act_description": "Grass areas suitable for picnics"
+    },
+    {
+      "act_name": "Relaxing",
+      "act_description": "Quiet spots for relaxation"
+    },
+    {
+      "act_name": "Children Play",
+      "act_description": "Playground activities for children"
+    },
+    {
+      "act_name": "Cycling",
+      "act_description": "Bike-friendly park paths"
+    }
+  ],
+  "service": [
+    {
+      "ser_name": "Benches",
+      "ser_description": "Seating available around the park"
+    },
+    {
+      "ser_name": "Tables",
+      "ser_description": "Picnic tables available"
+    },
+    {
+      "ser_name": "Shade",
+      "ser_description": "Trees or built shade structures"
+    },
+    {
+      "ser_name": "Toilets",
+      "ser_description": "Public restrooms available"
+    },
+    {
+      "ser_name": "Water Fountain",
+      "ser_description": "Drinking fountains for humans and dogs"
+    },
+    {
+      "ser_name": "Playground",
+      "ser_description": "Children’s play area"
+    },
+    {
+      "ser_name": "Walking Paths",
+      "ser_description": "Paths suitable for walking or jogging"
+    }
+  ],
+  "parkservice": [
+    {
+      "ps_park_id": 1,
+      "ps_ser_id": 1,
+      "ps_note": "Many benches available"
+    },
+    {
+      "ps_park_id": 1,
+      "ps_ser_id": 2,
+      "ps_note": "Several picnic tables"
+    },
+    {
+      "ps_park_id": 1,
+      "ps_ser_id": 3,
+      "ps_note": "Large shaded areas"
+    },
+    {
+      "ps_park_id": 2,
+      "ps_ser_id": 1,
+      "ps_note": "Benches along the main avenues"
+    },
+    {
+      "ps_park_id": 2,
+      "ps_ser_id": 3,
+      "ps_note": "Shaded areas under trees"
+    },
+    {
+      "ps_park_id": 3,
+      "ps_ser_id": 1,
+      "ps_note": "Plenty of benches"
+    },
+    {
+      "ps_park_id": 3,
+      "ps_ser_id": 3,
+      "ps_note": "Shaded paths for walking"
+    },
+    {
+      "ps_park_id": 4,
+      "ps_ser_id": 1,
+      "ps_note": "Benches near fountains"
+    },
+    {
+      "ps_park_id": 4,
+      "ps_ser_id": 3,
+      "ps_note": "Shaded garden areas"
+    },
+    {
+      "ps_park_id": 7,
+      "ps_ser_id": 1,
+      "ps_note": "Some benches"
+    },
+    {
+      "ps_park_id": 7,
+      "ps_ser_id": 3,
+      "ps_note": "Shaded spots"
+    },
+    {
+      "ps_park_id": 7,
+      "ps_ser_id": 2,
+      "ps_note": "Picnic tables"
+    },
+    {
+      "ps_park_id": 16,
+      "ps_ser_id": 1,
+      "ps_note": "Benches around the dog park"
+    },
+    {
+      "ps_park_id": 16,
+      "ps_ser_id": 3,
+      "ps_note": "Trees provide shade"
+    },
+    {
+      "ps_park_id": 20,
+      "ps_ser_id": 1,
+      "ps_note": "Benches available"
+    },
+    {
+      "ps_park_id": 20,
+      "ps_ser_id": 3,
+      "ps_note": "Shaded areas"
+    }
+  ],
+  "parkactivity": [
+    {
+      "pa_park_id": 1,
+      "pa_act_id": 1,
+      "pa_note": "Morning runs recommended"
+    },
+    {
+      "pa_park_id": 1,
+      "pa_act_id": 2,
+      "pa_note": "Dogs allowed in fenced area"
+    },
+    {
+      "pa_park_id": 1,
+      "pa_act_id": 3,
+      "pa_note": "Picnic areas near the benches"
+    },
+    {
+      "pa_park_id": 2,
+      "pa_act_id": 1,
+      "pa_note": "Good for jogging"
+    },
+    {
+      "pa_park_id": 2,
+      "pa_act_id": 4,
+      "pa_note": "Relax on lawns"
+    },
+    {
+      "pa_park_id": 3,
+      "pa_act_id": 2,
+      "pa_note": "Walk dogs on paths"
+    },
+    {
+      "pa_park_id": 3,
+      "pa_act_id": 3,
+      "pa_note": "Picnic areas available"
+    },
+    {
+      "pa_park_id": 7,
+      "pa_act_id": 2,
+      "pa_note": "Dog-friendly park"
+    },
+    {
+      "pa_park_id": 7,
+      "pa_act_id": 3,
+      "pa_note": "Picnic near shaded areas"
+    },
+    {
+      "pa_park_id": 16,
+      "pa_act_id": 2,
+      "pa_note": "Dedicated dog area"
+    },
+    {
+      "pa_park_id": 16,
+      "pa_act_id": 3,
+      "pa_note": "Bring your own picnic"
+    },
+    {
+      "pa_park_id": 20,
+      "pa_act_id": 2,
+      "pa_note": "Dog park inside larger park"
+    },
+    {
+      "pa_park_id": 20,
+      "pa_act_id": 4,
+      "pa_note": "Relax under trees"
+    }
+  ],
+  "user": [
+    {
+      "user_name": "EmmaSofie",
+      "user_email": "emma@example.com",
+      "user_pass": "hashed_password",
+      "user_location": "Lisbon",
+      "user_bdate": "str_to_date('2000.04.18'"
+    },
+    {
+      "user_name": "CarlosP",
+      "user_email": "carlos@example.com",
+      "user_pass": "hashed_password",
+      "user_location": "Lisbon",
+      "user_bdate": "str_to_date('1998.11.12'"
+    },
+    {
+      "user_name": "AnaM",
+      "user_email": "ana@example.com",
+      "user_pass": "hashed_password",
+      "user_location": "Lisbon",
+      "user_bdate": "str_to_date('2001.07.05'"
+    }
+  ],
+  "favorite": [
+    {
+      "ufav_park_id": 1,
+      "ufav_user_id": 1
+    },
+    {
+      "ufav_park_id": 7,
+      "ufav_user_id": 1
+    },
+    {
+      "ufav_park_id": 2,
+      "ufav_user_id": 2
+    },
+    {
+      "ufav_park_id": 16,
+      "ufav_user_id": 2
+    },
+    {
+      "ufav_park_id": 20,
+      "ufav_user_id": 3
+    }
+  ],
+  "review": [
+    {
+      "urev_park_id": 1,
+      "urev_user_id": 1,
+      "urev_title": "Great park for dogs",
+      "urev_text": "Loved the fenced dog area and shady paths."
+    },
+    {
+      "urev_park_id": 7,
+      "urev_user_id": 1,
+      "urev_title": "Nice picnic spot",
+      "urev_text": "\"Good benches and shade"
+    },
+    {
+      "urev_park_id": 16,
+      "urev_user_id": 2,
+      "urev_title": "Fun for dogs",
+      "urev_text": "The dog park is well maintained and safe."
+    },
+    {
+      "urev_park_id": 20,
+      "urev_user_id": 3,
+      "urev_title": "Peaceful area",
+      "urev_text": "\"Dogs enjoyed the space"
+    }
+  ],
+  "dog": [
+    {
+      "dog_name": "Dog Park Available",
+      "dog_description": "A fully fenced dog area inside the park"
+    },
+    {
+      "dog_name": "No Dog Park",
+      "dog_description": "No fenced dog area available"
+    }
+  ],
+  "elements": [],
+  "comments": [
+    {
+      "comment_text": "Love the benches here!",
+      "comment_ps_id": 1,
+      "comment_user_id": 1
+    },
+    {
+      "comment_text": "Shade makes picnics nice",
+      "comment_ps_id": 3,
+      "comment_user_id": 1
+    },
+    {
+      "comment_text": "Dog fountains are useful",
+      "comment_ps_id": 8,
+      "comment_user_id": 2
+    },
+    {
+      "comment_text": "Paths are well kept",
+      "comment_ps_id": 16,
+      "comment_user_id": 3
+    }
+  ]
+}
