@@ -10,102 +10,104 @@
   }
 
   /* bevar body reset hvis nødvendigt, men undgå at ændre layout globalt */
-  body { margin: 0; }
+  body {
+    margin: 0;
+  }
 
   h1 {
-      font-size: 40px;
-      font-weight: 700;
-      margin-bottom: 60px;
-    }
-    h2 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .label-sub {
-      font-size: 15px;
-      margin-bottom: 10px;
-      opacity: 0.8;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-    }
-    input {
-      width: 100%;
-      padding: 10px 0;
-      border: none;
-      border-bottom: 1px solid #122D12;
-      background: transparent;
-      font-size: 15px;
-      margin-bottom: 18px;
-    }
-    textarea {
-      width: 100%;
-      height: 270px;
-      border-radius: 12px;
-      border: 1px solid #122D12;
-      padding: 15px;
-      font-size: 15px;
-      background: transparent;
-      resize: none;
-      font-family: nimbus-sans, sans-serif;
-      color: #1c2b1c;
-    }
-    .tags {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-    .tag {
-      border: 1px solid #122D12;
-      background-color: #D3FA91;
-      border-radius: 22px;
-      padding: 6px 14px;
-      font-size: 14px;
-      cursor: pointer;
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-    }
- 
-    button {
-      margin-top: 14px;
-      width: 100px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      float: right;
-        transition: transform 260ms cubic-bezier(.2,.8,.2,1);
-  transform-origin: center center;
-  will-change: transform; 
-  opacity: 90%;
-    }
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 60px;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .label-sub {
+    font-size: 15px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+  input {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #122d12;
+    background: transparent;
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+  textarea {
+    width: 100%;
+    height: 270px;
+    border-radius: 12px;
+    border: 1px solid #122d12;
+    padding: 15px;
+    font-size: 15px;
+    background: transparent;
+    resize: none;
+    font-family: nimbus-sans, sans-serif;
+    color: #1c2b1c;
+  }
+  .tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .tag {
+    border: 1px solid #122d12;
+    background-color: #d3fa91;
+    border-radius: 22px;
+    padding: 6px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+  }
 
-    button:hover {
-  transform: translateX(8px);
-    }
+  button {
+    margin-top: 14px;
+    width: 100px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    float: right;
+    transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: center center;
+    will-change: transform;
+    opacity: 90%;
+  }
+
+  button:hover {
+    transform: translateX(8px);
+  }
   .tag.active {
-      background: #122D12 !important;
-      color: #D3FA91;
-      border-color: #122D12;
-    }
-    .decor-image {
-        z-index: -1;
+    background: #122d12 !important;
+    color: #d3fa91;
+    border-color: #122d12;
+  }
+  .decor-image {
+    z-index: -1;
     opacity: 60%;
-      position: absolute;
-      bottom: 0;
-      right: 60px;
-      width: 800px;
-      height: 600px;
-      pointer-events: none; /* så det ikke forstyrrer klik på knapper osv */
-      user-select: none; /* så det ikke kan markeres */
-    }
+    position: absolute;
+    bottom: 0;
+    right: 60px;
+    width: 800px;
+    height: 600px;
+    pointer-events: none; /* så det ikke forstyrrer klik på knapper osv */
+    user-select: none; /* så det ikke kan markeres */
+  }
   @media (max-width: 900px) {
     .form-page {
-      padding: 0 48px;        /* mindre sidepadding end desktop */
+      padding: 0 48px; /* mindre sidepadding end desktop */
       margin-top: 40px;
       padding-bottom: 80px;
     }
@@ -140,9 +142,13 @@
       margin-bottom: 28px;
     }
 
-    h2 { font-size: 18px; }
+    h2 {
+      font-size: 18px;
+    }
 
-    .grid { gap: 24px; }
+    .grid {
+      gap: 24px;
+    }
 
     input {
       font-size: 15px;
@@ -193,9 +199,16 @@
   }
 
   @media (max-width: 420px) {
-    .form-page { padding: 0 14px; }
-    h1 { font-size: 24px; margin-bottom: 20px; }
-    .decor-image { display: none; } /* skjul dekor på meget små skærme for plads */
+    .form-page {
+      padding: 0 14px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .decor-image {
+      display: none;
+    } /* skjul dekor på meget små skærme for plads */
   }
 
   /* confirmation popup */
@@ -204,29 +217,45 @@
     left: 50%;
     top: 20%;
     transform: translateX(-50%);
-    border: 1px solid rgba(18,45,18,0.08);
-    box-shadow: 0 8px 30px rgba(6,20,8,0.08);
+    border: 1px solid rgba(18, 45, 18, 0.08);
+    box-shadow: 0 8px 30px rgba(6, 20, 8, 0.08);
     border-radius: 12px;
     padding: 18px 20px;
     z-index: 9999;
     min-width: 280px;
     text-align: center;
   }
-  .confirm-popup__inner strong { display:block; margin-bottom:6px; font-size:18px; }
-  .confirm-popup__inner div { font-size:14px; margin-bottom:12px; }
-  .confirm-close {
-    background:#122D12; color:#D3FA91; border:none; padding:8px 14px; border-radius:8px; cursor:pointer;
+  .confirm-popup__inner strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 18px;
   }
-  .confirm-popup[hidden] { display:none; }
+  .confirm-popup__inner div {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .confirm-close {
+    background: #122d12;
+    color: #d3fa91;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .confirm-popup[hidden] {
+    display: none;
+  }
 
   /* inline confirmation text (to the right of send button) */
   .confirm-inline {
     font-weight: 700;
-    color: #122D12;
+    color: #122d12;
     font-size: 16px;
     opacity: 0;
     transform: translateY(-4px);
-    transition: opacity 220ms ease, transform 220ms ease;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
     pointer-events: none; /* klik går igennem */
     white-space: nowrap;
   }
@@ -236,17 +265,17 @@
   }
 </style>
 
-  <div class="form-page">
+<div class="form-page">
   <h1>Share your favorite</h1>
 
   <div class="grid">
     <div>
       <h2>First!</h2>
       <div class="label-sub">Who are you?</div>
-      <input type="text" placeholder="First name">
-      <input type="text" placeholder="Last name">
-      <input type="email" placeholder="e-mail">
-      <input type="text" placeholder="What do you do in Lisbon?">
+      <input type="text" placeholder="First name" />
+      <input type="text" placeholder="Last name" />
+      <input type="email" placeholder="e-mail" />
+      <input type="text" placeholder="What do you do in Lisbon?" />
     </div>
 
     <div>
@@ -275,12 +304,21 @@
     <h2>Last</h2>
     <div class="label-sub">Your rating!</div>
 
-    <input type="text" placeholder="Name of the park">
-    <textarea placeholder="Describe what makes this space fantastic and what it does to you"></textarea>
+    <input type="text" placeholder="Name of the park" />
+    <textarea
+      placeholder="Describe what makes this space fantastic and what it does to you"
+    ></textarea>
 
-    <div class="send-row" style="display:inline-flex; align-items:center; gap:12px;">
-      <button type="button" class="send-btn" aria-label="Send"><img src="/images/send.svg" alt="send"></button>
-      <span class="confirm-inline" aria-hidden="true">Thank you for your review!</span>
+    <div
+      class="send-row"
+      style="display:inline-flex; align-items:center; gap:12px;"
+    >
+      <button type="button" class="send-btn" aria-label="Send"
+        ><img src="/images/send.svg" alt="send" /></button
+      >
+      <span class="confirm-inline" aria-hidden="true"
+        >Thank you for your review!</span
+      >
     </div>
   </div>
 
@@ -289,40 +327,49 @@
 </div>
 
 <script type="text/javascript">
-  document.querySelectorAll('.tag').forEach(tag => {
-    tag.addEventListener('click', () => {
+  document.querySelectorAll(".tag").forEach((tag) => {
+    tag.addEventListener("click", () => {
       const text = tag.textContent.trim();
       const lastChar = text.slice(-1);
-      const base = (lastChar === '✕' || lastChar === '＋' || lastChar === '+' || lastChar === '×') ? text.slice(0, -1).trim() : text;
-      const isActive = tag.classList.contains('active');
+      const base =
+        lastChar === "✕" ||
+        lastChar === "＋" ||
+        lastChar === "+" ||
+        lastChar === "×"
+          ? text.slice(0, -1).trim()
+          : text;
+      const isActive = tag.classList.contains("active");
       if (!isActive) {
-        tag.textContent = base + ' ✕';
-        tag.classList.add('active');
+        tag.textContent = base + " ✕";
+        tag.classList.add("active");
       } else {
-        tag.textContent = base + ' ＋';
-        tag.classList.remove('active');
+        tag.textContent = base + " ＋";
+        tag.classList.remove("active");
       }
     });
   });
 
   // inline confirmation: vis ved klik, skjul ved klik andetsteds eller efter timeout
   (function () {
-    const send = document.querySelector('.send-btn');
-    const confirm = document.querySelector('.confirm-inline');
+    const send = document.querySelector(".send-btn");
+    const confirm = document.querySelector(".confirm-inline");
     if (!send || !confirm) return;
     let timeoutId = null;
 
     function hideConfirm() {
-      confirm.classList.remove('show');
-      confirm.setAttribute('aria-hidden', 'true');
-      if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+      confirm.classList.remove("show");
+      confirm.setAttribute("aria-hidden", "true");
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
     }
 
-    send.addEventListener('click', (e) => {
+    send.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation(); // undgå at dokument-click skjuler det med det samme
-      confirm.classList.add('show');
-      confirm.setAttribute('aria-hidden', 'false');
+      confirm.classList.add("show");
+      confirm.setAttribute("aria-hidden", "false");
       if (timeoutId) clearTimeout(timeoutId);
       timeoutId = setTimeout(hideConfirm, 3000);
 
@@ -330,11 +377,10 @@
       const onDocClick = (ev) => {
         if (ev.target === send || send.contains(ev.target)) return;
         hideConfirm();
-        document.removeEventListener('click', onDocClick);
+        document.removeEventListener("click", onDocClick);
       };
       // tilføj listener efter nuværende event loop så det ikke fanges af samme klik
-      setTimeout(() => document.addEventListener('click', onDocClick), 0);
+      setTimeout(() => document.addEventListener("click", onDocClick), 0);
     });
   })();
 </script>
-
