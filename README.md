@@ -1,3 +1,44 @@
+System Architecture
+
+Frontend
+
+Built using HTML, CSS, JavaScript in Astro
+
+Fully responsive interface
+
+Interactive Calmness Map
+
+Dynamic filtering and info overlays
+
+Form components for feedback & ratings
+
+Emotional design: soft transitions, minimal navigation
+
+Backend
+
+Lightweight custom SQL database
+
+Node/PHP-like request handlers (depending on hosting)
+
+Fetching of park data, dog information, services & reviews
+
+Data formatting before sending to frontend as JSON-like structures
+
+Unity Application
+
+Weather & time systems controlling ambience
+
+3D environment with real vegetation & assets
+
+Interactive plaques connected to UI
+
+Smooth WASD navigation and experience flow
+
+Data Flow (Network)
+User → Website UI → Request handler → Database → Response → Map Rendering
+Unity App → Internal simulation + local UI overlay
+External Sources → Pre-processed & inserted into DB manually
+
 # Astro Starter Kit: Basics
 
 ```sh
